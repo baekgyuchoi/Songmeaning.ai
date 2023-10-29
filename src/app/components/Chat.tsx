@@ -17,6 +17,7 @@ interface ChatProps {
  */
 const Chat: FC<ChatProps> = ({}) => {
     return (
+
         <Accordion 
             type='single' 
             collapsible 
@@ -28,7 +29,6 @@ const Chat: FC<ChatProps> = ({}) => {
                     </AccordionTrigger>
                     <AccordionContent>
                         <div className='flex flex-col h-80'>
-                            messages
                             <ChatInput className='px-4' />
                         </div>
                     </AccordionContent>
@@ -36,6 +36,7 @@ const Chat: FC<ChatProps> = ({}) => {
                 </div>
             </AccordionItem>
         </Accordion>
+        
     );
 };
 
