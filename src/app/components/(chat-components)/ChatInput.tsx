@@ -20,6 +20,7 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props}) => {
                 },
                 body: JSON.stringify({messages: [message]}),
             })
+            console.log(response.headers.get('status'))
             return response.body
         },
         onSuccess: async (stream) => {

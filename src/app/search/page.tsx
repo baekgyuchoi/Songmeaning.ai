@@ -1,6 +1,7 @@
 import { SongInfo } from "@/lib/validators/song_info";
 import { Suspense } from "react";
 import SearchItemButton from "../components/(search-page)/SearchItemButton";
+import * as Genius from "genius-lyrics";
 
 
 const geniusAPISearchURL = 'https://api.genius.com/search?q='

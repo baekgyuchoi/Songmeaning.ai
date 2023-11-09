@@ -14,6 +14,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "eventsource-parser": "^1.1.1",
+    "genius-lyrics": "^4.4.6",
     "lucide-react": "^0.290.0",
     "nanoid": "^5.0.2",
     "next": "14.0.0",
