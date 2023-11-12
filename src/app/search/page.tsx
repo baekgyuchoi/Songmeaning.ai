@@ -26,10 +26,9 @@ async function getSearchResults(searchQuery: string | undefined) {
             song_title: hit.result.full_title,
             genius_url: hit.result.url,
             song_slug: hit.result.path.split('/').pop()?.split('-lyrics')[0].split('-annotated')[0],
-            genius_id: hit.result.id,
+            genius_id: parseInt(hit.result.id),
             artist_name: hit.result.primary_artist.name,
             artist_slug: hit.result.primary_artist.url.split('/').pop(),
-            has_meaning: true
         };
         songInfoArray.push(songInfo);
     }
@@ -46,7 +45,7 @@ export default async function SearchPage({
     const searchQuery = searchParams?.q;
  
     const data = await getSearchResults(searchQuery);
-    console.log(data)
+   
 
 
 

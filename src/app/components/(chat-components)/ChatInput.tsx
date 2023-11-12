@@ -13,6 +13,7 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props}) => {
 
     const { mutate: sendMessage, isPending } = useMutation({
         mutationFn: async (message: Message) => {
+            console.log("hi, sending message")
             const response = await fetch('/api/message', {
                 method: 'POST',
                 headers: {
