@@ -2,12 +2,11 @@ import * as Genius from "genius-lyrics";
 import { SongInfo } from "@/lib/validators/song_info";
 import { PrismaClient } from '@prisma/client'
 import { songMeaningPrompt } from "@/app/helpers/constants/queue-songmeaning-prompt";
-import { ChatGPTMessage, OpenAIStream } from "@/lib/openai-stream";
-import { OpenAIStreamPayload } from "@/lib/openai-stream";
+import OpenAI from 'openai'  
 
 
 
-const prisma = new PrismaClient()
+
 
 const genius_api_key = process.env.GENIUS_API_KEY_1
 
@@ -22,105 +21,102 @@ async function getSongLyrics(song_id: number) {
 }
 
 async function getSongMeaning(song_title: string, artist: string, lyrics: string) {
-
+    
     const songMeaningContext = `Song: ${song_title}\nArtist: ${artist}\nLyrics: ${lyrics}\n\nMeaning:`
 
-    const outboundMessages: ChatGPTMessage[] = [{
-        role: 'user',
-        content: songMeaningContext,
-    }];
+    const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY
+    });
 
-    outboundMessages.unshift({
-        role: 'system',
-        content: songMeaningPrompt,
-    })
-
-    const payload: OpenAIStreamPayload = {
+    const gptResponse = await openai.chat.completions.create({
+        messages: [{ role: 'user', content: songMeaningContext }, { role: 'system', content: songMeaningPrompt }],
         model: 'gpt-3.5-turbo',
-        messages: outboundMessages,
-        temperature: 0.8,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-        max_tokens: 1000,
-        stream: false,
-        n: 1,
-    }
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-        },
-        body: JSON.stringify(payload),
     })
-    const json = await res.json()
-    return json.choices[0].text
+
+    return gptResponse.choices[0].message
 }
 //maybe POST to alter databasenext c
 export async function POST(request: Request) {
+    const prisma = new PrismaClient()
     const song_info = await request.json() as SongInfo
     // query if song_id exists in database or use song_slug instead
-
-    const db_song = await prisma.songs.findUnique({
+    // if song exists, return "song already exists"
+    // if song does not exist, create song in database
+    const song_in_db = await prisma.songs.findUnique({
         where: {
             song_slug: song_info.song_slug,
-        },
-        include: {
-            song_meaning: true
+            },
+        })
+    if (song_in_db != null) {
+        if (song_in_db.isValid === false) {
+            return new Response("Error - song is invalid")
         }
-    })
-
-    if (db_song != null) {
-        if (db_song.lyrics != null) {
-            const lyrics = db_song.lyrics
-        }
-        db_song.song_meaning
+        return new Response("Error - song already exists")
     }
+   
 
 
+
+    // lyrics isValid logic
+  
     const lyrics = await getSongLyrics(song_info.genius_id)
-
-
-    // if (db_song?.lyrics === null) {
-    //     await prisma.songs.update({
-    //         where: {
-    //             song_slug: song_info.song_slug,
-    //         },
-    //         data: {
-    //             lyrics: lyrics
-    //         }
-    //     })
-    // }
-
-    await prisma.songs.create({
-        data: {
-            song_title: song_info.song_title,
-            song_slug: song_info.song_slug,
-            genius_id: song_info.genius_id,
-            artist_name: song_info.artist_name,
-            artist_slug: song_info.artist_slug,
-            genius_url: song_info.genius_url,
-            lyrics: lyrics
-        }
-    })
-    const song_meaning = await getSongMeaning(song_info.song_title, song_info.artist_name, lyrics)
-
-    await prisma.songMeaning.create({
-        data: {
-            meaning: song_meaning,
-            createdAt: new Date(),
-            song: {
-                connect: {
-                    song_slug: song_info.song_slug
-                }
+    if (lyrics != null) {
+        
+        const song_meaning = await getSongMeaning(song_info.song_title, song_info.artist_name, lyrics)
+        
+        
+        await prisma.songs.create({
+            data: {
+                song_title: song_info.song_title,
+                song_slug: song_info.song_slug,
+                genius_id: song_info.genius_id,
+                artist_name: song_info.artist_name,
+                artist_slug: song_info.artist_slug,
+                genius_url: song_info.genius_url,
+                lyrics: lyrics,
+                isValid: true
             }
+        }).then( async () => {
+            if (song_meaning.content != null) {
+                console.log("songmeaning isn't null")
+                const song_meaning_text = song_meaning.content
+                console.log(song_meaning_text)
+
+                await prisma.songMeaning.create({
+                    data: {
+                        meaning: song_meaning_text,
+                        song: {
+                            connect: {
+                                song_slug: song_info.song_slug
+                            }
+                        }
+                    }
+            })
+            await prisma.$disconnect()
+            return new Response("songmeaning success")
+            }else {
+                    await prisma.$disconnect()
+                    return new Response("songmeaning failed")
         }
-    })
+        }
+        )
 
-    await prisma.$disconnect()
-
-    return new Response(lyrics)
+    } else {
+        await prisma.songs.create({
+            data: {
+                song_title: song_info.song_title,
+                song_slug: song_info.song_slug,
+                genius_id: song_info.genius_id,
+                artist_name: song_info.artist_name,
+                artist_slug: song_info.artist_slug,
+                genius_url: song_info.genius_url,
+                isValid: false
+            }
+        })
+        await prisma.$disconnect()
+        return new Response("song does not have valid lyrics")
+    }
+    return new Response("success")
 }
 
 

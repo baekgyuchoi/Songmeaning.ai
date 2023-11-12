@@ -39,8 +39,8 @@ model Artist {
 
 model SongMeaning {
   id     Int @id @default(autoincrement())
-  songId Int  @unique
-  song   Songs @relation(fields: [songId], references: [id])
-  meaning String
+  slug String  @unique
+  song   Songs @relation(fields: [slug], references: [song_slug])
+  meaning String @db.Text
   createdAt DateTime @default(now())
 }

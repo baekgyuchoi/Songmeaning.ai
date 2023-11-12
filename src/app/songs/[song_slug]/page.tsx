@@ -40,9 +40,38 @@ export default async function SongPage({ params }: {
         // const lyrics = await search[0].lyrics();
         const song_in_db = await IsSongInDB(params.song_slug)
 
-        const song_data = await QueueSong(params.song_slug)
+        if (song_in_db) {
+            const song_data = await QueueSong(params.song_slug)
+            if (!song_data?.isValid){
+                await prisma.$disconnect()
+                return (
+                    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+                        <h1>hi  </h1>
+                        <h1>404: Invalid Song</h1>
 
-        if (!song_data?.isValid){
+                        <h2>hi </h2>
+                    </main>
+                )
+            } else{
+                const meaning = song_data?.song_meaning?.meaning
+                let text1 = "TRUE"
+                if (!song_in_db) {
+                    text1 = "FALSE"
+                }
+                await prisma.$disconnect()
+                // console.log(lyrics)
+                return (
+                    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+                    <h1>hi  {text1}</h1>
+                    <h1>{ meaning }</h1>
+        
+                    <h2>hi </h2>
+                    </main>
+                );
+            }
+
+        }else {
+            await prisma.$disconnect()
             return (
                 <main className="flex min-h-screen flex-col items-center justify-between p-24">
                     <h1>hi  </h1>
@@ -53,22 +82,6 @@ export default async function SongPage({ params }: {
             )
         }
 
-        const meaning = song_data?.song_meaning?.meaning
-        const lyrics = song_data?.lyrics
-        let text1 = "TRUE"
-        if (!song_in_db) {
-            text1 = "FALSE"
-        }
-        await prisma.$disconnect()
-        // console.log(lyrics)
-    return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <h1>hi  {text1}</h1>
-        <h1>{ lyrics }</h1>
-
-        <h2>hi {meaning} </h2>
-        </main>
-    );
 };
 
 

@@ -5,31 +5,34 @@ import { PrismaClient } from "@prisma/client"
 export async function GET(request: Request) {
     const url = new URL(request.url)
     const queryParam = url.searchParams
+    const prisma = new PrismaClient()
     
     try{
         const req_slug = (queryParam.get('q') || "0")
-        const prisma = new PrismaClient()
+        
         const song = await prisma.songs.findUnique({
             where: {
                 song_slug: req_slug,
             },
         });
         let response_body = {
-            "Song exists": false,
+            "song_exists": false,
         }
         if (song != null) {
             response_body = {
-                "Song exists": true,
+                "song_exists": true,
             }
         }
         else{
             response_body = {
-                "Song exists": false,
+                "song_exists": false,
             }
         }
+        await prisma.$disconnect()
         return new Response(JSON.stringify(response_body))
     }
     catch{
+        await prisma.$disconnect()
         return new Response("Error")
     }
     // const url = new URL(request.url)

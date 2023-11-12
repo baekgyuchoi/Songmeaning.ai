@@ -16,7 +16,6 @@ const submitSearch = (searchQuery: string | null) => {
     if (typeof searchQuery !== "string") {
         return
     }
-    console.log("route pushed")
     router.push(`/search?q=${searchQuery}`);
 }
 
