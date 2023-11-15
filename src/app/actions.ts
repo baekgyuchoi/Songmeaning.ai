@@ -1,14 +1,35 @@
+'use server'
+import { PrismaClient } from "@prisma/client"
 import * as Genius from "genius-lyrics";
-import { SongInfo } from "@/lib/validators/song_info";
-import { PrismaClient } from '@prisma/client'
+import { SongInfo, SongInfoSchema } from "@/lib/validators/song_info";
 import { songMeaningPrompt } from "@/app/helpers/constants/queue-songmeaning-prompt";
 import OpenAI from 'openai'  
-
+import { redirect } from "next/navigation";
 
 
 
 
 const genius_api_key = process.env.GENIUS_API_KEY_1
+
+
+export async function IsSongInDB(req_slug: string) {
+    const prisma = new PrismaClient()
+    
+    try{
+        const song = await prisma.songs.findUnique({
+            where: {
+                song_slug: req_slug,
+            },
+        });
+        
+        await prisma.$disconnect()
+        return (song != null)
+    }
+    catch{
+        await prisma.$disconnect()
+        return "DB Error"
+    }
+}
 
 
 
@@ -36,27 +57,22 @@ async function getSongMeaning(song_title: string, artist: string, lyrics: string
     return gptResponse.choices[0].message
 }
 //maybe POST to alter databasenext c
-export async function POST(request: Request) {
+export async function GenerateSongMeaning(song_info : SongInfo) {
+
+
+    const is_song_in_db = await IsSongInDB(song_info.song_slug)
+
+    if (is_song_in_db || typeof(is_song_in_db) === typeof("a")) {
+
+        redirect(`/songs/${song_info.song_slug}`)
+    }
+    
+    
     const prisma = new PrismaClient()
-    await prisma.$connect()
-    const song_info = await request.json() as SongInfo
     // query if song_id exists in database or use song_slug instead
     // if song exists, return "song already exists"
     // if song does not exist, create song in database
-    const song_in_db = await prisma.songs.findUnique({
-        where: {
-            song_slug: song_info.song_slug,
-            },
-        })
-    if (song_in_db != null) {
-        if (song_in_db.isValid === false) {
-            return new Response("Error - song is invalid")
-        }
-        return new Response("Error - song already exists")
-    }
-   
-
-
+    
 
     // lyrics isValid logic
   
@@ -78,11 +94,10 @@ export async function POST(request: Request) {
                 isValid: true
             }
         }).then( async () => {
-            console.log("song created")
             if (song_meaning.content != null) {
                 console.log("songmeaning isn't null")
                 const song_meaning_text = song_meaning.content
-                
+                console.log(song_meaning_text)
 
                 await prisma.songMeaning.create({
                     data: {
@@ -95,10 +110,11 @@ export async function POST(request: Request) {
                     }
             })
             await prisma.$disconnect()
-            return new Response("songmeaning success")
+            redirect(`/songs/${song_info.song_slug}`)
             }else {
                     await prisma.$disconnect()
-                    return new Response("songmeaning failed")
+                    console.log("songmeaning failed")
+                    redirect(`/songs/${song_info.song_slug}`)
         }
         }
         )
@@ -116,9 +132,9 @@ export async function POST(request: Request) {
             }
         })
         await prisma.$disconnect()
-        return new Response("song does not have valid lyrics")
+        console.log("song does not have valid lyrics")
+        redirect(`/songs/${song_info.song_slug}`)
     }
-    return new Response("success")
 }
 
 
@@ -129,3 +145,5 @@ export async function POST(request: Request) {
 //     const search = await Client.songs.get(songInfo.genius_id);
 //     const lyrics = await search[0].lyrics();
 // }   
+
+

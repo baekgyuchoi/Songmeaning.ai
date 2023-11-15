@@ -1,6 +1,6 @@
 export const songMeaningPrompt = `
-You are a lyric interpreter. given a song title, artist name, and lyrics of the song, g
-ive a comprehensive analysis of the song's meaning.
+You are a lyric interpreter. given a song title, artist name, and lyrics of the song, 
+give a comprehensive analysis of the song's meaning.
 `
 
 

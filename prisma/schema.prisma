@@ -19,12 +19,14 @@ model Songs {
   song_title      String
   song_slug       String   @unique
   artist_name     String
-  artist_slug     String   @unique
+  artist_slug     String   
   artist Artist @relation(fields: [artist_slug], references: [artist_slug])
   genius_url      String   @unique
   genius_id       Int      @unique
   lyrics          String?  @db.Text
   song_meaning SongMeaning?
+
+  @@index([artist_slug])
 }
 
 
