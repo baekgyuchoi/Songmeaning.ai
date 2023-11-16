@@ -47,11 +47,38 @@ export default async function SearchPage({
     const data = await getSearchResults(searchQuery);
    
 
-
+    return (
+        <main className="flex flex-col items-center p-8 pt-24">
+          
+          <div className="max-w-4xl mt-5">
+      
+            <h1 className="text-3xl text-gray-800 mb-5">
+              Search results for: {searchQuery}
+            </h1>
+      
+            <ul className="">
+              {data.map((result, index) => (
+                <li 
+                  key={index}
+                  className="py-1"
+                >
+                  <SearchItemButton songInfo={result} />
+                </li>
+              ))}
+            </ul>
+            
+          </div>
+          
+          <footer className="text-gray-500 text-sm mt-32">
+            Copyright {new Date().getFullYear()}
+          </footer>
+      
+        </main>
+      );
 
     return (
     <div className="flex min-h-screen flex-col items-center justify-between p-24">
-        <h1>{searchQuery}</h1>
+        <h1>search results for: {searchQuery}</h1>
         {/* <p>{data} </p> */}
         <Suspense>
                 <ul>

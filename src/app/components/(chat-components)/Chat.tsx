@@ -3,20 +3,27 @@ import { FC } from 'react';
 import ChatHeader from './ChatHeader';
 import ChatInput from './ChatInput';
 import ChatMessages from './ChatMessages';
+import { SongData } from '@/lib/validators/song_data_response';
+
 
 /**
  * Chat component props
  * to be implemented with Song and Artist Info
  */
 interface ChatProps {
+    song_info: SongData,
+    chatbot_prompt: string
 }
+
+
 
 /**
  * Chat component
  * @param props Chat component props
  * @returns Chat component UI
  */
-const Chat: FC<ChatProps> = ({}) => {
+const Chat: FC<ChatProps> = (props) => {
+    
     return (
 
         <Accordion 
@@ -26,12 +33,12 @@ const Chat: FC<ChatProps> = ({}) => {
             <AccordionItem value='item-1'>
                 <div className='fixed right-8 w-80 bottom-8 bg-white border-gray-200 rounded-md overflow:hidden'>
                     <AccordionTrigger className='px-6 border-b border-zinc-300'>
-                        <ChatHeader />
+                        <ChatHeader song_info={props.song_info}/>
                     </AccordionTrigger>
                     <AccordionContent>
                         <div className='flex flex-col h-80'>
                             <ChatMessages className = 'px-2 py-3 flex-1'/>
-                            <ChatInput className='px-4' />
+                            <ChatInput chatbot_prompt={props.chatbot_prompt} className='px-4' />
                         </div>
                     </AccordionContent>
                     

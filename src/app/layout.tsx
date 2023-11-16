@@ -20,7 +20,6 @@ export default function RootLayout({
     <html lang="en">
       <Providers>
         <body className={inter.className}>
-          <Chat />
           {children}
         </body>
       </Providers>

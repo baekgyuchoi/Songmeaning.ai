@@ -10,7 +10,9 @@ import { FC, HTMLAttributes, useContext, useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import TextareaAutosize from 'react-textarea-autosize'
 
-interface ChatInputProps extends HTMLAttributes<HTMLDivElement> {}
+interface ChatInputProps extends HTMLAttributes<HTMLDivElement> {
+  chatbot_prompt: string
+}
 
 const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
@@ -22,6 +24,8 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
     updateMessage,
     setIsMessageUpdating,
   } = useContext(MessagesContext)
+  
+  
 
   const { mutate: sendMessage, isPending } = useMutation({
     mutationKey: ['sendMessage'],
@@ -32,13 +36,18 @@ const ChatInput: FC<ChatInputProps> = ({ className, ...props }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ messages }),
+        body: JSON.stringify({ "messages": messages, "chatbot_prompt": props.chatbot_prompt}),
       })
 
       return response.body
     },
     onMutate(message) {
       addMessage(message)
+      // addMessage({
+      //   id: nanoid(),
+      //   isUserInput: true,
+      //   text: "what is the meaning of 7 rings",
+      // })
     },
     onSuccess: async (stream) => {
       if (!stream) throw new Error('No stream')

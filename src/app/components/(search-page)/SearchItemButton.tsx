@@ -72,6 +72,7 @@ const SearchItemButton: React.FC<Props> = (props) => {
     };
     const songInfo = props.songInfo
 
+
     return (
         // Return your JSX here
         <div>
@@ -82,7 +83,7 @@ const SearchItemButton: React.FC<Props> = (props) => {
                 {isLoading ? (
                     <>loading...</>
                 ) : (
-                    <>{songInfo.song_title}</>
+                    <div className="truncate max-w-4xl">{songInfo.song_title}</div>
                 )}
                 
                 
