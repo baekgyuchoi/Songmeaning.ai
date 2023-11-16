@@ -7,7 +7,9 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <HomeButton />
       <SearchInput />
-      <h1> copyright </h1>
+      <footer className="text-gray-500 text-sm mt-32">
+            Copyright {new Date().getFullYear()}
+      </footer>
     </main>
   );
 }

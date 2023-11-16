@@ -46,11 +46,10 @@ export default async function SearchPage({
  
     const data = await getSearchResults(searchQuery);
    
-
     return (
         <main className="flex flex-col items-center p-8 pt-24">
           
-          <div className="max-w-4xl mt-5">
+          <div className="container max-w-4xl mt-5">
       
             <h1 className="text-3xl text-gray-800 mb-5">
               Search results for: {searchQuery}
@@ -60,7 +59,7 @@ export default async function SearchPage({
               {data.map((result, index) => (
                 <li 
                   key={index}
-                  className="py-1"
+                  className="py-2 w-full flex flex-col flex-row "
                 >
                   <SearchItemButton songInfo={result} />
                 </li>

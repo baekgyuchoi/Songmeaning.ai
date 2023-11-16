@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import * as Genius from 'genius-lyrics'
 import { useState } from "react";
-
+import LoadingQueue from './LoadingQueue';
 // make 
 
 
@@ -36,21 +36,6 @@ async function QueueSongMeaning(song_info: SongInfo) {
 
 
 
-const Button = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleClick = () => {
-    setIsLoading(true);
-    // do something async
-    setIsLoading(false);
-  };
-
-  return (
-    <button onClick={handleClick} disabled={isLoading}>
-      Click me!
-    </button>
-  );
-};
 
 
 const SearchItemButton: React.FC<Props> = (props) => {
@@ -60,9 +45,10 @@ const SearchItemButton: React.FC<Props> = (props) => {
     
     const buttonClick = async () => {
         console.log("button clicked");
-        setIsLoading(true);
+        
         const song_exists = await DoesSongExist(props.songInfo.song_slug)
         if (!song_exists) {
+            setIsLoading(true);
             const queue_response = await QueueSongMeaning(props.songInfo);
             console.log("song meaning queued")
             console.log(queue_response)
@@ -75,20 +61,20 @@ const SearchItemButton: React.FC<Props> = (props) => {
 
     return (
         // Return your JSX here
-        <div>
+       
             <button
                 disabled = {isLoading}
                 onClick={buttonClick}
-                className="bg-transparent text-gray font-bold text-4xl tracking-tight hover:text-gray-300 focus:outline-none focus:shadow-outline">
+                className="flex bg-transparent text-gray font-bold tracking-tight text-2xl sm:text-4xl hover:text-gray-300 focus:outline-none focus:shadow-outline">
                 {isLoading ? (
-                    <>loading...</>
+                    <LoadingQueue songInfo={songInfo}/>
                 ) : (
                     <div className="truncate max-w-4xl">{songInfo.song_title}</div>
                 )}
                 
                 
             </button>
-        </div>
+
     );
 };
 
