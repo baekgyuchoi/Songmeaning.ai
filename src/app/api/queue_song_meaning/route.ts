@@ -29,7 +29,7 @@ async function getSongMeaning(song_title: string, artist: string, lyrics: string
     });
 
     const gptResponse = await openai.chat.completions.create({
-        messages: [{ role: 'user', content: songMeaningContext }, { role: 'system', content: songMeaningPrompt }],
+        messages: [{ role: 'user', content: songMeaningContext + songMeaningPrompt }],
         model: 'gpt-3.5-turbo',
     })
 

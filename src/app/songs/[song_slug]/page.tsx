@@ -64,7 +64,7 @@ export default async function SongPage({ params }: {
                 const created_at = song_data?.song_meaning?.createdAt.toDateString()
                 const artist_name = song_data?.artist_name
                 const song_name = song_data?.song_title
-
+                
                 const split_meaning = meaning?.split("\n")
 
                 const chatbot_prompt = `Imagine you are ${artist_name}
