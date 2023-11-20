@@ -1,9 +1,11 @@
+'use client'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { FC } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import ChatHeader from './ChatHeader';
 import ChatInput from './ChatInput';
 import ChatMessages from './ChatMessages';
 import { SongData } from '@/lib/validators/song_data_response';
+import { MessagesContext } from '@/context/messages';
 
 
 /**
@@ -23,6 +25,12 @@ interface ChatProps {
  * @returns Chat component UI
  */
 const Chat: FC<ChatProps> = (props) => {
+    const {
+        clearMessages
+      } = useContext(MessagesContext)
+    useEffect(() => {
+        clearMessages()
+      }, [])
     
     return (
 

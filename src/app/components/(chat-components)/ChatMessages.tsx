@@ -10,6 +10,7 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
     const {
         messages,
         addMessage,
+        inputRef
         } = useContext(MessagesContext)
     const inverseMessages = [...messages].reverse()
     console.log("chat messages rendered")
@@ -45,7 +46,10 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
                                         id: nanoid(),
                                         isUserInput: true,
                                         text: 'give me 2 songs with similar lyric meanings'
-                                    })
+                                    }),
+                                    inputRef?.current?.focus()
+                                    inputRef?.current?.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter', code: 'Enter', which: 13, bubbles: true, cancelable: true}))
+                                    
                                 }
                             
                             }>Songs with similar lyric meaning</button>
@@ -55,7 +59,9 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
                                         id: nanoid(),
                                         isUserInput: true,
                                         text: 'give me a concise background of the artist'
-                                    })
+                                    }),
+                                    inputRef?.current?.focus()
+                                    inputRef?.current?.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter', code: 'Enter', which: 13, bubbles: true, cancelable: true}))
                                 }
                             
                             }>Artist background</button>

@@ -5,17 +5,23 @@ import { ReactNode, createContext, useState } from "react"
  export const MessagesContext = createContext<{
         messages: Message[]
         isMessageUpdating: boolean
+        inputRef: React.RefObject<HTMLTextAreaElement> | null
+        setInputRef: (ref: React.RefObject<HTMLTextAreaElement> | null) => void
         addMessage: (message: Message) => void
         removeMessage: (id: string) => void
         updateMessage: (id: string, updateFn: (prevText: string) => string) => void
         setIsMessageUpdating: (isUpdating: boolean) => void
+        clearMessages: () => void
     }>({
         messages: [],
         isMessageUpdating: false,
+        inputRef: null,
+        setInputRef: () => {},
         addMessage: () => {},
         removeMessage: () => {},
         updateMessage: () => {},
         setIsMessageUpdating: () => {},
+        clearMessages: () => {},
     })
 
 export function MessagesProvider({children}: {children: ReactNode}) {
@@ -27,6 +33,8 @@ export function MessagesProvider({children}: {children: ReactNode}) {
             text: "Hello, I'm a bot",
         }
     ])
+    const [inputRef, setInputRef] = useState<React.RefObject<HTMLTextAreaElement> | null>(null)
+    
 
     const addMessage = (message: Message) => {
         setMessages((prev) => [...prev, message]) 
@@ -44,6 +52,15 @@ export function MessagesProvider({children}: {children: ReactNode}) {
             return message
         }))
     }
+    const clearMessages = () => {
+        setMessages([
+            {
+                id: nanoid(),
+                isUserInput: false,
+                text: "Hello, I'm a bot",
+            }
+        ])
+    }
 
     return (
     <MessagesContext.Provider value={{
@@ -52,7 +69,10 @@ export function MessagesProvider({children}: {children: ReactNode}) {
         addMessage,
         removeMessage,
         updateMessage,
-        setIsMessageUpdating        
+        setIsMessageUpdating,
+        inputRef,
+        setInputRef,
+        clearMessages
     }}>
         {children}
     </MessagesContext.Provider>

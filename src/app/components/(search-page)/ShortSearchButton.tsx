@@ -69,7 +69,7 @@ const ShortSearchButton: React.FC<Props> = (props) => {
                 {isLoading ? (
                     <LoadingQueue songInfo={songInfo}/>
                 ) : (
-                    <div className="truncate max-w-4xl">{songInfo.song_title.split('by')[0]}</div>
+                    <div className="truncate max-w-4xl">{songInfo.song_title.split(' by')[0]}</div>
                 )}
                 
                 

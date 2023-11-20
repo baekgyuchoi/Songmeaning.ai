@@ -1,26 +1,23 @@
-'use client';
+
 import TypewriterComponent from "typewriter-effect";
 import HomeButton from "./components/HomeButton";
 import SearchInput from "./components/SearchInput";
+import HomeTypewriter from "./components/HomeTypewriter";
+import { PrismaClient } from "@prisma/client";
+import SearchItemButton from "./components/(search-page)/SearchItemButton";
+import TrendingSongs from "./components/TrendingSongs";
 
 
-export default function Home() {
+
+export default async function Home() {
+
   return (
     <div>
       <main className="flex min-h-screen flex-col items-center justify-between p-36">
         <div className="mt-16">
           <HomeButton />
         </div>
-        <div className="">
-          
-          <TypewriterComponent 
-            options={{
-              strings: ['Hello', 'Welcome to Songmeanings.ai', 'Search a song to get started'],
-              autoStart: true,
-              loop: true,
-            }}
-          />
-        </div>
+        <HomeTypewriter />
         <SearchInput />
         <div>
           <footer className="text-gray-500 text-sm mt-32">
@@ -30,23 +27,7 @@ export default function Home() {
         
       </main>
       <main className="flex min-h-screen flex-col items-center justify-between p-36">
-        <div className="mt-16">
-          <HomeButton />
-        </div>
-        <div className="">
-          
-          <TypewriterComponent 
-            options={{
-              strings: ['Hello', 'Welcome to Songmeanings.ai', 'Search a song to get started'],
-              autoStart: true,
-              loop: true,
-            }}
-          />
-        </div>
-        <SearchInput />
-        <footer className="text-gray-500 text-sm mt-32">
-              Copyright {new Date().getFullYear()}
-        </footer>
+        <TrendingSongs />
       </main>
       
     </div>

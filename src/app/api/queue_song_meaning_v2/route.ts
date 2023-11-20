@@ -51,10 +51,11 @@ export async function POST(req: Request) {
     function min(a: number, b: number): number {
         return a < b ? a : b;
     }
-    try {
-        const song_info = await req.json() as SongInfo
-        
+    const song_info = await req.json() as SongInfo
+    try {      
         const song_lyrics = await getSongLyrics(song_info.genius_id)
+        console.log(song_lyrics)
+       
         const shorted_lyrics = song_lyrics.slice(0,min(song_lyrics.length - 1, 5000))
         const songMeaningContext = `Song: ${song_info.song_title}\nArtist: ${song_info.artist_name}\nLyrics: ${shorted_lyrics}\n\nMeaning:`
 
@@ -84,6 +85,19 @@ export async function POST(req: Request) {
         return new Response(stream)
     } catch (error) {
         console.error('An error occurred:', error)
-        return new Response('Error occurred', { status: 500 })
+        console.log("songlyrics are null")
+            const prisma = new PrismaClient();
+            await prisma.$connect()
+
+            await prisma.songs.update({
+                where: {
+                    song_slug: song_info.song_slug,
+                },
+                data: {
+                    isValid: false,
+                }
+            })
+            await prisma.$disconnect()
+        return new Response('Error occurred: This song does not have lyrics', { status: 500 })
     }
 }

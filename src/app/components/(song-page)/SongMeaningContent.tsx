@@ -93,7 +93,9 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
                 </>
             ):(
                 <div className='flex items-center justify-center'>
+                    <div className='mt-24'>
                     <LoadingQueue songInfo={song_info}/>
+                    </div>
                 </div>
             )}
             

@@ -16,6 +16,7 @@ generator client {
 model Songs {
   id              Int      @id @default(autoincrement())
   isValid         Boolean  @default(true)
+  viewCount       Int      @default(0)
   song_title      String
   song_slug       String   @unique
   artist_name     String
