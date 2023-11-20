@@ -1,6 +1,7 @@
 'use client'
 import { SongInfo } from '@/lib/validators/song_info';
 import React, { Suspense, useEffect, useState } from 'react';
+import LoadingQueue from '../(search-page)/LoadingQueue';
 
 
 interface SongMeaningContentProps {
@@ -77,19 +78,27 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
 
     }, []);
     return (
-        <Suspense fallback={<div><p>Loading...</p></div>}>
+        
         <div>
-            {/* Display the stream content */}
-            {streamContent.map((paragraph, i) => {
-                return (
-                    <p key={i} 
-                    className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-500">
-                        {paragraph}
-                    </p>
-                )
-            })}
+            {streamContent.length > 0 ? (
+                <>
+                    {streamContent.map((paragraph, i) => {
+                        return (
+                            <p key={i} 
+                            className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-500">
+                                {paragraph}
+                            </p>
+                        )
+                    })}
+                </>
+            ):(
+                <div className='flex items-center justify-center'>
+                    <LoadingQueue songInfo={song_info}/>
+                </div>
+            )}
+            
         </div>
-        </Suspense>
+     
     
     );
 };

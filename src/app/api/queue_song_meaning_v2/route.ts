@@ -30,37 +30,6 @@ async function getSongLyrics(song_id: number) {
     return lyrics
 }
 
-async function SaveSongMeaning(stream: ReadableStream, song_info: SongInfo) {
-    const reader = stream.getReader()
-    const decoder = new TextDecoder()
-    let done = false
-    let meaning = ''
-    while (!done) {
-        const { value, done: doneReading } = await reader.read()
-        done = doneReading
-        const chunkValue = decoder.decode(value)
-        meaning += chunkValue
-    }  
-    if (meaning === '') {
-        return ["Error - no meaning generated"]
-    }
-    console.log("meaning", meaning)
-    const prisma = new PrismaClient()
-    await prisma.$connect()
-    await prisma.songMeaning.create({
-        data: {
-            meaning: meaning,
-            song: {
-                connect: {
-                    song_slug: song_info.song_slug
-                }
-            }
-        }
-    })
-
-    await prisma.$disconnect()
-    return ["Success!"]
-}
 
 // async function getSongMeaning(song_title: string, artist: string, lyrics: string) {
     
@@ -79,12 +48,15 @@ async function SaveSongMeaning(stream: ReadableStream, song_info: SongInfo) {
 // }
 
 export async function POST(req: Request) {
+    function min(a: number, b: number): number {
+        return a < b ? a : b;
+    }
     try {
         const song_info = await req.json() as SongInfo
         
         const song_lyrics = await getSongLyrics(song_info.genius_id)
-
-        const songMeaningContext = `Song: ${song_info.song_title}\nArtist: ${song_info.artist_name}\nLyrics: ${song_lyrics}\n\nMeaning:`
+        const shorted_lyrics = song_lyrics.slice(0,min(song_lyrics.length - 1, 5000))
+        const songMeaningContext = `Song: ${song_info.song_title}\nArtist: ${song_info.artist_name}\nLyrics: ${shorted_lyrics}\n\nMeaning:`
 
         const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: songMeaningContext + songMeaningPrompt }]
         const parsedMessages = MessageArraySchema.parse(messages)

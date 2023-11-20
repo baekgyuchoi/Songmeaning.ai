@@ -67,7 +67,7 @@ const SearchItemButton: React.FC<Props> = (props) => {
                 onClick={buttonClick}
             >
                 {isLoading ? (
-                    <LoadingQueue songInfo={songInfo}/>
+                    <div className="truncate max-w-4xl">Loading...</div>
                 ) : (
                     <div className="truncate max-w-4xl">{songInfo.song_title}</div>
                 )}

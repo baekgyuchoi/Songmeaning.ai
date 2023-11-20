@@ -97,7 +97,7 @@ export default async function SongPage({ params }: {
                 
                 // console.log(lyrics)
                 return (
-                    <main className="flex flex-col items-center px-4 py-8 pt-24">
+                    <main className="flex flex-col items-center px-4 py-8 pt-20">
                         <Chat song_info={song_data} chatbot_prompt = {chatbot_prompt} />
                   
                         <Card className=" w-2/3 mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">

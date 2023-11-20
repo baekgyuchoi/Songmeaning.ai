@@ -34,9 +34,11 @@ async function QueueArtist(artist_slug_input: string) {
           }
           songs.push(song)
         }
+        await prisma.$disconnect()
         return songs
       }else{
         console.log("no artist error")
+        await prisma.$disconnect()
         return null
       }
   }

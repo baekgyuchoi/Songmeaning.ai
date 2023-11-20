@@ -1,40 +1,7 @@
-import * as Genius from "genius-lyrics";
+
 import { SongInfo } from "@/lib/validators/song_info";
 import { PrismaClient } from '@prisma/client'
-import { songMeaningPrompt } from "@/app/helpers/constants/queue-songmeaning-prompt";
-import OpenAI from 'openai'  
 
-
-
-
-
-const genius_api_key = process.env.GENIUS_API_KEY_1
-
-
-
-async function getSongLyrics(song_id: number) {
-    const Client = new Genius.Client(genius_api_key);
-    const SongsClient = Client.songs;
-    const searchSong = await SongsClient.get(song_id)
-    const lyrics = await searchSong.lyrics();
-    return lyrics
-}
-
-async function getSongMeaning(song_title: string, artist: string, lyrics: string) {
-    
-    const songMeaningContext = `Song: ${song_title}\nArtist: ${artist}\nLyrics: ${lyrics}\n\nMeaning:`
-
-    const openai = new OpenAI({
-        apiKey: process.env.OPENAI_API_KEY
-    });
-
-    const gptResponse = await openai.chat.completions.create({
-        messages: [{ role: 'user', content: songMeaningContext + songMeaningPrompt }],
-        model: 'gpt-3.5-turbo',
-    })
-
-    return gptResponse.choices[0].message
-}
 //maybe POST to alter databasenext c
 export async function POST(request: Request) {
     const prisma = new PrismaClient()
