@@ -61,7 +61,9 @@ export default async function SearchPage({
                   key={index}
                   className="py-2 w-full flex flex-col flex-row "
                 >
-                  <SearchItemButton songInfo={result} />
+                  <div className="flex bg-transparent text-gray font-bold tracking-tight text-2xl sm:text-4xl hover:text-gray-300 focus:outline-none focus:shadow-outline">
+                    <SearchItemButton songInfo={result} />
+                  </div>
                 </li>
               ))}
             </ul>

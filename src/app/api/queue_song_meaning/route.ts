@@ -64,11 +64,14 @@ export async function POST(request: Request) {
     if (lyrics != null) {
         
         const song_meaning = await getSongMeaning(song_info.song_title, song_info.artist_name, lyrics)
-        
-        
+        console.log(song_info)
+        let song_title = song_info.song_title
+        if (song_info.song_title.length > 100) {
+            song_title = song_info.song_title.substring(0, 100) + "..."
+        }
         await prisma.songs.create({
             data: {
-                song_title: song_info.song_title,
+                song_title: song_title,
                 song_slug: song_info.song_slug,
                 genius_id: song_info.genius_id,
                 artist_name: song_info.artist_name,

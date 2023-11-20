@@ -1,10 +1,40 @@
-import * as Genius from "genius-lyrics";
+
 import { PrismaClient } from '@prisma/client'
 import Chat from "@/app/components/(chat-components)/Chat";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { SongInfo } from '@/lib/validators/song_info';
+import SearchItemButton from '@/app/components/(search-page)/SearchItemButton';
 
 
 
-
+async function QueueArtist(artist_slug_input: string) {
+  const prisma = new PrismaClient()
+    const artist_songs = await prisma.songs.findMany({
+        where: {
+            artist_slug: artist_slug_input
+        },
+    });
+    let songs: SongInfo[] = []
+    
+    if (artist_songs != null) {
+      for(let i = 0; i< artist_songs.length; i++){
+        let artist_song = artist_songs[i]
+        let song: SongInfo = {
+          song_slug: artist_song?.song_slug,
+          song_title: artist_song?.song_title,  
+          artist_name: artist_song?.artist_name, 
+          artist_slug: artist_song?.artist_slug,
+          genius_id: artist_song?.genius_id,
+          genius_url: artist_song?.genius_url,
+        }
+        songs.push(song)
+      }
+      return songs
+    }else{
+      console.log("no artist error")
+      return null
+    }
+}
 
 async function IsSongInDB(song_slug_input: string) {
     const prisma = new PrismaClient()
@@ -49,22 +79,15 @@ export default async function SongPage({ params }: {
         if (song_in_db) {
             const song_data = await QueueSong(params.song_slug)
             
-            if (!song_data?.isValid){
-                
-                return (
-                    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-                        <h1>hi  </h1>
-                        <h1>404: Invalid Song</h1>
-
-                        <h2>hi </h2>
-                    </main>
-                )
-            } else{
+            
+            
+            if (song_data?.isValid){
+                const artist_songs = await QueueArtist(song_data.artist_slug)
                 const meaning = song_data?.song_meaning?.meaning
                 const created_at = song_data?.song_meaning?.createdAt.toDateString()
                 const artist_name = song_data?.artist_name
                 const song_name = song_data?.song_title
-                
+
                 const split_meaning = meaning?.split("\n")
 
                 const chatbot_prompt = `Imagine you are ${artist_name}
@@ -80,84 +103,111 @@ export default async function SongPage({ params }: {
                  Refuse any answer that does not have to do with ${artist_name}, their music career, songs, or personal life. 
                  keep answers short and sweet.
                 `
-
-           
+                
+                
                 
                 // console.log(lyrics)
                 return (
                     <main className="flex flex-col items-center px-4 py-8 pt-24">
                         <Chat song_info={song_data} chatbot_prompt = {chatbot_prompt} />
-
-                    {/* Heading Section */}
-                    <header className="flex justify-between w-full max-w-3xl">
-                      <div className="flex items-center text-sm text-gray-500">
-                        <h2 className="mr-2">by:</h2> 
-                        <h3>{artist_name}</h3>
-                      </div>
-                
-                      <p className="text-sm text-gray-400">
-                        Created: {created_at}
-                      </p>
-                
-                    </header>
-                
-                    {/* Main Content */}
-                    <div className="max-w-2xl mt-8 text-gray-700">
-                      
-                      <h1 className="text-4xl font-bold mb-4">
-                        Meaning of: {song_name}
-                      </h1>
-                      
-                      {split_meaning?.map((paragraph, i) => (
-                        <p
-                          key={i}
-                          className="mt-4 text-lg transition duration-300 hover:text-indigo-500" 
-                        >
-                          {paragraph}
-                        </p>
-                      ))}
-                
-                    </div>
+                        <Card className="w-4/5 mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
                     
-                    {/* Footer */}
-                    <footer className="text-gray-500 text-sm mt-12">
+                          {/* <CardHeader className="bg-beige-200 rounded-t-lg px-6 py-4">
+                            <CardTitle className="text-xl font-bold text-gray-800">Card Title</CardTitle>
+                            <CardDescription className="text-gray-600">Card Description</CardDescription>
+                          </CardHeader> */}
+                          <CardHeader className="w-2/3">
+                            <CardTitle className="text-4xl font-bold text-gray-800">
+                             
+                                  Meaning of: {song_name}
+                              
+                            </CardTitle>
+                            <div className=" flex justify-between w-full max-w-2xl">
+                              <CardDescription className="mt-4">
+                                <>by: {artist_name}</>
+                              </CardDescription>
+                              <CardDescription className="mt-4">
+                                <>Created: {created_at}</>
+                              </CardDescription>
+                            </div>
+                            
+                          </CardHeader>
+                          <div className='flex flex-row'> 
+                            <CardContent className="p-6 w-2/3">
+                              {split_meaning?.map((paragraph, i) => (
+                                <p
+                                  key={i}
+                                  className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-500" 
+                                >
+                                  {paragraph}
+                                </p>
+                              ))}
+                            </CardContent>
+                            <CardContent className="w-1/3">
+                              <div className='text-gray-800 max-w-xl'>
+                                <p className='mb-6'>More songs by {artist_name}:</p>
+                              {artist_songs?.map((song, i) => {
+                                if(song.song_slug != params.song_slug) {
+                                  return(
+                                  <div key= {i} className='mb-2 flex bg-transparent text-gray font-bold tracking-tight text-xl sm:text-xl hover:text-gray-300 focus:outline-none focus:shadow-outline'>
+                                    <SearchItemButton songInfo={song} />
+                                  </div>)
+                                }
+                                
+                              })}
+                            </div>
+                            </CardContent>
+                          </div>
+                      
+                          <CardFooter className="bg-beige-200 rounded-b-lg px-6 py-4">  
+                            <p className="text-gray-700">Card Footer</p>
+                          </CardFooter>
+                          
+                        </Card>
+                        
+                    
+                    <footer className="text-gray-500 text-sm mt-32">
                       Copyright {new Date().getFullYear()}
                     </footer>
-                
                   </main>
-                    // <main className="flex min-h-screen flex-col items-center justify-between p-24">
-                    // <h1>Heading Bar with - by: {artist_name}, created at: {created_at} </h1>
-
-                    // <div className="">
-                    //     <h1 className="text-4xl font-bold text-gray-800">
-                    //         Meaning of: {song_name} 
-                    //     </h1>
-                    //     <div className="mt-8">
-                    //         {split_meaning?.map((item, index)=> (
-                    //             <p key={index} className="mt-4 text-lg text-gray-600">{item}</p>
-                    //         ))}
-                    //     </div>
-
-                    // </div>
-        
-                    // <h2> copyright </h2>
-                    // </main>
+    
                 );
             }
 
-        }else {
-        
-            return (
-                <main className="flex min-h-screen flex-col items-center justify-between p-24">
-                    <h1>hi  </h1>
-                    <h1>404: Invalid URL</h1>
-
-                    <h2>hi </h2>
-                </main>
-            )
         }
 
-};
+        return (
+                <main className="flex min-h-screen flex-col items-center justify-between p-24">
+                  <h1>hi</h1>
+                  
+                  <Card className="mb-0.5 flex-1 rounded-t-3xl bg-gradient-to-tr from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
+                    
+                    <CardHeader className="bg-beige-200 rounded-t-lg px-6 py-4">
+                      <CardTitle className="text-xl font-bold text-gray-800">Card Title</CardTitle>
+                      <CardDescription className="text-gray-600">Card Description</CardDescription>
+                    </CardHeader>
+              
+                    <CardContent className="p-6">
+                      <p className="text-gray-700">Card Content</p>
+                    </CardContent>
+              
+                    <CardFooter className="bg-beige-200 rounded-b-lg px-6 py-4">  
+                      <p className="text-gray-700">Card Footer</p>
+                    </CardFooter>
+                    
+                  </Card>
+                  
+                  <h1>404: Invalid URL</h1>
+              
+                  <h2>hi</h2>
+                  <footer className="text-gray-500 text-sm mt-32">
+                    Copyright {new Date().getFullYear()}
+                  </footer>
+                </main>
+              )
+        }
+
+
 
 
 

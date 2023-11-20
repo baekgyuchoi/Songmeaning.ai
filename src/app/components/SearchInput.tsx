@@ -22,12 +22,12 @@ const submitSearch = (searchQuery: string | null) => {
 
 
   return (
-    <div className="flex justify-center w-2/3">
+    <div className="flex justify-center w-1/3">
       <input
         value={searchQuery || ""}
         onChange={(event) => setSearchQuery(event.target.value)}
         onKeyDown={(event) => {if (event.key === 'Enter') {submitSearch(searchQuery)}}    }
-        className="px-5 py-1 w-2/3 sm:px-5 sm:py-3 flex-1 text-zinc-200 bg-zinc-800 focus:bg-black rounded-full focus:outline-none focus:ring-[1px] focus:ring-green-700 placeholder:text-zinc-400"
+        className="px-5 py-1 sm:px-5 sm:py-3 flex-1 text-zinc-200 bg-zinc-800 focus:bg-black rounded-full focus:outline-none focus:ring-[1px] focus:ring-green-700 placeholder:text-zinc-400"
         placeholder="Search a song here"
       />
     </div>

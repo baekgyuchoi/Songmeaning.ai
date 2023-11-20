@@ -65,7 +65,7 @@ const SearchItemButton: React.FC<Props> = (props) => {
             <button
                 disabled = {isLoading}
                 onClick={buttonClick}
-                className="flex bg-transparent text-gray font-bold tracking-tight text-2xl sm:text-4xl hover:text-gray-300 focus:outline-none focus:shadow-outline">
+            >
                 {isLoading ? (
                     <LoadingQueue songInfo={songInfo}/>
                 ) : (
