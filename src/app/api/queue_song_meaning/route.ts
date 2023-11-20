@@ -96,7 +96,7 @@ export async function POST(request: Request) {
                             }
                         }
                     }
-            })
+                })
             await prisma.$disconnect()
             return new Response("songmeaning success")
             }else {

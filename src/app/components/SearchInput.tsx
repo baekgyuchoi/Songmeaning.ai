@@ -3,6 +3,7 @@
 import { constants } from "buffer";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import TypewriterComponent from "typewriter-effect"
 
 
 const SearchInput = () => {
