@@ -46,11 +46,27 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
                 }
 
                 console.log("done")
-              
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
+                const meaning_payload = {
+                    song_slug: song_info.song_slug,
+                    meaning: result
+                }
+                try{
+                    await fetch('/api/post_song_meaning', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(meaning_payload),
+                    });
+                    console.log("songmeaning created")
+                    }catch(error){
+                        console.log("error - songmeaning not created")
+                        console.log(error)
+                    }
+                }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
     };
     useEffect(() => {
         if (first_render) {
@@ -61,7 +77,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
 
     }, []);
     return (
-        
+        <Suspense fallback={<div><p>Loading...</p></div>}>
         <div>
             {/* Display the stream content */}
             {streamContent.map((paragraph, i) => {
@@ -73,6 +89,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
                 )
             })}
         </div>
+        </Suspense>
     
     );
 };

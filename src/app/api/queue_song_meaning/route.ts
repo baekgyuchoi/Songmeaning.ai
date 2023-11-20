@@ -49,79 +49,26 @@ export async function POST(request: Request) {
             },
         })
     if (song_in_db != null) {
+        await prisma.$disconnect()
         if (song_in_db.isValid === false) {
             return new Response("Error - song is invalid")
         }
         return new Response("Error - song already exists")
     }
    
-
-
-
-    // lyrics isValid logic
-  
-    const lyrics = await getSongLyrics(song_info.genius_id)
-    if (lyrics != null) {
-        
-        const song_meaning = await getSongMeaning(song_info.song_title, song_info.artist_name, lyrics)
-        console.log(song_info)
-        let song_title = song_info.song_title
-        if (song_info.song_title.length > 100) {
-            song_title = song_info.song_title.substring(0, 100) + "..."
+    await prisma.songs.create({
+        data: {
+            song_slug: song_info.song_slug,
+            artist_name: song_info.artist_name,
+            song_title: song_info.song_title,
+            genius_id: song_info.genius_id,
+            artist_slug: song_info.artist_slug,
+            genius_url: song_info.genius_url,
         }
-        await prisma.songs.create({
-            data: {
-                song_title: song_title,
-                song_slug: song_info.song_slug,
-                genius_id: song_info.genius_id,
-                artist_name: song_info.artist_name,
-                artist_slug: song_info.artist_slug,
-                genius_url: song_info.genius_url,
-                lyrics: lyrics,
-                isValid: true
-            }
-        }).then( async () => {
-            console.log("song created")
-            if (song_meaning.content != null) {
-                console.log("songmeaning isn't null")
-                const song_meaning_text = song_meaning.content
-                
-
-                await prisma.songMeaning.create({
-                    data: {
-                        meaning: song_meaning_text,
-                        song: {
-                            connect: {
-                                song_slug: song_info.song_slug
-                            }
-                        }
-                    }
-                })
-            await prisma.$disconnect()
-            return new Response("songmeaning success")
-            }else {
-                    await prisma.$disconnect()
-                    return new Response("songmeaning failed")
-        }
-        }
-        )
-
-    } else {
-        await prisma.songs.create({
-            data: {
-                song_title: song_info.song_title,
-                song_slug: song_info.song_slug,
-                genius_id: song_info.genius_id,
-                artist_name: song_info.artist_name,
-                artist_slug: song_info.artist_slug,
-                genius_url: song_info.genius_url,
-                isValid: false
-            }
-        })
-        await prisma.$disconnect()
-        return new Response("song does not have valid lyrics")
-    }
-    return new Response("success")
+    })
+    await prisma.$disconnect()
+    return new Response("Success!")
+ 
 }
 
 

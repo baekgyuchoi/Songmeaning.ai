@@ -4,6 +4,7 @@ import React from 'react';
 import SearchItemButton from '../(search-page)/SearchItemButton';
 import { PrismaClient } from '@prisma/client';
 import { SongInfo } from '@/lib/validators/song_info';
+import ShortSearchButton from '../(search-page)/ShortSearchButton';
 
 interface ArtistSongsScrollProps {
   // Define your component props here
@@ -48,13 +49,14 @@ const ArtistSongsScroll: React.FC<ArtistSongsScrollProps> = async (props) => {
 
   return (
     // JSX code for your component
-    <ScrollArea className="h-[200px] w-[350px] rounded-mdß p-4">
+    <ScrollArea className="h-[250px] rounded-md p-4">
         <ScrollBar />
         {artist_songs?.map((song, i) => {
         if(song.song_slug != song_slug) {
             return(
                 <div key= {i} className='mb-2 flex bg-transparent text-gray font-bold tracking-tight text-xl sm:text-xl hover:text-gray-300 focus:outline-none focus:shadow-outline'>
-                <SearchItemButton songInfo={song} />
+                
+                <ShortSearchButton songInfo={song} />
                 </div>
             )
         }

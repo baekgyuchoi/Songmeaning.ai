@@ -59,7 +59,7 @@ export default async function SongPage({ params }: {
             const song_data = await QueueSong(params.song_slug)
             
             
-            
+            console.log("songs in db")
             if (song_data?.isValid){
                 
                 const meaning = song_data?.song_meaning?.meaning
@@ -102,79 +102,78 @@ export default async function SongPage({ params }: {
                   
                         <Card className=" w-2/3 mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
                     
-                          {/* <CardHeader className="bg-beige-200 rounded-t-lg px-6 py-4">
-                            <CardTitle className="text-xl font-bold text-gray-800">Card Title</CardTitle>
-                            <CardDescription className="text-gray-600">Card Description</CardDescription>
-                          </CardHeader> */}
-                          <CardHeader>
-                            <CardTitle className="mt-12 text-4xl font-bold text-gray-800">
-                             
-                                  Meaning of: {song_name}
+                          <div className='md:ml-12 ml-0'>
+                            <CardHeader>
+                              <CardTitle className="mt-12 text-4xl font-bold text-gray-800">
                               
-                            </CardTitle>
-                            <div className=" flex justify-between w-2/3">
-                              <CardDescription className="mt-16">
-                                <>by: {artist_name}</>
-                              </CardDescription>
-                              <CardDescription className="mt-16">
-                                <>Created: {created_at}</>
-                              </CardDescription>
-                            </div>
-                            
-                          </CardHeader>
-                         
-                          <div className='flex flex-row'> 
-                            <div className="w-4/5">
-                              <CardContent className="p-6" style={{ minHeight: '600px', minWidth: '200px' }}>
-                                <Suspense fallback={<div >Loading feed...</div>}>
-                                  {
-                                    is_meaning_valid ? (
-                                      <>{split_meaning?.map((paragraph, i) => (
-                                        <p
-                                          key={i}
-                                          className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-500" 
-                                        >
-                                          {paragraph}
-                                        </p>
-                                      ))}</>
-                                    ) : (
-                                      <SongMeaningContent song_info={song_info} />
-                                    )
-                                  }
-                                  
-                                  {/* {split_meaning?.map((paragraph, i) => (
-                                    <p
-                                      key={i}
-                                      className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-500" 
-                                    >
-                                      {paragraph}
-                                    </p>
-                                  ))} */}
-                                </Suspense>
-                              </CardContent>
-                            </div>
-                            <div className='flex flex-grow justify-center'>
-                              <CardContent className="mx-auto">
-                                <div className='text-gray-800 '>
-                                  <h1 className="flex justify-center text-2xl text-gray-800 mb-3">
-                                      More by {artist_name}
-                                  </h1>   
-                                  <Suspense fallback={<p>Loading feed...</p>}>
-                                    <ArtistSongsScroll 
-                                      song_slug={song_data.song_slug} 
-                                      artist_slug={song_data.artist_slug}
-                                      />
-                                  </Suspense>
-                                </div>
-                              </CardContent>
-                            </div>
-                          </div>
-                        
-                      
-                          <CardFooter className="bg-beige-200 rounded-b-lg px-6 mt-36 py-4">  
-                            <p className="text-gray-700">Card Footer</p>
-                          </CardFooter>
+                                    Meaning of: {song_name}
+                                
+                              </CardTitle>
+                              <div className=" flex justify-between w-2/3">
+                                <CardDescription className="mt-16">
+                                  <>by: {artist_name}</>
+                                </CardDescription>
+                                <CardDescription className="mt-16">
+                                  <>Created: {created_at}</>
+                                </CardDescription>
+                              </div>
+                              
+                            </CardHeader>
                           
+                            <div className='flex flex-col md:flex-row  '> 
+                              <div className="w-full md:w-2/3">
+                                <CardContent className="p-6" style={{ minHeight: '600px', minWidth: '200px' }}>
+                                  
+                                    {
+                                      is_meaning_valid ? (
+                                        <>{split_meaning?.map((paragraph, i) => (
+                                          <p
+                                            key={i}
+                                            className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-500" 
+                                          >
+                                            {paragraph}
+                                          </p>
+                                        ))}</>
+                                      ) : (
+                                        <Suspense fallback={<div className='flex items-center bg-black'>Loading feed...</div>}>
+                                          <SongMeaningContent song_info={song_info} />
+                                        </Suspense>
+                                      )
+                                    }
+                                    
+                                    {/* {split_meaning?.map((paragraph, i) => (
+                                      <p
+                                        key={i}
+                                        className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-500" 
+                                      >
+                                        {paragraph}
+                                      </p>
+                                    ))} */}
+                                 
+                                </CardContent>
+                              </div>
+                              <div className='w-full md:w-1/3'>
+                                <CardContent className="mx-auto">
+                                  <div className='text-gray-800 '>
+                                    <h1 className="flex justify-center text-2xl text-gray-800 mb-3">
+                                        More by {artist_name}
+                                    </h1>   
+                                    <Suspense fallback={<p>Loading feed...</p>}>
+                                      <ArtistSongsScroll 
+                                        song_slug={song_data.song_slug} 
+                                        artist_slug={song_data.artist_slug}
+                                        />
+                                    </Suspense>
+                                  </div>
+                                </CardContent>
+                              </div>
+                            </div>
+                          
+                        
+                            <CardFooter className="bg-beige-200 rounded-b-lg px-6 mt-36 py-4">  
+                              <p className="text-gray-700">Card Footer</p>
+                            </CardFooter>
+                          </div>
                         </Card>
                         
                         
