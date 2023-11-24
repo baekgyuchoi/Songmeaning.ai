@@ -14,24 +14,6 @@ import TrendingSongs from '@/app/components/TrendingSongs';
 
 
 
-
-
-
-async function IsSongInDB(song_slug_input: string) {
-    const prisma = new PrismaClient()
-    const song = await prisma.songs.findUnique({
-        where: {
-            song_slug: song_slug_input
-        },
-    });
-    await prisma.$disconnect()
-    if (song != null) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 async function QueueSong(song_slug_input: string) {
     const prisma = new PrismaClient()
     const song = await prisma.songs.findUnique({
@@ -68,7 +50,7 @@ export default async function SongPage({ params }: {
         
         let is_meaning_valid = false
 
-        
+      
 
     
         const song_data = await QueueSong(params.song_slug)
@@ -93,6 +75,10 @@ export default async function SongPage({ params }: {
                 artist_slug: song_data?.artist_slug,
                 genius_id: song_data?.genius_id,
                 genius_url: song_data?.genius_url,
+                header_image_url: song_data?.header_image_url,
+                song_art_url: song_data?.song_image_url,
+                release_date: song_data?.release_date,
+                song_short_title: song_data?.song_short_title,
             }
             const split_meaning = meaning?.split("\n")
 
@@ -109,12 +95,9 @@ export default async function SongPage({ params }: {
               Refuse any answer that does not have to do with ${artist_name}, their music career, songs, or personal life. 
               keep answers short and sweet.
             `
-            
-
-            
-            // console.log(lyrics)
+        
             return (
-                <main className="flex flex-col items-center px-4 py-8 pt-20">
+                <main className="flex flex-col items-center px-4 py-8">
                     <Chat song_info={song_data} chatbot_prompt = {chatbot_prompt} />
               
                     <Card className=" w-full md:w-2/3 mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
@@ -184,7 +167,7 @@ export default async function SongPage({ params }: {
                               
                             </CardContent>
                           </div>
-                          <div className='w-full md:w-1/3  flex flex-col'>
+                          {/* <div className='w-full md:w-1/3  flex flex-col'>
                             <CardContent className="">
                                 <Suspense fallback={<p>Loading feed...</p>}>
                                   <TrendingSongs />
@@ -204,7 +187,7 @@ export default async function SongPage({ params }: {
                               </div>
                             </CardContent>
                            
-                          </div>
+                          </div> */}
                         </div>
                       
                     

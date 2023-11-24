@@ -31,6 +31,10 @@ export async function POST(request: Request) {
             genius_id: song_info.genius_id,
             artist_slug: song_info.artist_slug,
             genius_url: song_info.genius_url,
+            song_short_title: song_info.song_short_title,
+            header_image_url: song_info.header_image_url,
+            song_image_url: song_info.song_art_url,
+            release_date: song_info.release_date,
         }
     })
     await prisma.$disconnect()

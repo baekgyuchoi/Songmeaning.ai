@@ -1,14 +1,13 @@
-export default async function SongLoadingPage({ params }: {
-    params: { song_slug : string } 
-    }) {
-        // console.log(lyrics)
+
+import React from 'react';
+import { Loader2 } from 'lucide-react';
+
+const LoadingPage = () => {
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <h1></h1>
-        <h1
-           className="bg-transparent text-gray font-bold text-4xl tracking-tight hover:text-gray-300 focus:outline-none focus:shadow-outline"
-        > Loading ...  </h1>
-        <h2></h2>
-        </main>
+        <div className="loading-page fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center">
+            <Loader2 className='animate-spin h-12 w-12'  />
+        </div>
     );
 };
+
+export default LoadingPage;

@@ -1,7 +1,7 @@
 import { SongInfo } from "@/lib/validators/song_info";
-import { Suspense } from "react";
+
 import SearchItemButton from "../components/(search-page)/SearchItemButton";
-import SearchResultForm from "../components/(search-page)/SearchResultForm";
+
 
 
 const geniusAPISearchURL = 'https://api.genius.com/search?q='
@@ -24,11 +24,15 @@ async function getSearchResults(searchQuery: string | undefined) {
     for (const hit of data.response.hits) {
         const songInfo: SongInfo = {
             song_title: hit.result.full_title,
+            song_short_title: hit.result.title,
             genius_url: hit.result.url,
             song_slug: hit.result.path.split('/').pop()?.split('-lyrics')[0].split('-annotated')[0],
             genius_id: parseInt(hit.result.id),
             artist_name: hit.result.primary_artist.name,
             artist_slug: hit.result.primary_artist.url.split('/').pop(),
+            header_image_url: hit.result.header_image_url,
+            song_art_url: hit.result.song_art_image_url,
+            release_date: hit.result.release_date_for_display,
         };
         songInfoArray.push(songInfo);
     }
@@ -47,26 +51,29 @@ export default async function SearchPage({
     const data = await getSearchResults(searchQuery);
    
     return (
-        <main className="flex flex-col items-center p-8 pt-16">
+        <main className="flex flex-col items-center p-8 ">
           
-          <div className="container max-w-4xl mt-5">
+          <div className="container max-w-4xl ">
       
             <h1 className="text-3xl text-gray-800 mb-5">
               Search results for: {searchQuery}
             </h1>
-      
-            <ul className="">
-              {data.map((result, index) => (
-                <li 
-                  key={index}
-                  className="py-2 w-full flex flex-col flex-row "
-                >
-                  <div className="flex bg-transparent text-gray font-bold tracking-tight text-2xl sm:text-4xl hover:text-gray-300 focus:outline-none focus:shadow-outline">
-                    <SearchItemButton songInfo={result} />
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <div className="mt-4 grid grid-cols-1 gap-x-8 md:mt-6 md:grid-cols-1 md:gap-y-2 block">
+              <ul className="">
+                {data.map((result, index) => (
+                  <li 
+                    key={index}
+                    className="py-2 w-full flex flex-col flex-row "
+                  >
+                    <div className="flex bg-transparent text-gray font-bold tracking-tight text-l md:text-4xl sm:text-4xl hover:text-gray-300 focus:outline-none focus:shadow-outline">
+                      <SearchItemButton songInfo={result} />
+                    </div>
+                    
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
             
           </div>
           
@@ -77,29 +84,6 @@ export default async function SearchPage({
         </main>
       );
 
-    return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24">
-        <h1>search results for: {searchQuery}</h1>
-        {/* <p>{data} </p> */}
-        <Suspense>
-                <ul>
-                {data.map((result, index) => (
-                    
-                    <li 
-                        key={index}
-                        className='py-1'
-                    >
-                        <SearchItemButton songInfo={result} />
-                    </li>
-                   
-                    ))}
-                    
-                </ul>
-
-        </Suspense>
-        <div> copyright </div>
-    </div>
-    )
   }
 
 

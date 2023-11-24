@@ -2,9 +2,7 @@
 import { SongInfo } from '@/lib/validators/song_info';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import * as Genius from 'genius-lyrics'
 import { useState } from "react";
-import LoadingQueue from './LoadingQueue';
 // make 
 
 
@@ -30,7 +28,6 @@ async function QueueSongMeaning(song_info: SongInfo) {
             },
             body: JSON.stringify(song_info),
     })
-    console.log(res)
     return res
 }
 
@@ -44,32 +41,47 @@ const SearchItemButton: React.FC<Props> = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     
     const buttonClick = async () => {
-        console.log("button clicked");
         
         const song_exists = await DoesSongExist(props.songInfo.song_slug)
         if (!song_exists) {
             setIsLoading(true);
-            const queue_response = await QueueSongMeaning(props.songInfo);
-            console.log("song meaning queued")
-            console.log(queue_response)
+            await QueueSongMeaning(props.songInfo);
+            
         }
         setIsLoading(false);
         router.push("/songs/" + props.songInfo.song_slug);
     };
     const songInfo = props.songInfo
-
+    
+    
 
     return (
-        // Return your JSX here
+        // Return your JSX here 
+        
        
             <button
                 disabled = {isLoading}
                 onClick={buttonClick}
+                className='w-full ' 
+               
             >
                 {isLoading ? (
                     <div className="truncate max-w-4xl">Loading...</div>
                 ) : (
-                    <div className="truncate max-w-4xl">{songInfo.song_title}</div>
+                    <div className="flex flex-row w-full">
+                        <div className="group flex items-center gap-x-4 py-3">
+                            <div className="relative flex w-12 h-12 overflow-hidden">
+                                <img className="object-cover" src={songInfo.song_art_url} />
+                            </div>
+                            <div className="min-w-0 max-w-md">
+                                <p className="truncate">{songInfo.song_short_title}</p>
+                                <p className="text-gray-500 text-sm truncate">{songInfo.artist_name}</p>
+                            </div>
+                        </div>
+                        <div className='flex items-center justify-end w-full '>
+                            <p className="text-gray-500 text-sm truncate">{songInfo.release_date}</p>
+                        </div>
+                    </div>
                 )}
                 
                 

@@ -13,7 +13,6 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
         inputRef
         } = useContext(MessagesContext)
     const inverseMessages = [...messages].reverse()
-    console.log("chat messages rendered")
     return (
         <div 
         {...props}

@@ -13,22 +13,21 @@ export default async function Home() {
 
   return (
     <div>
-      <main className="flex min-h-screen flex-col items-center justify-between p-36">
-        <div className="mt-16">
+      <main className="flex min-h-screen flex-col items-center justify-between p-12 md:p-36">
+        <div className="mt-16 ">
           <HomeButton />
         </div>
         <HomeTypewriter />
         <SearchInput />
-        <div>
-          <footer className="text-gray-500 text-sm mt-32">
-              © 2021 Songmeanings.ai
-          </footer>
+        <div className="w-full md:w-4/5 flex flex-col items-center jusify-center ">
+          
+          <TrendingSongs className="w-full" />
         </div>
         
       </main>
-      <main className="flex min-h-screen flex-col items-center justify-between p-36">
-        <TrendingSongs />
-      </main>
+      <div className="flex flex-col items-center justify-between pb-36 pt-36">
+          <footer>Copyright</footer>
+      </div>
       
     </div>
   );

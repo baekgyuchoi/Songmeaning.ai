@@ -6,7 +6,7 @@ import { PrismaClient } from '@prisma/client';
 import { SongInfo } from '@/lib/validators/song_info';
 import ShortSearchButton from '../(search-page)/ShortSearchButton';
 
-interface ArtistSongsScrollProps {
+interface MoreFromArtistProps {
   // Define your component props here
   artist_slug: string;
   song_slug: string;
@@ -47,7 +47,7 @@ async function QueueArtist(artist_slug_input: string) {
       }
   }
 
-const ArtistSongsScroll: React.FC<ArtistSongsScrollProps> = async (props) => {
+const MoreFromArtist: React.FC<MoreFromArtistProps> = async (props) => {
   // Define your component logic here
     const artist_slug = props.artist_slug
     const song_slug = props.song_slug
@@ -72,4 +72,4 @@ const ArtistSongsScroll: React.FC<ArtistSongsScrollProps> = async (props) => {
   );
 };
 
-export default ArtistSongsScroll;
+export default MoreFromArtist;

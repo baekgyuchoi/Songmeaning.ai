@@ -49,9 +49,8 @@ const ShortSearchButton: React.FC<Props> = (props) => {
         const song_exists = await DoesSongExist(props.songInfo.song_slug)
         if (!song_exists) {
             setIsLoading(true);
-            const queue_response = await QueueSongMeaning(props.songInfo);
-            console.log("song meaning queued")
-            console.log(queue_response)
+            await QueueSongMeaning(props.songInfo);
+            
         }
         setIsLoading(false);
         router.push("/songs/" + props.songInfo.song_slug);
@@ -69,7 +68,7 @@ const ShortSearchButton: React.FC<Props> = (props) => {
                 {isLoading ? (
                     <LoadingQueue songInfo={songInfo}/>
                 ) : (
-                    <div className="truncate max-w-4xl">{songInfo.song_title.split(' by')[0]}</div>
+                    <div className="truncate max-w-4xl">{songInfo.song_short_title}</div>
                 )}
                 
                 

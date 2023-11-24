@@ -1,15 +1,24 @@
 
 
 
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import SearchItemButton from './(search-page)/SearchItemButton';
 import { PrismaClient } from '@prisma/client';
 import ShortSearchButton from './(search-page)/ShortSearchButton';
+import { SongInfo, SongInfoArraySchema } from '@/lib/validators/song_info';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+
+import Image from "next/image"
+import { Card } from '@/components/ui/card';
 
 
-interface Props {
-    // Define the props for your component here
+interface TrendingSongsProps extends HTMLAttributes<HTMLDivElement> 
+{
+  className?: string;
 }
+
+
+
 
 async function GetTrendingSongs() {
     const prisma = new PrismaClient();
@@ -18,35 +27,73 @@ async function GetTrendingSongs() {
       orderBy: {
         viewCount: "desc",
       },
-      take: 10,
+      take: 15,
     });
+    await prisma.$disconnect();
     return trending_songs
   }
 
 
-const TrendingSongs: React.FC<Props> = async ({ /* Destructure your props here */ }) => {
+const TrendingSongs: React.FC<TrendingSongsProps> = async (className) => {
     // Define your component logic here
     const trending_songs = await GetTrendingSongs()
+    const songInfoArray: SongInfo[] = trending_songs.map((song) => {
+      const songInfo: SongInfo = {
+        song_title: song.song_title,
+        song_short_title: song.song_short_title,
+        genius_url: song.genius_url,
+        song_slug: song.song_slug,
+        genius_id: song.genius_id,
+        artist_name: song.artist_name,
+        artist_slug: song.artist_slug,
+        header_image_url: song.header_image_url,
+        song_art_url: song.song_image_url,
+        release_date: song.release_date,
+      };
+      return songInfo;
+    });
+    
     return (
         // Return your JSX here
-        <div className=' flex flex-col items-center '>
+        <div className='w-full md:w-4/5 flex flex-col items-center '>
+
           <h1 className="text-3xl text-gray-800 mb-5">
             Trending Songs
           </h1>
-          <ul className="">
-            {trending_songs.map((result, index) => (
-              <li 
-                key={index}
-                className="py-2 w-full flex flex-col flex-row "
-              >
-                <div className="flex justify-center bg-transparent text-black font-bold tracking-tight truncate-max-w-l text-md sm:text-md  hover:text-gray-300 focus:outline-none focus:shadow-outline">
-                  <SearchItemButton songInfo={result} />
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
 
+          <div className='carousel carousel-center bg-gray-50 rounded-box w-full flex'>
+           
+            {songInfoArray.map((song_info) => (
+                <div 
+                  key={song_info.song_slug}
+                  className='carousel-item flex-shrink flex flex-col justify-center items-left rounded-md w-40'
+                >
+                  <div className='flex flex-shrink items-center justify-center aspect-square m-4 mb-2 h-36 w-auto'>
+                    <img
+                      src={song_info.song_art_url}
+                      alt={`Song Image for ${song_info.song_title}`}
+                     
+                      className="object-cover rounded-md w-9/10   "
+                    />
+                  </div>
+                  <div className=" ml-4 text-xs text-muted-foreground w-4/5 truncate mb-2">
+                    <div className='text-black'>
+                    {song_info.song_short_title}
+                    </div>
+                    <div className=''>
+                        by {song_info.artist_name}
+                    </div>
+                   
+                  </div>
+                </div>
+              ))}
+          </div>
+
+
+          
+     
+        </div>
+        
     );
 };
 

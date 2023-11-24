@@ -1,5 +1,3 @@
-
-import { SongInfo } from "@/lib/validators/song_info";
 import { PrismaClient } from '@prisma/client'
 
 //maybe POST to alter databasenext c

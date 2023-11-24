@@ -12,7 +12,6 @@ const HomeButton: React.FC<Props> = ({ /* Destructure your props here */ }) => {
     // Define your component logic here
     const router = useRouter();
     const buttonClick = () => {
-        console.log("button clicked");
         router.push("/");
     };
 
