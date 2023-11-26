@@ -54,7 +54,19 @@ export async function POST(req: Request) {
     const song_info = await req.json() as SongInfo
     try {      
         const song_lyrics = await getSongLyrics(song_info.genius_id)
-   
+        const prisma = new PrismaClient();
+        await prisma.$connect()
+
+        await prisma.songs.update({
+            where: {
+                song_slug: song_info.song_slug,
+            },
+            data: {
+                lyrics: song_lyrics,
+
+            }
+        })
+        await prisma.$disconnect()
        
         const shorted_lyrics = song_lyrics.slice(0,min(song_lyrics.length - 1, 5000))
         const songMeaningContext = `Song: ${song_info.song_title}\nArtist: ${song_info.artist_name}\nLyrics: ${shorted_lyrics}\n\nMeaning:`

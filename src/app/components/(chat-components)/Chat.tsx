@@ -4,8 +4,9 @@ import { FC, useContext, useEffect } from 'react';
 import ChatHeader from './ChatHeader';
 import ChatInput from './ChatInput';
 import ChatMessages from './ChatMessages';
-import { SongData } from '@/lib/validators/song_data_response';
+
 import { MessagesContext } from '@/context/messages';
+import { SongInfo } from '@/lib/validators/song_info';
 
 
 /**
@@ -13,7 +14,7 @@ import { MessagesContext } from '@/context/messages';
  * to be implemented with Song and Artist Info
  */
 interface ChatProps {
-    song_info: SongData,
+    song_info: SongInfo,
     chatbot_prompt: string
 }
 

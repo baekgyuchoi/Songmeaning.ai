@@ -30,11 +30,32 @@ model Songs {
   header_image_url String @default("https://images.genius.com/b8eb5ee526b9948ecf5b68572464f35b.1000x1000x1.png")
   song_short_title String @default("Song Short Title here")
   release_date    String  @default("Release Date here")
+  two_word_description     String  @default("default/default")
+  badges            BadgesOnSongs[] 
 
   @@index([artist_slug])
 }
 
+model Badges {
+  id          Int          @id @default(autoincrement())
+  badge_name  String       @unique
+  songs       BadgesOnSongs[]
+  created_at  DateTime     @default(now())
+  first_song  String
+  
+}
 
+model BadgesOnSongs {
+  badge_id  Int
+  song_id   Int
+  song        Songs         @relation(fields: [song_id], references: [id])
+  badges      Badges        @relation(fields: [badge_id], references: [id])
+
+
+  @@id([badge_id, song_id])
+  @@index([badge_id])
+  @@index([song_id])
+}
 
 
 model Artist {

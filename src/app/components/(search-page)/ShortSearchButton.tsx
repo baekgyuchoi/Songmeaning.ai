@@ -22,7 +22,7 @@ async function DoesSongExist(song_slug: string) {
 }
 
 async function QueueSongMeaning(song_info: SongInfo) {
-    const url = '/api/queue_song_meaning'
+    const url = '/api/post_song'
     const res = await fetch(url, {
         method: 'POST',
         headers: {

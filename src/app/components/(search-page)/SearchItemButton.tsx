@@ -20,7 +20,7 @@ async function DoesSongExist(song_slug: string) {
 }
 
 async function QueueSongMeaning(song_info: SongInfo) {
-    const url = '/api/queue_song_meaning'
+    const url = '/api/post_song'
     const res = await fetch(url, {
         method: 'POST',
         headers: {
@@ -78,7 +78,7 @@ const SearchItemButton: React.FC<Props> = (props) => {
                                 <p className="text-gray-500 text-sm truncate">{songInfo.artist_name}</p>
                             </div>
                         </div>
-                        <div className='flex items-center justify-end w-full '>
+                        <div className='flex items-center justify-end w-full hidden md:flex'>
                             <p className="text-gray-500 text-sm truncate">{songInfo.release_date}</p>
                         </div>
                     </div>

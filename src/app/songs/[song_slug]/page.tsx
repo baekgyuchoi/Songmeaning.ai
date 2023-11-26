@@ -10,6 +10,10 @@ import ArtistSongsScroll from '@/app/components/(song-page)/ArtistSongsScroll';
 import SongMeaningContent from '@/app/components/(song-page)/SongMeaningContent';
 import { Car } from 'lucide-react';
 import TrendingSongs from '@/app/components/TrendingSongs';
+import TrendingChart from '@/app/components/(song-tables)/TrendingChart';
+import MoreFromArtist from '@/app/components/(song-tables)/MoreFromArtist';
+import SongBadges from '@/app/components/(song-page)/SongBadges';
+import Link from 'next/link';
 
 
 
@@ -21,7 +25,8 @@ async function QueueSong(song_slug_input: string) {
             song_slug: song_slug_input
         },
         include: {
-            song_meaning: true
+            song_meaning: true,
+            badges: true
         }
     });
     if (song != null) {
@@ -55,7 +60,7 @@ export default async function SongPage({ params }: {
     
         const song_data = await QueueSong(params.song_slug)
           
-          
+        console.log(song_data?.lyrics)
         
         console.log(song_data?.isValid)
         if (song_data != null){
@@ -98,105 +103,105 @@ export default async function SongPage({ params }: {
         
             return (
                 <main className="flex flex-col items-center px-4 py-8">
-                    <Chat song_info={song_data} chatbot_prompt = {chatbot_prompt} />
-              
-                    <Card className=" w-full md:w-2/3 mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
-                
-                      <div className='md:ml-12 ml-0'>
-                        <CardHeader>
-                          <CardTitle className="mt-12 text-4xl font-bold text-gray-800">
-                          
-                                Meaning of: {song_name}
+                    <Chat song_info={song_info} chatbot_prompt = {chatbot_prompt} />
+                    <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
+                      <Card className=" w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
+                  
+                        <div className='md:ml-12 ml-0'>
+                          <CardHeader>
+                            <CardTitle className="mt-12 text-4xl font-bold text-gray-800">
                             
-                          </CardTitle>
-                          <div className=" flex justify-between w-2/3">
-                            <CardDescription className="mt-16">
-                              <>by: {artist_name}</>
-                            </CardDescription>
-                            <CardDescription className="mt-16">
-                              <>Created: {created_at}</>
-                            </CardDescription>
-                          </div>
-                          
-                        </CardHeader>
-                      
-                        <div className='flex flex-col md:flex-row  '> 
-                          <div className="w-full md:w-2/3">
-                            <CardContent className="p-6" style={{ minHeight: '600px', minWidth: '200px' }}>
-                                {
-                                  song_data?.isValid ? (
-                                    <>
-                                    {
-                                      is_meaning_valid ? (
-                                        <>{split_meaning?.map((paragraph, i) => (
-                                          <p
-                                            key={i}
-                                            className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-500" 
-                                          >
-                                            {paragraph}
-                                          </p>
-                                        ))}</>
-                                      ) : (
-                                        <Suspense fallback={<div className='flex items-center bg-black'>Loading feed...</div>}>
-                                          <SongMeaningContent song_info={song_info} />
-                                        </Suspense>
-                                      )
-                                    } 
-                                    </> 
-                                  ) : (
-                                    <Card className="mb-0.5 flex-1 rounded-t-3xl bg-white from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
-                    
-                                      <CardHeader className="bg-beige-200 rounded-t-lg px-6 py-4">
-                                        <CardTitle className="text-xl font-bold text-gray-800">Card Title</CardTitle>
-                                        <CardDescription className="text-gray-600">Card Description</CardDescription>
-                                      </CardHeader>
-                                
-                                      <CardContent className="p-6 text-gray-700">
-                                        <p className="text-gray-700">Card Content</p>
-                                        <p>  Song is not Valid</p>
-                                      </CardContent>
-                                
-                                      <CardFooter className="bg-beige-200 rounded-b-lg px-6 py-4">  
-                                        <p className="text-gray-700">Card Footer</p>
-                                      </CardFooter>
-                                      
-                                    </Card>
-                                  )
-                                }
-                                                                              
+                                  Meaning of: {song_name}
                               
-                            </CardContent>
-                          </div>
-                          {/* <div className='w-full md:w-1/3  flex flex-col'>
-                            <CardContent className="">
-                                <Suspense fallback={<p>Loading feed...</p>}>
-                                  <TrendingSongs />
-                                </Suspense>
-                            </CardContent>
-                            <CardContent className="mx-auto">
-                              <div className='text-gray-800 '>
-                                <h1 className="flex justify-center text-2xl text-gray-800 mb-3">
-                                    More by {artist_name}
-                                </h1>   
-                                <Suspense fallback={<p>Loading feed...</p>}>
-                                  <ArtistSongsScroll 
-                                    song_slug={song_data.song_slug} 
-                                    artist_slug={song_data.artist_slug}
-                                    />
-                                </Suspense>
-                              </div>
-                            </CardContent>
-                           
-                          </div> */}
-                        </div>
+                            </CardTitle>
+                            <div className=" flex justify-between w-2/3">
+                              <CardDescription className="mt-16">
+                                <Link href={`/artists/${song_info.artist_slug}`}>by: {artist_name}</Link>
+                              </CardDescription>
+                              <CardDescription className="mt-16">
+                                <>Created: {created_at}</>
+                              </CardDescription>
+                            </div>
+                            
+                          </CardHeader>
+                        
+                          <div className='flex flex-col md:flex-row  '> 
+                            <div className="w-full md:w-2/3 flex-grow">
+                              <CardContent className="p-6" style={{ minHeight: '600px', minWidth: '200px' }}>
+                                  {
+                                    song_data?.isValid ? (
+                                      <>
+                                      {
+                                        is_meaning_valid ? (
+                                          <>{split_meaning?.map((paragraph, i) => (
+                                            <p
+                                              key={i}
+                                              className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-500" 
+                                            >
+                                              {paragraph}
+                                            </p>
+                                          ))}</>
+                                        ) : (
+                                          <Suspense fallback={<div className='flex items-center bg-black'>Loading feed...</div>}>
+                                            <SongMeaningContent song_info={song_info} />
+                                          </Suspense>
+                                        )
+                                      } 
+                                      </> 
+                                    ) : (
+                                      <Card className="mb-0.5 flex-1 rounded-t-3xl bg-white from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
                       
-                    
-                        <CardFooter className="bg-beige-200 rounded-b-lg px-6 mt-36 py-4">  
-                          <p className="text-gray-700">Card Footer</p>
-                        </CardFooter>
-                      </div>
-                    </Card>
-                    
+                                        <CardHeader className="bg-beige-200 rounded-t-lg px-6 py-4">
+                                          <CardTitle className="text-xl font-bold text-gray-800">Card Title</CardTitle>
+                                          <CardDescription className="text-gray-600">Card Description</CardDescription>
+                                        </CardHeader>
+                                  
+                                        <CardContent className="p-6 text-gray-700">
+                                          <p className="text-gray-700">Card Content</p>
+                                          <p>  Song is not Valid</p>
+                                        </CardContent>
+                                  
+                                        <CardFooter className="bg-beige-200 rounded-b-lg px-6 py-4">  
+                                          <p className="text-gray-700">Card Footer</p>
+                                        </CardFooter>
+                                        
+                                      </Card>
+                                    )
+                                  }
+                                                                                
+                                
+                              </CardContent>
+                            </div>
+                            <div className='w-full md:w-1/3  flex flex-col items-center '>
+                              <CardContent className="text-black">
+                                  <Suspense fallback={<p>Loading feed...</p>}>
+                                    <TrendingChart />
+                                  </Suspense>
+                              </CardContent>
+                              
+                              <CardContent className="mt-16">
+                                <div className=' '>
+                                  <Suspense fallback={<p>Loading feed...</p>}>
+                                    <MoreFromArtist song_slug={song_data.song_slug} artist_name={song_data.artist_name} artist_slug={song_data.artist_slug} />
+                                  </Suspense>
+                                </div>
+                              </CardContent>
+                            
+                            </div>
+                          </div>
+                        
+                      
+                          <CardFooter className="bg-beige-200 rounded-b-lg px-6 mt-36 py-4 flex flex-col">  
+                            <Suspense fallback={<p>Loading feed...</p>}>
+                              <SongBadges songData = {song_data}/>
+                            </Suspense>
+                            
+                            <p className="text-gray-700">Card Footer</p>
+                            
+                          </CardFooter>
+                        </div>
+                      </Card>
+                    </div>
                     
                 
                 <footer className="text-gray-500 text-sm mt-32">

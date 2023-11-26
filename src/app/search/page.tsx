@@ -51,7 +51,7 @@ export default async function SearchPage({
     const data = await getSearchResults(searchQuery);
    
     return (
-        <main className="flex flex-col items-center p-8 ">
+        <main className="flex flex-col items-center p-4 ">
           
           <div className="container max-w-4xl ">
       

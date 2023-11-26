@@ -1,8 +1,8 @@
-import { SongData } from '@/lib/validators/song_data_response'
+import { SongInfo } from '@/lib/validators/song_info'
 import { FC } from 'react'
 
 interface ChatHeaderProps {
-    song_info: SongData
+    song_info: SongInfo
 }
 
 const ChatHeader: FC<ChatHeaderProps> = (props) => {

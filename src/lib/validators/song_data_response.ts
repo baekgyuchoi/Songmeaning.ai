@@ -29,14 +29,19 @@ export const SongDataSchema = z.object({
     artist_slug: z.string(),
     isValid: z.boolean(),
     lyrics: z.union([z.string(),z.null()]),
+    song_image_url: z.string(),
+    header_image_url: z.string(),
+    song_short_title: z.string(),
+    release_date: z.string(),
+    two_word_description: z.string(),
+    badges: z.array(z.object({})),
     song_meaning: z.union([z.object({
         id: z.number(),
         slug: z.string(),
         meaning: z.string(),
         createdAt:z.date()
-    }), z.null()])
-
-
+    }), z.null()]),
+    
 
 
 })
