@@ -22,26 +22,30 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
             <div className='flex-1 flex-grow'></div>
                 
                 {inverseMessages.map((message) => (
-                    <div key={message.id} className='chat-message'>
-                        <div className={cn('flex items-end',{
-                            'justify-end': message.isUserInput,
-                            // put user messages on right and bot messages on left
-                        })}>
-                            <div
-                                className={cn('flex flex-col space-y-2 text-sm max-w-xs mx-2 overflow-x-hidden', {
-                                'order-1 items-end': message.isUserInput,
-                                'order-2 items-start': !message.isUserInput,
-                                })}>
-                                <p
-                                className={cn('px-4 py-2 rounded-lg', {
-                                    'bg-blue-600 text-white': message.isUserInput,
-                                    'bg-gray-200 text-gray-900': !message.isUserInput,
-                                })}>
-                                {message.text}
-                                </p>
+                    message.text ? (
+                        <div key={message.id} className='chat-message'>
+                            <div className={cn('flex items-end',{
+                                'justify-end': message.isUserInput,
+                                // put user messages on right and bot messages on left
+                            })}>
+                                <div
+                                    className={cn('flex flex-col space-y-2 text-sm max-w-xs mx-2 overflow-x-hidden', {
+                                    'order-1 items-end': message.isUserInput,
+                                    'order-2 items-start': !message.isUserInput,
+                                    })}>
+                                    <p
+                                    className={cn('px-4 py-2 rounded-lg', {
+                                        'bg-blue-600 text-white': message.isUserInput,
+                                        'bg-gray-200 text-gray-900': !message.isUserInput,
+                                    })}>
+                                    {message.text}
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    ) : (
+                        <div key={nanoid()}></div>
+                    )
                 ))}
                 <div className='chat-message'>
                 <div className={cn('flex items-end',{
@@ -80,10 +84,11 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
                                     addMessage({
                                         id: nanoid(),
                                         isUserInput: true,
-                                        text: 'give me a concise background of the artist'
+                                        text: 'give me a concise background of the artist in no more than 3 sentences'
                                     }),
                                     inputRef?.current?.focus()
-                                    inputRef?.current?.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter', code: 'Enter', which: 13, bubbles: true, cancelable: true}))
+                                    inputRef?.current?.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter', which: 13, bubbles: true, cancelable: true}))
+
                                 }
                             
                             }>

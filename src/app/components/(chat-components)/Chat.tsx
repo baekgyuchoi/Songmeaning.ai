@@ -40,7 +40,7 @@ const Chat: FC<ChatProps> = (props) => {
             collapsible 
             className='relative bg-white z-40 shadow'>
             <AccordionItem value='item-1'>
-                <div className='fixed right-8 w-80 bottom-8 bg-white border-gray-200 rounded-md overflow:hidden'>
+                <div className='fixed right-8 w-80 bottom-8 bg-gray-100 border-gray-200 rounded-md overflow:hidden'>
                     <AccordionTrigger className='px-6 border-b border-zinc-300'>
                         <ChatHeader song_info={props.song_info}/>
                     </AccordionTrigger>

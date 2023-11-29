@@ -55,7 +55,7 @@ export default async function SearchPage({
           
           <div className="container max-w-4xl ">
       
-            <h1 className="text-2xl text-gray-800 mb-5 font-mono">
+            <h1 className="text-2xl text-gray-800 mb-5 font-mono mt-16">
               Search results for: {searchQuery}
             </h1>
             <div className="mt-4 grid grid-cols-1 gap-x-8 md:mt-6 md:grid-cols-1 md:gap-y-2 block">

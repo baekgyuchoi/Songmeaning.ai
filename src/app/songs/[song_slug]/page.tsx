@@ -128,7 +128,7 @@ export default async function SongPage({ params }: {
                         
                           <div className='flex flex-col md:flex-row  '> 
                             <div className="w-full md:w-2/3 flex-grow pr-4">
-                              <CardContent className="p-6" style={{ minHeight: '600px', minWidth: '200px' }}>
+                              <CardContent className="p-6 mb-12" style={{ minHeight: '600px', minWidth: '200px' }}>
                                   {
                                     song_data?.isValid ? (
                                       <>
@@ -162,9 +162,7 @@ export default async function SongPage({ params }: {
                                           <p>  Song is not Valid</p>
                                         </CardContent>
                                   
-                                        <CardFooter className="bg-beige-200 rounded-b-lg px-6 py-4">  
-                                          <p className="text-gray-700">Card Footer</p>
-                                        </CardFooter>
+                                       
                                         
                                       </Card>
                                     )
@@ -205,12 +203,7 @@ export default async function SongPage({ params }: {
                           </div>
                         
                       
-                          <CardFooter className="bg-beige-200 rounded-b-lg px-6 mt-36 py-4 flex flex-col">  
-                            
-                            
-                            <p className="text-gray-700">Card Footer</p>
-                            
-                          </CardFooter>
+                         
                         </div>
                       </Card>
                     </div>
@@ -242,9 +235,7 @@ export default async function SongPage({ params }: {
                       <p> This URL is invalid</p>
                     </CardContent>
               
-                    <CardFooter className="bg-beige-200 rounded-b-lg px-6 py-4">  
-                      <p className="text-gray-700">Card Footer</p>
-                    </CardFooter>
+                   
                     
                   </Card>
                   
@@ -252,7 +243,7 @@ export default async function SongPage({ params }: {
               
                   <h2>hi</h2>
                   <footer className="text-gray-500 text-sm mt-32">
-                    Copyright {new Date().getFullYear()}
+                    Songmeanings.ai Copyright {new Date().getFullYear()}
                   </footer>
                 </main>
               )
