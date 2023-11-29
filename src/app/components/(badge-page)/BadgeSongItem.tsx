@@ -4,6 +4,7 @@ import { SongInfo } from '@/lib/validators/song_info';
 import Link from 'next/link';
 
 import React from 'react';
+import Image from 'next/image';
 
 import SongBadges from '../(song-page)/SongBadges';
 import { SongData } from '@/lib/validators/song_data_response';
@@ -66,7 +67,7 @@ const BadgeSongItem: React.FC<Props> = (props) => {
                         <div className="flex flex-row w-full  p-2 pl-4 pr-4">
                             <div className="group flex items-center gap-x-4 py-3">
                                 <div className="relative flex w-12 h-12 overflow-hidden">
-                                    <img className="object-cover" src={songData.song_image_url} />
+                                    <Image alt="song image" className="object-cover" src={songData.song_image_url} />
                                 </div>
                                 <div className='flex flex-col '>
 
