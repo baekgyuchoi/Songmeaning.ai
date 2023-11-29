@@ -6,14 +6,17 @@ const NavBar = () => {
 
 return (
     <div className="">
-      <div className="container mx-auto flex items-center justify-between p-4">
-        <div className="ml-20">
+      <div className="container mx-auto flex items-center justify-between p-4 ">
+        <div className="ml-4 md:ml-20 ">
           <HomeButton />
         </div>
         
-  
-        <SearchInput />
-  
+        <div className="w-1/2 flex items-center justify-end mr-10">
+          <div className="w-1/2">
+            <SearchInput />
+          </div>
+        
+        </div>
       </div>
     </div>
   )

@@ -23,7 +23,7 @@ const submitSearch = (searchQuery: string | null) => {
 
 
   return (
-    <div className="flex justify-center w-full md:w-1/3 rounded p-2 transition ">
+    <div className="flex justify-center w-full  rounded p-2 transition ">
       <input
         value={searchQuery || ""}
         onChange={(event) => setSearchQuery(event.target.value)}
