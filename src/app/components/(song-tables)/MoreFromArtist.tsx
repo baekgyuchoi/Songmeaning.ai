@@ -6,12 +6,14 @@ import { PrismaClient } from '@prisma/client';
 import { SongInfo } from '@/lib/validators/song_info';
 import ShortSearchButton from '../(search-page)/ShortSearchButton';
 import TrendingChartItem from './TrendingChartItem';
+import Link from 'next/link';
 
 interface MoreFromArtistProps {
   // Define your component props here
   artist_slug: string;
   song_slug: string;
   artist_name: string;
+  artist_id: number;
 }
 
 async function QueueArtist(artist_slug_input: string) {
@@ -33,6 +35,7 @@ async function QueueArtist(artist_slug_input: string) {
           song_slug: artist_song?.song_slug,
           song_title: artist_song?.song_title,  
           artist_name: artist_song?.artist_name, 
+          artist_id: artist_song?.artist_id,
           artist_slug: artist_song?.artist_slug,
           genius_id: artist_song?.genius_id,
           genius_url: artist_song?.genius_url,
@@ -69,12 +72,11 @@ const MoreFromArtist: React.FC<MoreFromArtistProps> = async (props) => {
       
       {(artist_songs.length <= 1) ? (
       <div>
-        
       </div>
       ):(
       <div>
-        <div className='rounded-md border flex items-center justify-center mb-2'>
-          <h1>More from {artist_name}</h1>
+        <div className='rounded-md font-mono border flex items-center justify-center mb-2'>
+          <h1>More from <Link className="text-gray-600 underline" href={"/artists/" + artist_slug} > {artist_name} </Link></h1>
         </div>
         <div className='carousel carousel-center carousel-vertical h-96 rounded-box bg-white w-fit flex'>
           
@@ -89,7 +91,8 @@ const MoreFromArtist: React.FC<MoreFromArtistProps> = async (props) => {
             )
           }})}
         </div>
-      </div>)}
+      </div>
+      )}
     
     
   </main>

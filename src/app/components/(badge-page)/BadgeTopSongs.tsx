@@ -62,6 +62,7 @@ async function QueueSong(badge_name: string) {
           song_slug: song.song_slug,
           genius_id: song.genius_id,
           artist_name: song.artist_name,
+          artist_id: song.artist_id,
           artist_slug: song.artist_slug,
           header_image_url: song.header_image_url,
           song_art_url: song.song_image_url,

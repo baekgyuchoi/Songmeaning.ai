@@ -28,6 +28,7 @@ async function QueueArtist(artist_slug_input: string) {
             song_slug: artist_song?.song_slug,
             song_title: artist_song?.song_title,  
             artist_name: artist_song?.artist_name, 
+            artist_id: artist_song?.artist_id,
             artist_slug: artist_song?.artist_slug,
             genius_id: artist_song?.genius_id,
             genius_url: artist_song?.genius_url,

@@ -16,6 +16,7 @@ const TestPage: React.FC = () => {
         song_slug: "bts-dynamite-english-translation",
         genius_id: 4900781,
         artist_name: "Genius English Translations",
+        artist_id: 361,
         artist_slug: "Genius-english-translations",
         header_image_url: "https://images.genius.com/6b5b1a34b7b09417468f3848046f1b71.300x300x1.png",
         song_art_url: "https://images.genius.com/6b5b1a34b7b09417468f3848046f1b71.300x300x1.png",

@@ -57,7 +57,7 @@ export default async function BadgesPage({ params }: {
                                 
                             </CardHeader>
                         
-                        // here
+                    
                             <BadgeContent badge_name={params.badge_name} />
                     
                             <CardFooter className="bg-beige-200 rounded-b-lg px-6 mt-36 py-4">  

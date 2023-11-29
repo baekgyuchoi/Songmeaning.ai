@@ -17,18 +17,18 @@ model Songs {
   id              Int      @id @default(autoincrement())
   isValid         Boolean  @default(true)
   viewCount       Int      @default(0)
-  song_title      String
+  song_title      String   @db.Text
   song_slug       String   @unique
-  artist_name     String
+  artist_name     String  
+  artist_id       Int     
   artist_slug     String   
-  artist Artist @relation(fields: [artist_slug], references: [artist_slug])
   genius_url      String   @unique
   genius_id       Int      @unique
   lyrics          String?  @db.Text
   song_meaning SongMeaning?
   song_image_url  String  @default("https://images.genius.com/6b5b1a34b7b09417468f3848046f1b71.300x300x1.png")
   header_image_url String @default("https://images.genius.com/b8eb5ee526b9948ecf5b68572464f35b.1000x1000x1.png")
-  song_short_title String @default("Song Short Title here")
+  song_short_title String 
   release_date    String  @default("Release Date here")
   two_word_description     String  @default("default/default")
   badges            BadgesOnSongs[] 
@@ -60,10 +60,10 @@ model BadgesOnSongs {
 
 
 model Artist {
-  id          Int          @id @default(autoincrement()) 
+  id          Int          @id 
   artist_slug String       @unique
-  name        String
-  songs       Songs[]
+  primary_artist_name       String
+  artist_names              String
 }
 
 model SongMeaning {

@@ -1,6 +1,7 @@
 'use client'
 import { Card } from '@/components/ui/card';
 import { SongInfo } from '@/lib/validators/song_info';
+import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useState } from "react";
@@ -20,7 +21,7 @@ async function DoesSongExist(song_slug: string) {
     return data['song_exists']
 }
 
-async function QueueSongMeaning(song_info: SongInfo) {
+async function PostSongToDB(song_info: SongInfo) {
     const url = '/api/post_song'
     const res = await fetch(url, {
         method: 'POST',
@@ -46,7 +47,7 @@ const SearchItemButton: React.FC<Props> = (props) => {
         const song_exists = await DoesSongExist(props.songInfo.song_slug)
         if (!song_exists) {
             setIsLoading(true);
-            await QueueSongMeaning(props.songInfo);
+            await PostSongToDB(props.songInfo);
             
         }
         setIsLoading(false);
@@ -68,7 +69,23 @@ const SearchItemButton: React.FC<Props> = (props) => {
             >
                 <Card className='rounded-box'>
                     {isLoading ? (
-                        <div className="truncate max-w-4xl">Loading...</div>
+                        <div className="flex flex-col w-full  items-center justify-center">
+                        <div className="group flex items-center gap-x-4 py-3">
+                            
+                            <div className="min-w-0 max-w-md flex items-center flex-col">
+                                
+               
+                            </div>
+                        </div>
+                        <Loader2 className="animate-spin" size={32} />
+                        <div className="group flex items-center gap-x-4 py-3">
+                            
+                            <div className="min-w-0 max-w-md flex items-center flex-col">
+                                
+               
+                            </div>
+                        </div>
+                    </div>
                     ) : (
                         
                         <div className="flex flex-row w-full  p-2 pl-4 pr-4">

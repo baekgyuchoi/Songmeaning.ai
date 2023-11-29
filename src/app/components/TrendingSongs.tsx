@@ -45,6 +45,7 @@ const TrendingSongs: React.FC<TrendingSongsProps> = async (className) => {
         genius_url: song.genius_url,
         song_slug: song.song_slug,
         genius_id: song.genius_id,
+        artist_id: song.artist_id,
         artist_name: song.artist_name,
         artist_slug: song.artist_slug,
         header_image_url: song.header_image_url,

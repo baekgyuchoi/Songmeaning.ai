@@ -7,6 +7,7 @@ export const SongInfoSchema = z.object({
     song_slug: z.string(),
     genius_id: z.number(),
     artist_name: z.string(),
+    artist_id: z.number(),
     artist_slug: z.string(),
     header_image_url: z.string(),
     song_art_url: z.string(),

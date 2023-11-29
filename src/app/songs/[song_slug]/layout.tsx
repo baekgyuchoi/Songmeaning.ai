@@ -12,7 +12,7 @@ export const metadata = {
     children: React.ReactNode
   }) {
     return (
-      <div>
+      <div className="min-h-screen">
           <NavBar />
           {children}
       </div>

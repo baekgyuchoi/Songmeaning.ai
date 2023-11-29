@@ -6,7 +6,26 @@ import { SongInfo } from "@/lib/validators/song_info";
 import { PrismaClient } from "@prisma/client";
 import { Suspense } from "react";
 
+const geniusAPISearchURL = 'https://api.genius.com/artists/'
+const genius_access_token = "oNwFSu_AIjtrw3owTLM9p_RYc2o9EjyJTNv9Lf05GDgl7adlODR9DQwiUlz8FzDZ"
 
+
+async function getArtistInfo(artist_id: number | undefined) {
+  const geniusAPIArtistURL = 'https://api.genius.com/artists/'
+    const response = await fetch(geniusAPIArtistURL + artist_id, {
+        headers: {
+            'Authorization': 'Bearer ' + process.env.GENIUS_API_KEY_1
+        }
+    });
+    if (!response.ok) {
+        throw new Error('failed to fetch data');
+    }
+    const data = await response.json();
+
+    console.log(data.response.artist)
+    
+    return data.response.artist;
+}
 
 async function QueueSong(artist_slug_input: string) {
     const prisma = new PrismaClient()
@@ -27,6 +46,7 @@ async function QueueSong(artist_slug_input: string) {
             song_short_title: song.song_short_title,
             genius_url: song.genius_url,
             song_slug: song.song_slug,
+            artist_id: song.artist_id,
             genius_id: song.genius_id,
             artist_name: song.artist_name,
             artist_slug: song.artist_slug,
@@ -101,6 +121,7 @@ export default async function ArtistPage({ params }: {
         }
 
         const artist_name = songInfoArray[0].artist_name
+        const artist_id = songInfoArray[0].genius_id
 
         const chatbot_prompt = `Imagine you are ${params.artist_slug}
         , a well-known pop artist, 

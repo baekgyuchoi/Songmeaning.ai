@@ -76,6 +76,7 @@ export default async function SongPage({ params }: {
                 song_slug: song_data?.song_slug,
                 song_title: song_data?.song_title,  
                 artist_name: song_data?.artist_name, 
+                artist_id: song_data?.artist_id,
                 artist_slug: song_data?.artist_slug,
                 genius_id: song_data?.genius_id,
                 genius_url: song_data?.genius_url,
@@ -194,7 +195,7 @@ export default async function SongPage({ params }: {
                               <CardContent className="mt-16">
                                 <div className=' '>
                                   <Suspense fallback={<p>Loading feed...</p>}>
-                                    <MoreFromArtist song_slug={song_data.song_slug} artist_name={song_data.artist_name} artist_slug={song_data.artist_slug} />
+                                    <MoreFromArtist artist_id={song_data.artist_id} song_slug={song_data.song_slug} artist_name={song_data.artist_name} artist_slug={song_data.artist_slug} />
                                   </Suspense>
                                 </div>
                               </CardContent>
@@ -220,33 +221,16 @@ export default async function SongPage({ params }: {
         }
 
         return (
-                <main className="flex min-h-screen flex-col items-center justify-between p-24">
-                  <h1>hi</h1>
-                  
-                  <Card className="mb-0.5 flex-1 rounded-t-3xl bg-white from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
-                    
-                    <CardHeader className="bg-beige-200 rounded-t-lg px-6 py-4">
-                      <CardTitle className="text-xl font-bold text-gray-800">Card Title</CardTitle>
-                      <CardDescription className="text-gray-600">Card Description</CardDescription>
-                    </CardHeader>
+      
+            <div className="flex min-h-screen font-mono flex-col items-center justify-center pb-48">
               
-                    <CardContent className="p-6 text-gray-700">
-                      <p className="text-gray-700">Card Content</p>
-                      <p> This URL is invalid</p>
-                    </CardContent>
               
-                   
-                    
-                  </Card>
-                  
-                  <h1>404: Invalid URL</h1>
+              <h1>404: Invalid Song</h1>
               
-                  <h2>hi</h2>
-                  <footer className="text-gray-500 text-sm mt-32">
-                    Songmeanings.ai Copyright {new Date().getFullYear()}
-                  </footer>
-                </main>
-              )
+              
+             
+            </div>
+          )
         }
 
 
