@@ -17,7 +17,7 @@ export default async function Home() {
     <div>
       <main className="flex min-h-screen flex-col items-center justify-between p-12 md:p-36">
         <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 items-center'>
-          <div className="flex items-center flex-col container w-full md:w-3/5 border pb-16  rounded-box" >
+          <div className="flex items-center flex-col container w-full md:w-3/5 pb-16  " >
             {/* <img src="https://images.genius.com/b8eb5ee526b9948ecf5b68572464f35b.1000x1000x1.png"></img> */}
             <div className="mt-20 mb-12">
               <HomeButton />

@@ -27,19 +27,39 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
                             'justify-end': message.isUserInput,
                             // put user messages on right and bot messages on left
                         })}>
-                            <div className={cn('flex flex-col space-y-2 text-sm max-w-xs mx-2 overflow-x-hidden', {
-                                'bg-blue-600 text-white': message.isUserInput,
-                                'bg-gray-200 text-gray-900': !message.isUserInput,
-                            })}>
-                                <p > {message.text} </p>
+                            <div
+                                className={cn('flex flex-col space-y-2 text-sm max-w-xs mx-2 overflow-x-hidden', {
+                                'order-1 items-end': message.isUserInput,
+                                'order-2 items-start': !message.isUserInput,
+                                })}>
+                                <p
+                                className={cn('px-4 py-2 rounded-lg', {
+                                    'bg-blue-600 text-white': message.isUserInput,
+                                    'bg-gray-200 text-gray-900': !message.isUserInput,
+                                })}>
+                                {message.text}
+                                </p>
                             </div>
                         </div>
                     </div>
                 ))}
                 <div className='chat-message'>
-                    <div className='flex items-end'>
-                        <div className='flex flex-col space-y-2 text-sm max-w-xs mx-2 overflow-x-hidden bg-gray-200 text-gray-900'>
-                            <p > hey what's good baby </p> <button onClick={
+                <div className={cn('flex items-end',{
+                    'justify-end': false,
+                    // put user messages on right and bot messages on left
+                })}>
+                    <div
+                        className={cn('flex flex-col space-y-2 text-sm max-w-xs mx-2 overflow-x-hidden', {
+                        'order-1 items-end': false,
+                        'order-2 items-start': true,
+                        })}>
+                        <p
+                        className={cn('px-4 py-2 rounded-lg', {
+                            'bg-blue-600 text-white': false,
+                            'bg-gray-200 text-gray-900': true,
+                        })}>
+                        <p > Hello, what can I do for you? </p> 
+                        <button onClick={
                                 () => {
                                     addMessage({
                                         id: nanoid(),
@@ -51,7 +71,10 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
                                     
                                 }
                             
-                            }>Songs with similar lyric meaning</button>
+                            }>
+                                <p className='text-blue-800 underline'>Songs with similar lyric meaning</p>
+                                
+                        </button>
                             <button onClick={
                                 () => {
                                     addMessage({
@@ -63,9 +86,17 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
                                     inputRef?.current?.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter', code: 'Enter', which: 13, bubbles: true, cancelable: true}))
                                 }
                             
-                            }>Artist background</button>
-                        </div>
+                            }>
+                                <p className='text-blue-800 underline'>Artist background</p>
+                                
+                            </button>
+                        </p>
                     </div>
+                </div>
+
+
+
+                    
                 </div>
                 
             

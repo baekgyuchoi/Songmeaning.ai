@@ -10,6 +10,7 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 import Image from "next/image"
 import { Card } from '@/components/ui/card';
+import Link from 'next/link';
 
 
 interface TrendingSongsProps extends HTMLAttributes<HTMLDivElement> 
@@ -55,9 +56,9 @@ const TrendingSongs: React.FC<TrendingSongsProps> = async (className) => {
     
     return (
         // Return your JSX here
-        <div className='w-full md:w-3/5 flex flex-col items-center '>
+        <div className='w-full md:w-3/5 flex flex-col items-center mt-12'>
 
-          <div className="text-2xl text-gray-800 mb-5 ">
+          <div className="text-2xl text-gray-800 mb-5 font-mono">
             <p>Trending Songs</p>
           </div>
 
@@ -68,6 +69,7 @@ const TrendingSongs: React.FC<TrendingSongsProps> = async (className) => {
                   key={song_info.song_slug}
                   className='carousel-item flex-shrink flex flex-col justify-center items-left rounded-md w-40'
                 >
+                  <Link href= {"songs/" + song_info.song_slug} >
                   <div className='flex flex-shrink items-center justify-center aspect-square m-4 mb-2 h-36 w-auto'>
                     <img
                       src={song_info.song_art_url}
@@ -85,6 +87,7 @@ const TrendingSongs: React.FC<TrendingSongsProps> = async (className) => {
                     </div>
                    
                   </div>
+                  </Link>
                 </div>
               ))}
           </div>

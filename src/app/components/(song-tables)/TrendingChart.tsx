@@ -38,7 +38,7 @@ const TrendingChart: React.FC = async () => {
 
   return (
     <main>
-      <div className='rounded-md border flex items-center justify-center'>
+      <div className='rounded-md border flex items-center justify-center mb-2'>
         <h1>Trending Chart</h1>
       </div>
       <div className='carousel carousel-center carousel-vertical h-96 rounded-box bg-white w-fit flex'>

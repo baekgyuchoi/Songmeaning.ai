@@ -1,4 +1,5 @@
 'use client'
+import { Card } from '@/components/ui/card';
 import { SongInfo } from '@/lib/validators/song_info';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -62,29 +63,32 @@ const SearchItemButton: React.FC<Props> = (props) => {
             <button
                 disabled = {isLoading}
                 onClick={buttonClick}
-                className='w-full ' 
+                className='w-full overflow-hidden' 
                
             >
-                {isLoading ? (
-                    <div className="truncate max-w-4xl">Loading...</div>
-                ) : (
-                    <div className="flex flex-row w-full">
-                        <div className="group flex items-center gap-x-4 py-3">
-                            <div className="relative flex w-12 h-12 overflow-hidden">
-                                <img className="object-cover" src={songInfo.song_art_url} />
+                <Card className='rounded-box'>
+                    {isLoading ? (
+                        <div className="truncate max-w-4xl">Loading...</div>
+                    ) : (
+                        
+                        <div className="flex flex-row w-full  p-2 pl-4 pr-4">
+                            <div className="group flex items-center gap-x-4 py-3">
+                                <div className="relative flex w-12 h-12 overflow-hidden">
+                                    <img className="object-cover" src={songInfo.song_art_url} />
+                                </div>
+                                <div className="min-w-0 max-w-md flex items-start flex-col">
+                                    <p className="max-w-sm md:max-w-md truncate">{songInfo.song_short_title}</p>
+                                    <p className="pl-4 text-gray-500 text-sm max-w-md truncate">{songInfo.artist_name}</p>
+                                </div>
                             </div>
-                            <div className="min-w-0 max-w-md">
-                                <p className="truncate">{songInfo.song_short_title}</p>
-                                <p className="text-gray-500 text-sm truncate">{songInfo.artist_name}</p>
+                            <div className='flex items-center justify-end w-full hidden md:flex'>
+                                <p className="text-gray-500 text-sm truncate">{songInfo.release_date}</p>
                             </div>
                         </div>
-                        <div className='flex items-center justify-end w-full hidden md:flex'>
-                            <p className="text-gray-500 text-sm truncate">{songInfo.release_date}</p>
-                        </div>
-                    </div>
-                )}
-                
-                
+                        
+                    )}
+                    
+                </Card>
             </button>
 
     );

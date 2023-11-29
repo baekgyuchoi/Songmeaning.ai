@@ -27,11 +27,7 @@ import { ReactNode, createContext, useState } from "react"
 export function MessagesProvider({children}: {children: ReactNode}) {
     const [isMessageUpdating, setIsMessageUpdating] = useState<boolean>(false)
     const [messages, setMessages] = useState<Message[]>([
-        {
-            id: nanoid(),
-            isUserInput: false,
-            text: "Hello, I'm a bot",
-        }
+       
     ])
     const [inputRef, setInputRef] = useState<React.RefObject<HTMLTextAreaElement> | null>(null)
     
@@ -54,11 +50,7 @@ export function MessagesProvider({children}: {children: ReactNode}) {
     }
     const clearMessages = () => {
         setMessages([
-            {
-                id: nanoid(),
-                isUserInput: false,
-                text: "Hello, I'm a bot",
-            }
+            
         ])
     }
 

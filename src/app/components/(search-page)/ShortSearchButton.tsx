@@ -30,7 +30,7 @@ async function QueueSongMeaning(song_info: SongInfo) {
             },
             body: JSON.stringify(song_info),
     })
-    console.log(res)
+   
     return res
 }
 

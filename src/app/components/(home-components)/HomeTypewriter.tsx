@@ -15,7 +15,7 @@ const HomeTypewriter: React.FC<Props> = ({ /* Destructure your props here */ }) 
 
     return (
         // Return your JSX here
-        <div className="">
+        <div className="font-mono">
           
           <TypewriterComponent 
             options={{
@@ -23,6 +23,7 @@ const HomeTypewriter: React.FC<Props> = ({ /* Destructure your props here */ }) 
               autoStart: true,
               loop: true,
             }}
+            
           />
         </div>
     );

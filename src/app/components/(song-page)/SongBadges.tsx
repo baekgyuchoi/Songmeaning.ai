@@ -4,6 +4,7 @@ import { SongData } from '@/lib/validators/song_data_response';
 import { BadgesOnSongs, PrismaClient } from '@prisma/client';
 import React from 'react';
 import OpenAI from 'openai';
+import Link from 'next/link';
 
 interface SongBadgesProps {
   // Define your component props here
@@ -16,17 +17,26 @@ interface SongBadgesProps {
 async function AddSongToBadge(badge_id: number, song_id: number) {
   const prisma = new PrismaClient()
   await prisma.$connect()
+  
   const badge = await prisma.badges.findUnique({
     where: {
       id: badge_id
     }
   })
+
+  if (badge == null) {
+    console.log("badge not found")
+    await prisma.$disconnect()
+    return null
+  }
+
   
   await prisma.badges.update({
     where: {
       id: badge_id
     },
     data: {
+      songs_count: badge.songs_count + 1 ,
       songs: {
         create: [
           {
@@ -57,10 +67,11 @@ async function AddSongToBadge(badge_id: number, song_id: number) {
     }
   })
   console.log("song added to badge")
+  console.log(badge.songs_count)
+  console.log(badge)
   await prisma.$disconnect()
 }
 
-async function PostBadge(badge_name: string) {}
 
 async function IsBadgeInDB(badge_name: string) {
   const prisma = new PrismaClient()
@@ -81,10 +92,11 @@ async function IsBadgeInDB(badge_name: string) {
 async function QueueBadges(badge_name:string, song_slug: string, song_id: number) {
   const prisma = new PrismaClient()
   await prisma.$connect()
-  await prisma.badges.create({
+  const badge = await prisma.badges.create({
     data: {
       badge_name: badge_name,
       first_song: song_slug,
+      songs_count: 1,
       songs: {
         create: [
           {
@@ -93,6 +105,23 @@ async function QueueBadges(badge_name:string, song_slug: string, song_id: number
           }
         ]
       } 
+    }
+  })
+  await prisma.songs.update({
+    where: {
+      id: song_id
+    },
+    data: {
+      badges: {
+        connect: [
+          {
+            badge_id_song_id: {
+              badge_id: badge.id,
+              song_id: song_id
+            } 
+          }
+        ]
+      }
     }
   })
 
@@ -106,13 +135,13 @@ async function GenerateTwoWord(songData: SongData) {
   const openai = new OpenAI();
   const completion = await openai.chat.completions.create({
     messages: [
-      { role: "system", content: "Given a passage of song lyrics, you are to return the two words that describe the lyric's tone and mood the most accurately" },
+      { role: "system", content: "Given a passage of song lyrics, you are to return the two words - in this format: word1/word2 -  that describe the lyric's tone and mood the most accurately" },
       { role: "user", content: songData.lyrics },
   ],
     model: "ft:gpt-3.5-turbo-1106:personal::8Ozv43OJ",
   });
   const two_badges = completion.choices[0].message.content?.split('/')
-  if (two_badges == null) {
+  if (two_badges == null || two_badges.length != 2) {
     console.log("two badges error")
     return null
   }
@@ -155,9 +184,7 @@ const SongBadges: React.FC<SongBadgesProps> = async (props) => {
 
   if (props.songData.lyrics == null) {
     return (
-      <div> 
-        <Badge>default</Badge>
-      </div>
+      <></>
     )
   }
   
@@ -183,8 +210,10 @@ const SongBadges: React.FC<SongBadgesProps> = async (props) => {
       {/* Your component code here */}
       {badges?.map((badge, index) => {
         return (
-          <div key={index} className="inline-block">
-            <Badge>{badge}</Badge>
+          <div key={index} className="inline-block m-2">
+            <Link href={`/badges/${badge}`}>
+              <Badge>{badge}</Badge>
+            </Link>
           </div>
         )
       })}

@@ -55,7 +55,7 @@ export default async function SearchPage({
           
           <div className="container max-w-4xl ">
       
-            <h1 className="text-3xl text-gray-800 mb-5">
+            <h1 className="text-2xl text-gray-800 mb-5 font-mono">
               Search results for: {searchQuery}
             </h1>
             <div className="mt-4 grid grid-cols-1 gap-x-8 md:mt-6 md:grid-cols-1 md:gap-y-2 block">
@@ -65,7 +65,7 @@ export default async function SearchPage({
                     key={index}
                     className="py-2 w-full flex flex-col flex-row "
                   >
-                    <div className="flex bg-transparent text-gray font-bold tracking-tight text-l md:text-4xl sm:text-4xl hover:text-gray-300 focus:outline-none focus:shadow-outline">
+                    <div className="flex bg-transparent text-gray  tracking-tight text-l md:text-3xl sm:text-3xl hover:outline-blue focus:outline-none focus:shadow-outline">
                       <SearchItemButton songInfo={result} />
                     </div>
                     

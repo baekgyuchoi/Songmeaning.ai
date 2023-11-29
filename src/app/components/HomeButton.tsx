@@ -21,7 +21,8 @@ const HomeButton: React.FC<Props> = ({ /* Destructure your props here */ }) => {
             <button
                 onClick={buttonClick}
                 className="bg-transparent text-gray font-bold text-4xl tracking-tight hover:text-gray-300 focus:outline-none focus:shadow-outline">
-                AI<span className="text-gray-500 hover:text-gray-300">Lyrics</span>
+              
+               <h1 className="font-mono text-3xl font-medium">Songmeanings.<span className="font-sans">AI</span></h1>
             </button>
         </div>
     );

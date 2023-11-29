@@ -65,15 +65,15 @@ const MoreFromArtist: React.FC<MoreFromArtistProps> = async (props) => {
 
   return (
     // JSX code for your component
-    <main className='text-black'>
+    <main className='text-black flex items-center justify-center'>
       
       {(artist_songs.length <= 1) ? (
       <div>
-        No songs from this artist
+        
       </div>
       ):(
       <div>
-        <div className='rounded-md border flex items-center justify-center'>
+        <div className='rounded-md border flex items-center justify-center mb-2'>
           <h1>More from {artist_name}</h1>
         </div>
         <div className='carousel carousel-center carousel-vertical h-96 rounded-box bg-white w-fit flex'>

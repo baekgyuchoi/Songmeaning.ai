@@ -42,6 +42,7 @@ model Badges {
   songs       BadgesOnSongs[]
   created_at  DateTime     @default(now())
   first_song  String
+  songs_count Int          @default(0)
   
 }
 

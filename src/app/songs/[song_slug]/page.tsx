@@ -39,7 +39,7 @@ async function QueueSong(song_slug_input: string) {
         }
     })
     }
-  
+    console.log(song?.viewCount)
     await prisma.$disconnect()
     return song
 }
@@ -60,7 +60,6 @@ export default async function SongPage({ params }: {
     
         const song_data = await QueueSong(params.song_slug)
           
-        console.log(song_data?.lyrics)
         
         console.log(song_data?.isValid)
         if (song_data != null){
@@ -109,12 +108,14 @@ export default async function SongPage({ params }: {
                   
                         <div className='md:ml-12 ml-0'>
                           <CardHeader>
-                            <CardTitle className="mt-12 text-4xl font-bold text-gray-800">
-                            
-                                  Meaning of: {song_name}
+                            <CardTitle className="mt-12 text-4xl font-bold text-gray-800 flex justify-between">
+                              <div>
+                                <h1 className='font-serif'>Meaning of: </h1> {song_name}
+                              </div>
                               
                             </CardTitle>
-                            <div className=" flex justify-between w-2/3">
+                            
+                            <div className="flex justify-between w-2/3">
                               <CardDescription className="mt-16">
                                 <Link href={`/artists/${song_info.artist_slug}`}>by: {artist_name}</Link>
                               </CardDescription>
@@ -126,7 +127,7 @@ export default async function SongPage({ params }: {
                           </CardHeader>
                         
                           <div className='flex flex-col md:flex-row  '> 
-                            <div className="w-full md:w-2/3 flex-grow">
+                            <div className="w-full md:w-2/3 flex-grow pr-4">
                               <CardContent className="p-6" style={{ minHeight: '600px', minWidth: '200px' }}>
                                   {
                                     song_data?.isValid ? (
@@ -173,6 +174,19 @@ export default async function SongPage({ params }: {
                               </CardContent>
                             </div>
                             <div className='w-full md:w-1/3  flex flex-col items-center '>
+                              <CardContent className="text-black ">
+                               
+                                <div className='flex flex-col items-center justify-center'>
+                                
+                                  <div className='flex items-center'>
+                                    
+                                    <h1 className='text-bold p-2 '> Badges  </h1> <span className='text-gray-500 text-sm'> given by ai</span>
+                                  </div>
+                                  <Suspense fallback={<p></p>}>
+                                    <SongBadges songData = {song_data}/>
+                                  </Suspense>
+                                </div>
+                              </CardContent>
                               <CardContent className="text-black">
                                   <Suspense fallback={<p>Loading feed...</p>}>
                                     <TrendingChart />
@@ -192,9 +206,7 @@ export default async function SongPage({ params }: {
                         
                       
                           <CardFooter className="bg-beige-200 rounded-b-lg px-6 mt-36 py-4 flex flex-col">  
-                            <Suspense fallback={<p>Loading feed...</p>}>
-                              <SongBadges songData = {song_data}/>
-                            </Suspense>
+                            
                             
                             <p className="text-gray-700">Card Footer</p>
                             
