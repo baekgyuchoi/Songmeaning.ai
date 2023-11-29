@@ -72,10 +72,9 @@ const TrendingSongs: React.FC<TrendingSongsProps> = async (className) => {
                 >
                   <Link href= {"songs/" + song_info.song_slug} >
                   <div className='flex flex-shrink items-center justify-center aspect-square m-4 mb-2 h-36 w-auto'>
-                    <Image
+                    <img
                       src={song_info.song_art_url}
-                      alt={`Song Image for ${song_info.song_title}`}
-                     
+                      alt='song art'
                       className="object-cover rounded-md w-9/10   "
                     />
                   </div>

@@ -31,7 +31,7 @@ const Chat: FC<ChatProps> = (props) => {
       } = useContext(MessagesContext)
     useEffect(() => {
         clearMessages()
-      }, [clearMessages])
+      }, [])
     
     return (
 
