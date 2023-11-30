@@ -53,22 +53,20 @@ const ChatPopover: FC<ChatPopoverProps> = (props) => {
               <ShortChatHeader song_info={props.song_info}/>
             </Button>
           </div>
-          <Modal size='lg' placement='top-center' isOpen={isOpen} onOpenChange={onOpenChange} closeButton={<div className='pr-4'><button><p className="underline text-sm text-gray-500">close</p></button></div>} className=''>
+          <Modal size='lg' placement='bottom' scrollBehavior="inside" shouldBlockScroll={false} isOpen={isOpen} onOpenChange={onOpenChange} closeButton={<div className=''><button><p className="pr-6 underline text-sm text-gray-500">close</p></button></div>} className=''>
             <ModalContent className=''>
               {(onClose) => (
-                <div className='bg-white  border rounded-md '>
+                <div className='bg-white  border rounded-md p-2 '>
                   <ModalHeader className="flex flex-col gap-1">
                     <ChatHeader song_info={props.song_info}/>
                   </ModalHeader>
                   <ModalBody>
-                    <div className='flex flex-col h-80'>
-                        <ChatMessages className = 'px-2 py-3 flex-1'/>
+                    <div className='flex flex-col h-72'>
+                        <ChatMessages className = 'px-2  flex-1'/>
                         <ChatInput chatbot_prompt={props.chatbot_prompt} className='px-4' />
                     </div>
                   </ModalBody>
-                  <ModalFooter>
-
-                  </ModalFooter>
+                  
                 </div>
               )}
             </ModalContent>
