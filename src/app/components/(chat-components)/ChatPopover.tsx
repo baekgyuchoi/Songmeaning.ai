@@ -48,7 +48,7 @@ const ChatPopover: FC<ChatPopoverProps> = (props) => {
 
         <>
       <Button onPress={onOpen}>Open Modal</Button>
-      <Modal placement='center' isOpen={isOpen} onOpenChange={onOpenChange} className=''>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} className=''>
         <ModalContent>
           {(onClose) => (
             <div className='bg-white w-full border rounded-md'>
