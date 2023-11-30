@@ -5,7 +5,7 @@ import Chat from "@/app/components/(chat-components)/Chat";
 import SearchItemButton from "@/app/components/(search-page)/SearchItemButton";
 import SongMeaningContent from "@/app/components/(song-page)/SongMeaningContent";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { SongData } from "@/lib/validators/song_data_response";
 import { SongInfo } from "@/lib/validators/song_info";
 import { PrismaClient } from "@prisma/client";
