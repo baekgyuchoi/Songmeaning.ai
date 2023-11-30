@@ -6,6 +6,7 @@ module.exports = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
+    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
 	],
   theme: {
     container: {
@@ -74,5 +75,6 @@ module.exports = {
   },
   plugins: [require("tailwindcss-animate"),
             require('@tailwindcss/forms'),
-            require('daisyui'),],
+            require('daisyui'),
+            require('@nextui-org/react')],
 }

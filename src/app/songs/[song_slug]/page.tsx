@@ -14,6 +14,7 @@ import TrendingChart from '@/app/components/(song-tables)/TrendingChart';
 import MoreFromArtist from '@/app/components/(song-tables)/MoreFromArtist';
 import SongBadges from '@/app/components/(song-page)/SongBadges';
 import Link from 'next/link';
+import ChatPopover from '@/app/components/(chat-components)/ChatPopover';
 
 
 
@@ -103,7 +104,7 @@ export default async function SongPage({ params }: {
         
             return (
                 <main className="min-w-screen flex flex-col items-center md:px-4 py-8 ">
-                    <Chat song_info={song_info} chatbot_prompt = {chatbot_prompt} />
+                    <ChatPopover song_info={song_info} chatbot_prompt = {chatbot_prompt} />
                     <div className='md:mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
                       <Card className=" w-full md:w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
                   

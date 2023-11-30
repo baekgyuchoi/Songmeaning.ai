@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Chat from './components/(chat-components)/Chat'
 import Providers from './components/(chat-components)/Providers'
+import { NextUIProviderWrapper } from './components/NextUIProviderWrapper'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,11 +19,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      
       <Providers>
         <body className={inter.className}>
+        <NextUIProviderWrapper>
           {children}
+        </NextUIProviderWrapper>
         </body>
       </Providers>
+      
     </html>
   )
 }
