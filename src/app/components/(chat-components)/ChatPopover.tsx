@@ -53,8 +53,8 @@ const ChatPopover: FC<ChatPopoverProps> = (props) => {
               <ShortChatHeader song_info={props.song_info}/>
             </Button>
           </div>
-          <Modal size='lg' placement='bottom' scrollBehavior="inside" shouldBlockScroll={false} isOpen={isOpen} onOpenChange={onOpenChange} closeButton={<div className=''><button><p className="pr-6 underline text-sm text-gray-500">close</p></button></div>} className=''>
-            <ModalContent className=''>
+          <Modal size='lg' placement='bottom' scrollBehavior="normal" shouldBlockScroll={false} isOpen={isOpen} onOpenChange={onOpenChange} closeButton={<div className=''><button><p className="pr-6 underline text-sm text-gray-500">close</p></button></div>} className=''>
+            <ModalContent className='w-screen'>
               {(onClose) => (
                 <div className='bg-white  border rounded-md p-2 '>
                   <ModalHeader className="flex flex-col gap-1">
