@@ -1,4 +1,5 @@
 import Chat from "@/app/components/(chat-components)/Chat";
+import ChatPopover from "@/app/components/(chat-components)/ChatPopover";
 import SearchItemButton from "@/app/components/(search-page)/SearchItemButton";
 import SongMeaningContent from "@/app/components/(song-page)/SongMeaningContent";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -136,7 +137,12 @@ export default async function ArtistPage({ params }: {
     
         return (
             <main className="flex flex-col items-center md:px-4 py-8">
-                <Chat song_info={songInfoArray[0]} chatbot_prompt = {chatbot_prompt} />
+                <div className='md:hidden'>
+                      <ChatPopover song_info={songInfoArray[0]} chatbot_prompt={chatbot_prompt}/>
+                    </div>
+                    <div className='hidden md:flex'>
+                      <Chat song_info={songInfoArray[0]} chatbot_prompt={chatbot_prompt}/>
+                    </div>
                 <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
                   <Card className=" w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
               

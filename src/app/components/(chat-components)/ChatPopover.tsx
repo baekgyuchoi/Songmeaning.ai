@@ -53,7 +53,7 @@ const ChatPopover: FC<ChatPopoverProps> = (props) => {
               <ShortChatHeader song_info={props.song_info}/>
             </Button>
           </div>
-          <Modal size='xl' placement='auto' isOpen={isOpen} onOpenChange={onOpenChange} closeButton={<div className='pr-4'><button><p className="underline text-sm text-gray-500">close</p></button></div>} className=''>
+          <Modal size='lg' placement='top-center' isOpen={isOpen} onOpenChange={onOpenChange} closeButton={<div className='pr-4'><button><p className="underline text-sm text-gray-500">close</p></button></div>} className=''>
             <ModalContent className=''>
               {(onClose) => (
                 <div className='bg-white  border rounded-md '>
