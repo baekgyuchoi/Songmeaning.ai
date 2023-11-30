@@ -6,13 +6,13 @@ const NavBar = () => {
 
 return (
     <div className="">
-      <div className=" mx-auto flex items-center justify-between p-4 ">
-        <div className="ml-4 md:ml-20 ">
+      <div className=" mx-auto flex flex-col md:flex-row items-center justify-center md:justify-between p-4 ">
+        <div className="ml-0 md:ml-20">
           <HomeButton />
         </div>
         
-        <div className="w-1/2 flex items-center justify-end mr-10">
-          <div className="w-1/2">
+        <div className="w-1/2 flex items-center justify-center">
+          <div className="w-full md:w-1/2">
             <SearchInput />
           </div>
         
