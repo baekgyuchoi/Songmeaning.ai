@@ -6,7 +6,7 @@ const NavBar = () => {
 
 return (
     <div className="">
-      <div className="container mx-auto flex items-center justify-between p-4 ">
+      <div className=" mx-auto flex items-center justify-between p-4 ">
         <div className="ml-4 md:ml-20 ">
           <HomeButton />
         </div>

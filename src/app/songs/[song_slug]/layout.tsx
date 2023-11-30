@@ -12,9 +12,11 @@ export const metadata = {
     children: React.ReactNode
   }) {
     return (
-      <div className="min-h-screen">
+      <div className="w-fit min-w-540 bg-[hsl(0,0%,95%)]">
           <NavBar />
-          {children}
+          <div className="w-fit">
+            {children}
+          </div>
       </div>
     )
   }

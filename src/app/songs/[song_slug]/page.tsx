@@ -102,7 +102,7 @@ export default async function SongPage({ params }: {
             `
         
             return (
-                <main className="flex flex-col items-center px-4 py-8">
+                <main className="min-w-screen flex flex-col items-center px-4 py-8">
                     <Chat song_info={song_info} chatbot_prompt = {chatbot_prompt} />
                     <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
                       <Card className=" w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
@@ -116,7 +116,7 @@ export default async function SongPage({ params }: {
                               
                             </CardTitle>
                             
-                            <div className="flex justify-between w-2/3">
+                            <div className="flex justify-between w-full md:w-2/3">
                               <CardDescription className="mt-16">
                                 <Link href={`/artists/${song_info.artist_slug}`}>by: {artist_name}</Link>
                               </CardDescription>
