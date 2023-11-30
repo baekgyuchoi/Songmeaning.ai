@@ -135,7 +135,7 @@ export default async function ArtistPage({ params }: {
         `
     
         return (
-            <main className="flex flex-col items-center px-4 py-8">
+            <main className="flex flex-col items-center md:px-4 py-8">
                 <Chat song_info={songInfoArray[0]} chatbot_prompt = {chatbot_prompt} />
                 <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
                   <Card className=" w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
@@ -153,8 +153,8 @@ export default async function ArtistPage({ params }: {
                     
                       <div className='flex flex-col md:flex-row pt-20 '> 
                         <div className=" flex-grow">
-                        <CardContent className="p-6 text-black flex items-center justify-center pt-20" >
-                            <div className='h-96 carousel carousel-center carousel-vertical max-h-md bg-white w-2/3 flex'>
+                        <CardContent className="p-6 text-black flex items-center justify-center pt-12" >
+                            <div className='h-96 carousel carousel-center carousel-vertical max-h-md bg-white w-full md:w-2/3 flex'>
                               {songInfoArray.map((songInfo, index) => {
                                   return (
                                       <div key={index} className='mr-12 mt-4'>
@@ -170,9 +170,7 @@ export default async function ArtistPage({ params }: {
                       </div>
                     
                   
-                      <CardFooter className="bg-beige-200 rounded-b-lg px-6 mt-36 py-4">  
-                        <p className="text-gray-700">Card Footer</p>
-                      </CardFooter>
+                      
                     </div>
                   </Card>
                 </div>
