@@ -47,27 +47,31 @@ const ChatPopover: FC<ChatPopoverProps> = (props) => {
     return (
 
         <>
-      <Button onPress={onOpen}>Open Modal</Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} className=''>
-        <ModalContent>
-          {(onClose) => (
-            <div className='bg-white w-full border rounded-md'>
-              <ModalHeader className="flex flex-col gap-1">
-                <ChatHeader song_info={props.song_info}/>
-              </ModalHeader>
-              <ModalBody>
-                <div className='flex flex-col h-80'>
-                    <ChatMessages className = 'px-2 py-3 flex-1'/>
-                    <ChatInput chatbot_prompt={props.chatbot_prompt} className='px-4' />
-                </div>
-              </ModalBody>
-              <ModalFooter>
+          <div className='fixed right-8 w-fit bottom-8 bg-gray-100 border-gray-200 p-3 rounded-md overflow:hidden'>
+            <Button onPress={onOpen} className=''>
+              <ChatHeader song_info={props.song_info}/>
+            </Button>
+          </div>
+          <Modal size='full' isOpen={isOpen} onOpenChange={onOpenChange} className=''>
+            <ModalContent>
+              {(onClose) => (
+                <div className='bg-white w-full border rounded-md'>
+                  <ModalHeader className="flex flex-col gap-1">
+                    <ChatHeader song_info={props.song_info}/>
+                  </ModalHeader>
+                  <ModalBody>
+                    <div className='flex flex-col h-80'>
+                        <ChatMessages className = 'px-2 py-3 flex-1'/>
+                        <ChatInput chatbot_prompt={props.chatbot_prompt} className='px-4' />
+                    </div>
+                  </ModalBody>
+                  <ModalFooter>
 
-              </ModalFooter>
-            </div>
-          )}
-        </ModalContent>
-      </Modal>
+                  </ModalFooter>
+                </div>
+              )}
+            </ModalContent>
+          </Modal>
     </>
 
         // <Popover>

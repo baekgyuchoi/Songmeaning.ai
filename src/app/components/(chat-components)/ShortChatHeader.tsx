@@ -13,7 +13,7 @@ const ChatHeader: FC<ChatHeaderProps> = (props) => {
             <p className='text-xs'>Chat with</p>
             <div className='flex gap-1.5 items-center'>
                 <p className='w-2 h-2 rounded-full bg-green-500'></p>
-                <p className='font-medium w-36 truncate'> {artist_name} </p> <p className='font-medium'> AI</p>
+                <p className='font-medium max-w-sm truncate'> {artist_name} AI </p>
             </div>
         </div>
     </div>

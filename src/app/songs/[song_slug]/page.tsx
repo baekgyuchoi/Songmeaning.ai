@@ -104,9 +104,13 @@ export default async function SongPage({ params }: {
         
             return (
                 <main className="min-w-screen flex flex-col items-center md:px-4 py-8 ">
-                    <div className='hidden md:not-hidden'>
+                    <div className='md:hidden'>
+                      <ChatPopover song_info={song_info} chatbot_prompt={chatbot_prompt}/>
+                    </div>
+                    <div className='hidden md:flex'>
                       <Chat song_info={song_info} chatbot_prompt={chatbot_prompt}/>
                     </div>
+
                     <div className='md:mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
                       <Card className=" w-full md:w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
                   
