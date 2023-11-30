@@ -19,6 +19,7 @@ import {
     Button,
     ModalContent
  } from "@nextui-org/react"
+import ShortChatHeader from './ShortChatHeader';
 
 
 
@@ -49,13 +50,13 @@ const ChatPopover: FC<ChatPopoverProps> = (props) => {
         <>
           <div className='fixed right-8 w-fit bottom-8 bg-gray-100 border-gray-200 p-3 rounded-md overflow:hidden'>
             <Button onPress={onOpen} className=''>
-              <ChatHeader song_info={props.song_info}/>
+              <ShortChatHeader song_info={props.song_info}/>
             </Button>
           </div>
-          <Modal size='full' isOpen={isOpen} onOpenChange={onOpenChange} className=''>
-            <ModalContent>
+          <Modal size='xl' placement='auto' isOpen={isOpen} onOpenChange={onOpenChange} closeButton={<div className='pr-4'><button><p className="underline text-sm text-gray-500">close</p></button></div>} className=''>
+            <ModalContent className=''>
               {(onClose) => (
-                <div className='bg-white w-full border rounded-md'>
+                <div className='bg-white  border rounded-md '>
                   <ModalHeader className="flex flex-col gap-1">
                     <ChatHeader song_info={props.song_info}/>
                   </ModalHeader>

@@ -7,6 +7,7 @@ import ChatMessages from './ChatMessages';
 
 import { MessagesContext } from '@/context/messages';
 import { SongInfo } from '@/lib/validators/song_info';
+import ShortChatHeader from './ShortChatHeader';
 
 
 /**
@@ -41,8 +42,8 @@ const Chat: FC<ChatProps> = (props) => {
             className='relative bg-white z-40 shadow '>
             <AccordionItem value='item-1'>
                 <div className='fixed right-8 w-80 bottom-8 bg-gray-100 border-gray-200 rounded-md overflow:hidden'>
-                    <AccordionTrigger className='px-6 border-b border-zinc-300'>
-                        <ChatHeader song_info={props.song_info}/>
+                    <AccordionTrigger className='px-6 border-b border-zinc-300 truncate'>
+                        <ShortChatHeader song_info={props.song_info}/>
                     </AccordionTrigger>
                     <AccordionContent>
                         <div className='flex flex-col h-80'>
