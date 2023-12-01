@@ -5,6 +5,7 @@ import SongMeaningContent from "@/app/components/(song-page)/SongMeaningContent"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { SongInfo } from "@/lib/validators/song_info";
 import { PrismaClient } from "@prisma/client";
+import Link from "next/link";
 import { Suspense } from "react";
 
 const geniusAPISearchURL = 'https://api.genius.com/artists/'
@@ -159,18 +160,39 @@ export default async function ArtistPage({ params }: {
                     
                       <div className='flex flex-col md:flex-row pt-20 '> 
                         <div className=" flex-grow">
-                        <CardContent className="p-6 text-black flex items-center justify-center pt-12" >
-                            <div className='h-96 carousel carousel-center carousel-vertical max-h-md bg-white w-full md:w-2/3 flex'>
-                              {songInfoArray.map((songInfo, index) => {
+                        <CardContent className="p-6 text-black flex items-center justify-center pt-6 md:pt-12" >
+
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                          {songInfoArray.map((song_info, index) => {
                                   return (
-                                      <div key={index} className='mr-12 mt-4'>
-                                          <SearchItemButton songInfo={songInfo} />
+                                      <div key={index} className=''>
+                                          <Link href= {"songs/" + song_info.song_slug} >
+                                            <div className='flex flex-shrink items-center justify-center aspect-square m-4 mb-2 h-24 md:h-36 w-auto'>
+                                              <img
+                                                src={song_info.song_art_url}
+                                                alt='song art'
+                                                className="object-cover rounded-md w-9/10   "
+                                              />
+                                            </div>
+                                            <div className=" ml-4 text-xs text-muted-foreground w-4/5 truncate mb-2">
+                                              <div className='text-black'>
+                                              {song_info.song_short_title}
+                                              </div>
+                                              <div className=''>
+                                                  by {song_info.artist_name}
+                                              </div>
+                                            
+                                            </div>
+                                          </Link>
                                       </div>
                                   );
                               })}
-                                                                         
-                            </div>
-                            </CardContent>
+                            
+                          </div>
+
+
+                           
+                        </CardContent>
                         </div>
                         
                       </div>
