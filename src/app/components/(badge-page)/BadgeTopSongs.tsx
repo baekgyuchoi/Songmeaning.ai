@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import React from 'react';
 import SearchItemButton from '../(search-page)/SearchItemButton';
 import BadgeSongItem from './BadgeSongItem';
+import Link from 'next/link';
 
 
 async function QueueSong(badge_name: string) {
@@ -53,24 +54,6 @@ async function QueueSong(badge_name: string) {
 
   await prisma.$disconnect()
   
-  const songInfoArray = songs.map((song) => {
-      if (song != null) {
-      const songInfo: SongInfo = {
-          song_title: song.song_title,
-          song_short_title: song.song_short_title,
-          genius_url: song.genius_url,
-          song_slug: song.song_slug,
-          genius_id: song.genius_id,
-          artist_name: song.artist_name,
-          artist_id: song.artist_id,
-          artist_slug: song.artist_slug,
-          header_image_url: song.header_image_url,
-          song_art_url: song.song_image_url,
-          release_date: song.release_date,
-      };
-          return songInfo
-      }
-      })
   
   return songs
 }
@@ -82,15 +65,63 @@ interface BadgeTopSongsProps {
 
 const BadgeTopSongs: React.FC<BadgeTopSongsProps> = async (props) => {
   const songInfoArray = await QueueSong(props.badge_name)
-  if (songInfoArray == null) {
+  if (songInfoArray == null || songInfoArray[0] == null) {
     return(
       <div>this badge has no songs!</div>
     )
   }
   return (
-  
-      
-      <div className='mt-4 mb-4 h-96 carousel carousel-center carousel-vertical max-h-md flex w-full'>
+    <div className='w-full container flex flex-col'>
+    <div className='w-full flex flex-col items-center min-w-screen mt-12'>
+
+        <div className="text-2xl text-gray-800 mb-5 font-mono">
+        <p>Top Songs in Badge</p>
+        </div>
+
+        <div className='bg-gray-100 rounded-box flex flex-col items-start w-full'>
+            <div className='carousel carousel-center w-auto flex'>
+            {songInfoArray.map((songInfo, index) => {
+            if (songInfo == null) {
+                return(
+                    <>No Songs in Badge</>
+                )
+            }
+                return (
+                    <div 
+                    key={songInfo.song_slug}
+                    className='carousel-item flex-shrink flex flex-col justify-center items-left rounded-md w-40'
+                    >
+                    <Link href= {"../../songs/" + songInfo.song_slug} >
+                        <div className='flex flex-shrink items-center justify-center aspect-square m-4 mb-2 h-36 w-auto'>
+                            <img
+                                src={songInfo.song_image_url}
+                                alt='song art'
+                                className="object-cover rounded-md w-9/10   "
+                            />
+                        </div>
+                        <div className=" ml-4 text-xs text-muted-foreground w-4/5 truncate mb-2">
+                            <div className='text-black'>
+                            {songInfo.song_short_title}
+                            </div>
+                            <div className=''>
+                                by {songInfo.artist_name}
+                            </div>
+                        
+                        </div>
+                    </Link>
+                </div>
+                );
+            })}
+        
+            </div>
+        </div>
+        </div>
+      <div className='mt-20 flex items-center justify-center'>
+        <div className='text-2xl text-gray-800 mb-5 font-mono'>
+          <p>Top Songs in Badge</p>
+        </div>
+      </div>
+      <div className='mt-4 mb-4 h-96 carousel carousel-center carousel-vertical max-h-md flex w-full md:w-1/2'>
         {songInfoArray.map((songInfo, index) => {
           if (songInfo == null) {
               return(
@@ -105,7 +136,7 @@ const BadgeTopSongs: React.FC<BadgeTopSongsProps> = async (props) => {
         })}
                                                     
       </div>
-  
+    </div>
   );
 };
 

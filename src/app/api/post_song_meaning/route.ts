@@ -14,7 +14,7 @@ export async function POST(request: Request) {
             song_slug: song_meaning.song_slug,
             },
         })
-    if (song_in_db == null) {
+    if (song_in_db == null || song_meaning.meaning[-1] != ".") {
 
         await prisma.$disconnect()
         console.log("Error - song does not exist")

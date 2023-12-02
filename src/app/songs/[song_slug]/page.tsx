@@ -107,7 +107,7 @@ export default async function SongPage({ params }: {
                     <div className='md:hidden'>
                       <ChatPopover song_info={song_info} chatbot_prompt={chatbot_prompt}/>
                     </div>
-                    <div className='hidden md:flex'>
+                    <div className='hidden'>
                       <Chat song_info={song_info} chatbot_prompt={chatbot_prompt}/>
                     </div>
 

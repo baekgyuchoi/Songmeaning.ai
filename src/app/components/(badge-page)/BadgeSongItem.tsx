@@ -56,43 +56,44 @@ const BadgeSongItem: React.FC<Props> = (props) => {
         // Return your JSX here 
         
        
-            <Link
-                href = {"/songs/" + songData.song_slug}
-                className='w-full overflow-hidden' 
-               
-            >
-                <Card className='rounded-box w-full'>
+        
+                <div className='rounded-box border w-full text-black'>
                     
-                        
+                    
                         <div className="flex flex-row w-full  p-2 pl-4 pr-4">
                             <div className="group flex items-center gap-x-4 py-3">
                                 <div className="relative flex w-12 h-12 overflow-hidden">
                                     <img alt="song image" className="object-cover" src={songData.song_image_url} />
                                 </div>
-                                <div className='flex flex-col '>
+                                <div className='flex flex-col  '>
 
                                 
-                                <div className="min-w-0 max-w-md flex flex-shrink items-start flex-col ">
-                                    <p className="overflow-hidden max-w-sm truncate">{songData.song_title}</p>
-                                </div>
-                                <div className='flex flex-row  '>
-                                    
-                                    
-                                        <SongBadges songData={songData} />
-                                    
-                                </div>
+                                    <div className="min-w-0 max-w-md flex flex-shrink items-start flex-col ">
+                                        <Link
+                                            href = {"/songs/" + songData.song_slug}
+                                            className='w-full overflow-hidden' 
+                                        
+                                        >   
+                                            <p className="overflow-hidden max-w-sm truncate">{songData.song_title}</p>
+                                        </Link>
+                                    </div>
+                                    <div className='flex flex-row  '>
+                                        
+                                        
+                                            <SongBadges songData={songData} />
+                                        
+                                    </div>
                                
                                 </div>
                             </div>
 
                         
                         </div>
-                        
                     
                     
-                </Card>
-            </Link>
-
+                    
+                </div>
+           
     );
 };
 

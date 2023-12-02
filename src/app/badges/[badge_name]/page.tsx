@@ -56,13 +56,11 @@ export default async function BadgesPage({ params }: {
                                 
                                 
                             </CardHeader>
-                        
-                    
+                            
+                            
                             <BadgeContent badge_name={params.badge_name} />
-                    
-                            <CardFooter className="bg-beige-200 rounded-b-lg px-6 mt-36 py-4">  
-                                <p className="text-gray-700">Card Footer</p>
-                            </CardFooter>
+
+                           
                         </div>
                   </Card>
                 </div>):(
