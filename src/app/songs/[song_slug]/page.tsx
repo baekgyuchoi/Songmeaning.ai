@@ -70,9 +70,9 @@ export default async function SongPage({ params }: {
             if (meaning != null) {
                 is_meaning_valid = true
             }
-            const created_at = song_data?.song_meaning?.createdAt.toDateString()
+            const created_at = song_data?.song_meaning?.createdAt.toDateString().split(" ").slice(1).join(" ")
             const artist_name = song_data?.artist_name
-            const song_name = song_data?.song_title
+            const song_name = song_data?.song_short_title
             const song_info: SongInfo = {
                 song_slug: song_data?.song_slug,
                 song_title: song_data?.song_title,  
@@ -112,21 +112,19 @@ export default async function SongPage({ params }: {
                     </div>
 
                     <div className='md:mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
-                      <Card className=" w-full md:w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
+                      <Card className=" w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10  md:p-16">
                   
-                        <div className='md:ml-12 ml-0'>
+                        <div className=''>
                           <CardHeader>
                             <CardTitle className="mt-12 text-4xl font-bold text-gray-800 flex justify-between">
                               <div>
-                                <h1 className='font-serif'>Meaning of: </h1> {song_name}
+                              
+                                <p>{song_name} <Link className="text-gray-600 hover:text-gray-500" href={ `../../artists/${artist_name}`}>by {artist_name}</Link></p>
                               </div>
                               
                             </CardTitle>
                             
-                            <div className="flex justify-between w-full xl:w-2/3">
-                              <CardDescription className="mt-16">
-                                <Link href={`/artists/${song_info.artist_slug}`}>by: {artist_name}</Link>
-                              </CardDescription>
+                            <div className="flex justify-start w-full ">
                               <CardDescription className="mt-16">
                                 <>Created: {created_at}</>
                               </CardDescription>
@@ -134,9 +132,9 @@ export default async function SongPage({ params }: {
                             
                           </CardHeader>
                         
-                          <div className='flex flex-col xl:flex-row items-center '> 
-                            <div className="w-full xl:w-2/3 flex-grow pr-4">
-                              <CardContent className="p-1 md:p-3 xl:p-6 mb-12" style={{ minHeight: '600px', minWidth: '200px' }}>
+                          <div className='flex flex-col  items-center '> 
+                            <div className="w-full md:pr-4 md:mr-4 md:pl-4">
+                              <CardContent className="p-1 md:p-3  mb-12" style={{ minHeight: '600px', minWidth: '200px' }}>
                                   {
                                     song_data?.isValid ? (
                                       <div className='w-full'>
@@ -179,32 +177,28 @@ export default async function SongPage({ params }: {
                                 
                               </CardContent>
                             </div>
-                            <div className='w-full md:w-1/3  flex flex-col items-center '>
-                              <CardContent className="text-black ">
-                               
-                                <div className='flex flex-col items-center justify-center'>
+                            <div className='flex flex-col text-black items-center justify-center mb-20'>
                                 
                                   <div className='flex items-center'>
                                     
-                                    <h1 className='text-bold p-2 '> Badges  </h1> <span className='text-gray-500 text-sm'> given by ai</span>
+                                    <h1 className='text-bold text-black p-2 '> Badges  </h1> <span className='text-gray-500 text-sm'> given by ai</span>
                                   </div>
                                   <Suspense fallback={<p></p>}>
                                     <SongBadges songData = {song_data}/>
                                   </Suspense>
                                 </div>
-                              </CardContent>
-                              <CardContent className="text-black">
-                                  <Suspense fallback={<p>Loading feed...</p>}>
-                                    <TrendingChart />
-                                  </Suspense>
+                            <div className='  flex text-black flex-col lg:flex-row items-center '>
+                              
+                              <CardContent className="">
+                                <Suspense fallback={<p>Loading feed...</p>}>
+                                  <TrendingChart />
+                                </Suspense>
                               </CardContent>
                               
-                              <CardContent className="mt-16">
-                                <div className=' '>
-                                  <Suspense fallback={<p>Loading feed...</p>}>
-                                    <MoreFromArtist artist_id={song_data.artist_id} song_slug={song_data.song_slug} artist_name={song_data.artist_name} artist_slug={song_data.artist_slug} />
-                                  </Suspense>
-                                </div>
+                              <CardContent className="">                               
+                                <Suspense fallback={<p>Loading feed...</p>}>
+                                  <MoreFromArtist artist_id={song_data.artist_id} song_slug={song_data.song_slug} artist_name={song_data.artist_name} artist_slug={song_data.artist_slug} />
+                                </Suspense>
                               </CardContent>
                             
                             </div>

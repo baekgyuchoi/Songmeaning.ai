@@ -136,7 +136,7 @@ async function GenerateTwoWord(songData: SongData) {
   const completion = await openai.chat.completions.create({
     messages: [
       { role: "system", content: "Given a passage of song lyrics, you are to return the two words - in this format: word1/word2 -  that describe the lyric's tone and mood the most accurately" },
-      { role: "user", content: songData.lyrics },
+      { role: "user", content: "return 2 tone/mood words for these lyrics:" + songData.lyrics },
   ],
     model: "ft:gpt-3.5-turbo-1106:personal::8Ozv43OJ",
   });

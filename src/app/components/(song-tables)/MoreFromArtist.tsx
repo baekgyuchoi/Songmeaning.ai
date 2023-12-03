@@ -68,14 +68,14 @@ const MoreFromArtist: React.FC<MoreFromArtistProps> = async (props) => {
 
   return (
     // JSX code for your component
-    <main className='text-black flex items-center justify-center'>
+    <main className=''>
       
       {(artist_songs.length <= 1) ? (
       <div>
       </div>
       ):(
       <div>
-        <div className='rounded-md font-mono border flex items-center justify-center mb-2'>
+        <div className='rounded-md font-mono border flex items-center w-full justify-center  mb-2'>
           <h1>More from <Link className="text-gray-600 underline" href={"/artists/" + artist_slug} > {artist_name} </Link></h1>
         </div>
         <div className='carousel carousel-center carousel-vertical h-96 rounded-box bg-white w-fit flex'>

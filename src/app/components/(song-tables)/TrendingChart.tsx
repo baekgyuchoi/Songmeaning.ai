@@ -42,7 +42,7 @@ const TrendingChart: React.FC = async () => {
       <div className='font-mono rounded-md border flex items-center justify-center mb-2'>
         <h1>Trending Chart</h1>
       </div>
-      <div className='carousel carousel-center carousel-vertical h-96 rounded-box bg-white w-fit flex'>
+      <div className='carousel carousel-center carousel-vertical h-96 rounded-box bg-white w-full flex'>
         
         {/* Add your JSX code here */}
         {songInfoArray.map((songInfo,index) => {
