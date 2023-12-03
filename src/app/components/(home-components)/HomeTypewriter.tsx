@@ -15,13 +15,15 @@ const HomeTypewriter: React.FC<Props> = ({ /* Destructure your props here */ }) 
 
     return (
         // Return your JSX here
-        <div className="font-mono">
+        <div className="font-mono  w-full text-center">
           
           <TypewriterComponent 
             options={{
-              strings: ['Hello', 'Welcome to Songmeanings.ai', 'Search a song to get started'],
+              strings: ['Enrich your life with radically deeper song meanings', 'Search a song to get started'],
               autoStart: true,
               loop: true,
+              deleteSpeed: 25,
+              delay : 50,
             }}
             
           />

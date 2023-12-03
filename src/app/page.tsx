@@ -15,25 +15,31 @@ export default async function Home() {
 
   return (
     <div>
-      <main className="flex min-h-screen flex-col items-center justify-between p-12 md:p-36">
+      <main className="flex min-h-screen flex-col items-center justify-between p-16">
         <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 items-center'>
           <div className="flex items-center flex-col container w-full md:w-3/5 pb-16  " >
             
-            <div className="mt-20 mb-12">
+            <div className="mt-8 mb-12">
               <HomeButton />
             </div>
-            <HomeTypewriter />
+            <div className="flex items-center justify-center">
+              <HomeTypewriter />
+            </div>
           </div>
-          <HomeSearchInput />
-          <div className="w-full md:w-full flex flex-col items-center jusify-center ">
+          <div className=" w-full md:w-4/5  flex justify-center">
+            <HomeSearchInput />
+          </div>
+          <div className="w-full md:w-full flex flex-col items-center jusify-center mt-8 ">
             
             <TrendingSongs className="w-full" />
           </div>
+          <div className="flex items-center justify-center mt-20">
+            <footer className="text-gray-500 text-sm">2023 Songmeaning.AI</footer>
         </div>
+        </div>
+        
       </main>
-      <div className="flex flex-col items-center justify-between pb-36 pt-36">
-          <footer>Copyright</footer>
-      </div>
+      
     
     </div>
   );
