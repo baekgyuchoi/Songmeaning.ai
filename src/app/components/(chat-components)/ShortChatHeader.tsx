@@ -12,12 +12,12 @@ const ChatHeader: FC<ChatHeaderProps> = (props) => {
         artist_name_truncated = artist_name.slice(0, 20) + '...'
     }
     return (
-    <div className='w-full flex gap-3 justify-start items-center text-zinc-800'>
-        <div className='flex flex-col items-start text-sm'>
-            <p className='text-xs'>Chat with</p>
+    <div className='w-full flex gap-3 justify-start items-center justify-center text-zinc-800'>
+        <div className='flex  items-center  text-sm'>
+           
             <div className='flex gap-1.5 items-center'>
-                <p className='w-2 h-2 rounded-full bg-green-500'></p>
-                <p className='font-medium '> {artist_name_truncated} AI </p>
+              
+                <p className='font-medium '>Chat with {artist_name_truncated} AI </p>
             </div>
         </div>
     </div>

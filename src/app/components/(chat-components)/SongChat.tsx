@@ -39,14 +39,14 @@ const SongChat: FC<ChatProps> = (props) => {
         <Accordion 
             type='single' 
             collapsible 
-            className='relative bg-white z-40 shadow '>
+            className=' font-mono '>
             <AccordionItem value='item-1'>
-                <div className='w-full bg-gray-100 border-gray-200 rounded-md overflow:hidden'>
+                <div className='w-full  border rounded-md overflow:hidden font-mono '>
                     <AccordionTrigger className='px-6 border-b border-zinc-300 truncate'>
                         <ShortChatHeader song_info={props.song_info}/>
                     </AccordionTrigger>
                     <AccordionContent>
-                        <div className='flex flex-col h-80'>
+                        <div className='flex flex-col h-96'>
                             <ChatMessages className = 'px-2 py-3 flex-1'/>
                             <ChatInput chatbot_prompt={props.chatbot_prompt} className='px-4' />
                         </div>
