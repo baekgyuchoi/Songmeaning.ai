@@ -1,35 +1,35 @@
+import ArtistTopSongCarousel from "@/app/components/(artist-page)/ArtistTopSongCarousel";
+import ArtistTotalSongs from "@/app/components/(artist-page)/ArtistTotalSongs";
 import Chat from "@/app/components/(chat-components)/Chat";
 import ChatPopover from "@/app/components/(chat-components)/ChatPopover";
 import SearchItemButton from "@/app/components/(search-page)/SearchItemButton";
 import SongMeaningContent from "@/app/components/(song-page)/SongMeaningContent";
+import TrendingSongs from "@/app/components/TrendingSongs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { SongData } from "@/lib/validators/song_data_response";
 import { SongInfo } from "@/lib/validators/song_info";
 import { PrismaClient } from "@prisma/client";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
 
-const geniusAPISearchURL = 'https://api.genius.com/artists/'
-const genius_access_token = "oNwFSu_AIjtrw3owTLM9p_RYc2o9EjyJTNv9Lf05GDgl7adlODR9DQwiUlz8FzDZ"
 
 
-async function getArtistInfo(artist_id: number | undefined) {
-  const geniusAPIArtistURL = 'https://api.genius.com/artists/'
-    const response = await fetch(geniusAPIArtistURL + artist_id, {
-        headers: {
-            'Authorization': 'Bearer ' + process.env.GENIUS_API_KEY_1
-        }
-    });
-    if (!response.ok) {
-        throw new Error('failed to fetch data');
+
+async function getArtistInfo(artist_slug: string) {
+  const prisma = new PrismaClient()
+  await prisma.$connect()
+  const artist = await prisma.artist.findUnique({
+    where: {
+      artist_slug: artist_slug
     }
-    const data = await response.json();
-
-    console.log(data.response.artist)
-    
-    return data.response.artist;
+  })
+  await prisma.$disconnect()
+  return artist
 }
 
-async function QueueSong(artist_slug_input: string) {
+
+async function QueueTopSongs(artist_slug_input: string) {
     const prisma = new PrismaClient()
     const songs = await prisma.songs.findMany({
         where: {
@@ -37,7 +37,11 @@ async function QueueSong(artist_slug_input: string) {
         },
         include: {
             song_meaning: true
-        }
+        },
+        orderBy: {
+          viewCount: "desc",
+        },
+        take: 15,
     });
     
   
@@ -70,9 +74,11 @@ async function QueueSong(artist_slug_input: string) {
 export default async function ArtistPage({ params }: {
     params: { artist_slug : string } 
     }) {
-        const songInfoArray = await QueueSong(params.artist_slug)
-
-        if (songInfoArray[0] == null) {
+        
+        // const songInfoArray = await QueueSong(params.artist_slug)
+        const artist = await getArtistInfo(params.artist_slug)
+        console.log(artist)
+        if (artist == null) {
             return(
                 <main className="flex flex-col items-center px-4 py-8">
                 
@@ -92,18 +98,7 @@ export default async function ArtistPage({ params }: {
                     
                       <div className='flex flex-col md:flex-row  '> 
                         <div className="w-full md:w-2/3 flex-grow">
-                          <CardContent className="p-6" style={{ minHeight: '600px', minWidth: '200px' }}>
-                              
-                            {songInfoArray.map((songInfo, index) => {
-                                return (
-                                    <div key={index} className='ml-2'>
-                                        <SearchItemButton songInfo={songInfo} />
-                                    </div>
-                                );
-                            })}
-                                                                       
-                            
-                          </CardContent>
+                          
                         </div>
                         
                       </div>
@@ -122,8 +117,8 @@ export default async function ArtistPage({ params }: {
             )
         }
 
-        const artist_name = songInfoArray[0].artist_name
-        const artist_id = songInfoArray[0].genius_id
+        const artist_name = artist.name
+        const artist_id = artist.genius_id
 
         const chatbot_prompt = `Imagine you are ${params.artist_slug}
         , a well-known pop artist, 
@@ -138,60 +133,54 @@ export default async function ArtistPage({ params }: {
     
         return (
             <main className="flex flex-col items-center md:px-4 py-8">
-                <div className='md:hidden'>
-                      <ChatPopover song_info={songInfoArray[0]} chatbot_prompt={chatbot_prompt}/>
-                    </div>
-                    <div className='hidden md:flex'>
-                      <Chat song_info={songInfoArray[0]} chatbot_prompt={chatbot_prompt}/>
-                    </div>
                 <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
                   <Card className=" w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
               
                     <div className='md:ml-12 ml-0'>
                       <CardHeader>
-                        <CardTitle className="mt-12 text-4xl font-bold text-gray-800">
+                        <CardTitle className="mt-12 text-4xl font-bold text-gray-800 ">
                         
-                              Song meanings for {artist_name}
+                              Song meanings for <p className="text-gray-600">{artist_name}</p>
                           
                         </CardTitle>
                         
                         
                       </CardHeader>
                     
-                      <div className='flex flex-col md:flex-row pt-20 '> 
-                        <div className=" flex-grow">
-                        <CardContent className="p-6 text-black flex items-center justify-center pt-6 md:pt-12" >
-
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                          {songInfoArray.map((song_info, index) => {
-                                  return (
-                                      <div key={index} className=''>
-                                          <Link href= {"songs/" + song_info.song_slug} >
-                                            <div className='flex flex-shrink items-center justify-center aspect-square m-4 mb-2 h-24 md:h-36 w-auto'>
-                                              <img
-                                                src={song_info.song_art_url}
-                                                alt='song art'
-                                                className="object-cover rounded-md w-9/10   "
-                                              />
-                                            </div>
-                                            <div className=" ml-4 text-xs text-muted-foreground w-4/5 truncate mb-2">
-                                              <div className='text-black'>
-                                              {song_info.song_short_title}
-                                              </div>
-                                              <div className=''>
-                                                  by {song_info.artist_name}
-                                              </div>
-                                            
-                                            </div>
-                                          </Link>
-                                      </div>
-                                  );
-                              })}
-                            
+                      <div className='flex flex-col pt-20 '> 
+                        <div className=" ">
+                        <CardContent className="p-6 text-black flex flex-col items-center justify-center pt-6 md:pt-6" >
+                          <div className="w-full flex items-center flex-col justify-center mb-8">
+                            <div className='font-mono rounded-md border w-full flex items-center justify-center'>
+                                <h1>Top Song Meanings by {artist.name}</h1>
+                            </div>
+                
+                            <Suspense 
+                              fallback={
+                                <div className="flex items-center justify-center">
+                                  <Loader2 size={32} className="animate-spin" />
+                                </div>
+                              }
+                            >
+                              <ArtistTopSongCarousel artist_slug={artist.artist_slug} />
+                            </Suspense>
                           </div>
-
-
-                           
+                          <div>
+                            <div className='font-mono rounded-md border w-full flex items-center justify-center mb-8'>
+                                <h1>All Songs related to {artist.name}</h1>
+                            </div>
+                
+                            <Suspense 
+                              fallback={
+                                <div className="flex items-center justify-center">
+                                  <Loader2 size={32} className="animate-spin" />
+                                </div>
+                              }
+                            >
+                              <ArtistTotalSongs artist_id={artist.genius_id} artist_name={artist.name}  />
+                            </Suspense>
+                          </div>
+                          
                         </CardContent>
                         </div>
                         

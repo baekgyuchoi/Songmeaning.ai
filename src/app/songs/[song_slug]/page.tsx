@@ -119,7 +119,7 @@ export default async function SongPage({ params }: {
                             <CardTitle className="mt-12 text-4xl font-bold text-gray-800 flex justify-between">
                               <div>
                               
-                                <p>{song_name} <Link className="text-gray-600 hover:text-gray-500" href={ `../../artists/${artist_name}`}>by {artist_name}</Link></p>
+                                <p>{song_name} <Link className="text-gray-600 hover:text-gray-500" href={ `../../artists/${song_info.artist_slug}`}>by {artist_name}</Link></p>
                               </div>
                               
                             </CardTitle>
@@ -187,7 +187,7 @@ export default async function SongPage({ params }: {
                                     <SongBadges songData = {song_data}/>
                                   </Suspense>
                                 </div>
-                            <div className='  flex text-black flex-col lg:flex-row items-center '>
+                            <div className='  flex text-black flex-col lg:flex-row items-start '>
                               
                               <CardContent className="">
                                 <Suspense fallback={<p>Loading feed...</p>}>

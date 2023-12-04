@@ -12,64 +12,60 @@ generator client {
 }
 
 
-   
+
 model Songs {
-  id              Int      @id @default(autoincrement())
-  isValid         Boolean  @default(true)
-  viewCount       Int      @default(0)
-  song_title      String   @db.Text
-  song_slug       String   @unique
-  artist_name     String  
-  artist_id       Int     
-  artist_slug     String   
-  genius_url      String   @unique
-  genius_id       Int      @unique
-  lyrics          String?  @db.Text
-  song_meaning SongMeaning?
-  song_image_url  String  @default("https://images.genius.com/6b5b1a34b7b09417468f3848046f1b71.300x300x1.png")
-  header_image_url String @default("https://images.genius.com/b8eb5ee526b9948ecf5b68572464f35b.1000x1000x1.png")
-  song_short_title String 
-  release_date    String  @default("Release Date here")
-  two_word_description     String  @default("default/default")
-  badges            BadgesOnSongs[] 
+  id                   Int             @id @default(autoincrement())
+  isValid              Boolean         @default(true)
+  viewCount            Int             @default(0)
+  song_title           String          @db.Text
+  song_slug            String          @unique
+  artist_name          String
+  artist_id            Int
+  artist_slug          String
+  genius_url           String          @unique
+  genius_id            Int             @unique
+  lyrics               String?         @db.Text
+  song_meaning         SongMeaning?
+  song_image_url       String          @default("https://images.genius.com/6b5b1a34b7b09417468f3848046f1b71.300x300x1.png")
+  header_image_url     String          @default("https://images.genius.com/b8eb5ee526b9948ecf5b68572464f35b.1000x1000x1.png")
+  song_short_title     String
+  release_date         String          @default("Release Date here")
+  two_word_description String          @default("default/default")
+  badges               BadgesOnSongs[]
 
   @@index([artist_slug])
 }
 
 model Badges {
-  id          Int          @id @default(autoincrement())
-  badge_name  String       @unique
+  id          Int             @id @default(autoincrement())
+  badge_name  String          @unique
   songs       BadgesOnSongs[]
-  created_at  DateTime     @default(now())
+  created_at  DateTime        @default(now())
   first_song  String
-  songs_count Int          @default(0)
-  
+  songs_count Int             @default(0)
 }
 
 model BadgesOnSongs {
-  badge_id  Int
-  song_id   Int
-  song        Songs         @relation(fields: [song_id], references: [id])
-  badges      Badges        @relation(fields: [badge_id], references: [id])
-
+  badge_id Int
+  song_id  Int
+  song     Songs  @relation(fields: [song_id], references: [id])
+  badges   Badges @relation(fields: [badge_id], references: [id])
 
   @@id([badge_id, song_id])
   @@index([badge_id])
   @@index([song_id])
 }
 
-
 model Artist {
-  id          Int          @id 
-  artist_slug String       @unique
-  primary_artist_name       String
-  artist_names              String
+  genius_id   Int    @id
+  artist_slug String @unique
+  name        String
 }
 
 model SongMeaning {
-  id     Int @id @default(autoincrement())
-  slug String  @unique
-  song   Songs @relation(fields: [slug], references: [song_slug])
-  meaning String @db.Text
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique
+  song      Songs    @relation(fields: [slug], references: [song_slug])
+  meaning   String   @db.Text
   createdAt DateTime @default(now())
 }
