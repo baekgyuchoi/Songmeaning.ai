@@ -1,89 +1,115 @@
-'use client'
+
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { SongInfo } from '@/lib/validators/song_info';
 import { Pagination, PaginationCursor, PaginationItem } from '@nextui-org/react';
 import { PrismaClient } from '@prisma/client';
 import { get } from 'http';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import ArtistSongItem from './ArtistSongItem';
+
+
+async function getArtistSongs(artist_id: number, artist_name: string, current_page: number, per_page: number) {
+
+    
+    let songInfoArray: SongInfo[] = []
+    let done = false
+    while (!done) {
+      const geniusAPIArtistURL = 'https://api.genius.com/artists/'+ artist_id +"/songs"+"?" + "sort=title&per_page=" + per_page + "&page=" + current_page
+      const response = await fetch(geniusAPIArtistURL, {
+          headers: {
+              'Authorization': 'Bearer ' + process.env.GENIUS_API_KEY_1
+          },
+          
+      });
+      if (!response.ok) {
+          throw new Error('failed to fetch data');
+      }
+      const data = await response.json();
+      
+      let is_ft_artist = false
+      
+      for (let song of data.response.songs) {
+        if (song.featured_artists ) {
+          for (let ft_artist of song.featured_artists) {
+            if (ft_artist.name.includes(artist_name)) {
+              is_ft_artist = true
+            }
+          }
+        }
+  
+        if ((song.primary_artist.name.includes(artist_name)) ) {
+          const songInfo: SongInfo = {
+            song_title: song.full_title,
+            song_short_title: song.title,
+            genius_url: song.url,
+            song_slug: song.path.split('/').pop()?.split('-lyrics')[0].split('-annotated')[0],
+            genius_id: parseInt(song.id),
+            artist_name: song.primary_artist.name,
+            artist_id: parseInt(song.primary_artist.id),
+            artist_slug: song.primary_artist.url.split('/').pop(),
+            header_image_url: song.header_image_url,
+            song_art_url: song.song_art_image_url,
+            release_date: song.release_date_for_display,
+          };
+          songInfoArray.push(songInfo)
+        }
+        
+      }
+     
+     
+      if (data.response.next_page == null) {
+        console.log("done")
+        done = true
+      }
+      current_page = current_page + 1
+    }
+   
+      
+  
+  
+  
+      
+      return songInfoArray;
+  }
+
 
 interface ArtistTotalSongsProps {
     artist_id: number;
     artist_name: string;
-}
+    }
 
 const ArtistTotalSongs: React.FC<ArtistTotalSongsProps> = async (props) => {
-    const [page, setPage] = useState(1);
-    const [isLastPage, setIsLastPage] = useState(false);
-    const [songInfoArray, setSongInfoArray] = useState<SongInfo[]>([]);
+    const songInfoArray = await getArtistSongs(props.artist_id, props.artist_name, 1, 30)
+    
 
     
 
-    useEffect(() => {
-        const fetchURL = '/api/get_all_artist_songs?artist_id=' + props.artist_id + '&page=' + page + '&artist_name=' + props.artist_name
-        const fetchData = async () => {
-            try {
-                const response = await fetch(fetchURL); // Replace with your API route
-                const data = await response.json();
-                setSongInfoArray(data!.song_array);
-                if (data.has_next_page == false) {
-                    setIsLastPage(true);
-                }
-                return data
-
-            } catch (error) {
-                console.error('Error fetching songInfoArray:', error);
-                return null
-            }
-        };
-
-        fetchData();
-        
-    }, [page]);
-    
-    return (
-        <div>
-            <div className='flex items-center justify-between font-mono underline text-gray-800'>
-                <button
-                    disabled={page == 1}
-                    onClick={() => setPage(page - 1)}
-                >
-                    prev
-                </button>
-                <button
-                    disabled={isLastPage}
-                    onClick={() => setPage(page + 1)}
-                >
-                    next
-                </button>
+        return (
+            <div>
+                
+                
+                <ScrollArea className='w-full h-screen'>
+                <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 md:gap-4">
+                    {songInfoArray.map((song_info, index) => {
+                        return (
+                            <div key={index} className='flex items-start'>
+                              
+                                <ArtistSongItem songInfo={song_info} />
+                                
+                            </div>
+                        );
+                    })}
+                   
+                   
+                
+                </div>
+                </ScrollArea>
             </div>
+            
+        );
+    };
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 md:gap-4">
-                {songInfoArray.map((song_info, index) => {
-                    return (
-                        <div key={index} className=''>
-                            <Link href={"../songs/" + song_info.song_slug}>
-                                <div className='flex flex-shrink items-center justify-center aspect-square m-4 mb-2 h-36 w-auto'>
-                                    <img
-                                        src={song_info.song_art_url}
-                                        alt='song art'
-                                        className="object-cover rounded-md w-9/10 h-36 w-auto "
-                                    />
-                                </div>
-                                <div className="ml-4 text-xs text-muted-foreground w-4/5 truncate mb-2">
-                                    <div className='text-black'>
-                                        {song_info.song_short_title}
-                                    </div>
-                                    <div className=''>
-                                        by {song_info.artist_name}
-                                    </div>
-                                </div>
-                            </Link>
-                        </div>
-                    );
-                })}
-            </div>
-        </div>
-    );
-};
+
 
 export default ArtistTotalSongs;

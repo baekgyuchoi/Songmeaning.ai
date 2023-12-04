@@ -57,28 +57,28 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
                         'order-1 items-end': false,
                         'order-2 items-start': true,
                         })}>
-                        <p
+                        <div
                         className={cn('px-4 py-2 rounded-lg', {
                             'bg-blue-600 text-white': false,
                             'bg-gray-200 text-gray-900': true,
                         })}>
-                        <p > Hello, what can I do for you? </p> 
-                        <button onClick={
-                                () => {
-                                    addMessage({
-                                        id: nanoid(),
-                                        isUserInput: true,
-                                        text: 'give me 2 songs with similar lyric meanings'
-                                    }),
-                                    inputRef?.current?.focus()
-                                    inputRef?.current?.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter', code: 'Enter', which: 13, bubbles: true, cancelable: true}))
-                                    
-                                }
-                            
-                            }>
-                                <p className='text-blue-800 underline'>Songs with similar lyric meaning</p>
+                            <p > Hello, what can I do for you? </p> 
+                            <button onClick={
+                                    () => {
+                                        addMessage({
+                                            id: nanoid(),
+                                            isUserInput: true,
+                                            text: 'give me 2 songs with similar lyric meanings'
+                                        }),
+                                        inputRef?.current?.focus()
+                                        inputRef?.current?.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter', code: 'Enter', which: 13, bubbles: true, cancelable: true}))
+                                        
+                                    }
                                 
-                        </button>
+                                }>
+                                    <p className='text-blue-800 underline'>Songs with similar lyric meaning</p>
+                                    
+                            </button>
                             <button onClick={
                                 () => {
                                     addMessage({
@@ -95,7 +95,7 @@ const ChatMessages: FC<ChatMessagesProps> = ({ className, ...props }) => {
                                 <p className='text-blue-800 underline'>Artist background</p>
                                 
                             </button>
-                        </p>
+                        </div>
                     </div>
                 </div>
 

@@ -15,6 +15,8 @@ import MoreFromArtist from '@/app/components/(song-tables)/MoreFromArtist';
 import SongBadges from '@/app/components/(song-page)/SongBadges';
 import Link from 'next/link';
 import ChatPopover from '@/app/components/(chat-components)/ChatPopover';
+import ArtistLink from '@/app/components/(song-page)/ArtistLink';
+import SongChat from '@/app/components/(chat-components)/SongChat';
 
 
 
@@ -104,12 +106,7 @@ export default async function SongPage({ params }: {
         
             return (
                 <main className="min-w-screen flex flex-col items-center md:px-4 py-8 ">
-                    <div className='md:hidden'>
-                      <ChatPopover song_info={song_info} chatbot_prompt={chatbot_prompt}/>
-                    </div>
-                    <div className='hidden'>
-                      <Chat song_info={song_info} chatbot_prompt={chatbot_prompt}/>
-                    </div>
+                    
 
                     <div className='md:mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
                       <Card className=" w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10  md:p-16">
@@ -119,7 +116,7 @@ export default async function SongPage({ params }: {
                             <CardTitle className="mt-12 text-4xl font-bold text-gray-800 flex justify-between">
                               <div>
                               
-                                <p>{song_name} <Link className="text-gray-600 hover:text-gray-500" href={ `../../artists/${song_info.artist_slug}`}>by {artist_name}</Link></p>
+                                <div className='flex'><p>{song_name}&nbsp;</p> <br></br> <div className="flex text-gray-600 hover:text-gray-500"> by &nbsp; <ArtistLink artist_id={song_info.artist_id} artist_name={song_info.artist_name} artist_slug={song_info.artist_slug}></ArtistLink></div></div>
                               </div>
                               
                             </CardTitle>
@@ -177,16 +174,28 @@ export default async function SongPage({ params }: {
                                 
                               </CardContent>
                             </div>
-                            <div className='flex flex-col text-black items-center justify-center mb-20'>
+                            <div className='w-screen md:w-full text-black mb-10'>
+                              <SongChat song_info={song_info} chatbot_prompt={chatbot_prompt}/>
+                            </div>
+                            <div className='flex w-full '>
+                              <CardContent>
+                              <div className='flex flex-col text-black items-start justify-between ml-10'>
                                 
-                                  <div className='flex items-center'>
-                                    
-                                    <h1 className='text-bold text-black p-2 '> Badges  </h1> <span className='text-gray-500 text-sm'> given by ai</span>
-                                  </div>
-                                  <Suspense fallback={<p></p>}>
-                                    <SongBadges songData = {song_data}/>
-                                  </Suspense>
+                                <div className='flex items-center'>
+                                  
+                                  <h1 className='text-bold text-black p-2 '> Badges  </h1> <span className='text-gray-500 text-sm'> given by ai</span>
                                 </div>
+                                <Suspense fallback={<p></p>}>
+                                  <SongBadges songData = {song_data}/>
+                                </Suspense>
+                              </div>
+                              </CardContent>
+                              <div>
+
+                              </div>
+                 
+                            </div>
+                            
                             <div className='  flex text-black flex-col lg:flex-row items-start '>
                               
                               <CardContent className="">

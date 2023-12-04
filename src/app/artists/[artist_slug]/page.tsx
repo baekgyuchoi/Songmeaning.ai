@@ -147,7 +147,7 @@ export default async function ArtistPage({ params }: {
                         
                       </CardHeader>
                     
-                      <div className='flex flex-col pt-20 '> 
+                      <div className='flex flex-col pt-12 '> 
                         <div className=" ">
                         <CardContent className="p-6 text-black flex flex-col items-center justify-center pt-6 md:pt-6" >
                           <div className="w-full flex items-center flex-col justify-center mb-8">
@@ -162,11 +162,11 @@ export default async function ArtistPage({ params }: {
                                 </div>
                               }
                             >
-                              <ArtistTopSongCarousel artist_slug={artist.artist_slug} />
+                              <ArtistTopSongCarousel artist_slug={artist.artist_slug} className="w-full bg black"/>
                             </Suspense>
                           </div>
                           <div>
-                            <div className='font-mono rounded-md border w-full flex items-center justify-center mb-8'>
+                            <div className='font-mono rounded-md border w-full flex items-center justify-center mt-20 mb-8'>
                                 <h1>All Songs related to {artist.name}</h1>
                             </div>
                 
