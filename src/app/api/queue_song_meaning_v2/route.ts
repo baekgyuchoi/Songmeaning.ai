@@ -46,6 +46,7 @@ async function getSongLyrics(song_id: number) {
 
 //     return gptResponse.choices[0].message
 // }
+export const maxDuration = 300 
 
 export async function POST(req: Request) {
     function min(a: number, b: number): number {
