@@ -63,10 +63,14 @@ async function getArtistSongs(artist_id: number, artist_name: string, current_pa
         done = true
       }
       current_page = current_page + 1
+
+      if (current_page > 40) {
+        done = true
+      }
     }
    
       
-  
+    console.log(current_page)
   
   
       

@@ -7,8 +7,7 @@ export async function POST(request: Request) {
     // query if song_id exists in database or use song_slug instead
     // if song exists, return "song already exists"
     // if song does not exist, create song in database
-    console.log(song_meaning.meaning)
-    console.log(song_meaning.meaning[song_meaning.meaning.length - 1])
+  
     const prisma = new PrismaClient()
     await prisma.$connect()
     const song_in_db = await prisma.songs.findUnique({
