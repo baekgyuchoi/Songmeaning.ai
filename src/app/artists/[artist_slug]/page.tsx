@@ -1,3 +1,4 @@
+import ArtistSongItem from "@/app/components/(artist-page)/ArtistSongItem";
 import ArtistTopSongCarousel from "@/app/components/(artist-page)/ArtistTopSongCarousel";
 import ArtistTotalSongs from "@/app/components/(artist-page)/ArtistTotalSongs";
 import Chat from "@/app/components/(chat-components)/Chat";
@@ -14,6 +15,66 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 
+async function GetArtistSongs(artist_id: number, artist_name: string, current_page: number, per_page: number) {
+
+    
+  let songInfoArray: SongInfo[] = []
+ 
+  const geniusAPIArtistURL = 'https://api.genius.com/artists/'+ artist_id +"/songs"+"?" + "sort=title&per_page=" + per_page + "&page=" + current_page
+  const response = await fetch(geniusAPIArtistURL, {
+      headers: {
+          'Authorization': 'Bearer ' + process.env.GENIUS_API_KEY_1
+      },
+      
+  });
+  if (!response.ok) {
+      throw new Error('failed to fetch data');
+  }
+  const data = await response.json();
+  
+  let is_ft_artist = false
+  
+  for (let song of data.response.songs) {
+    if (song.featured_artists ) {
+      for (let ft_artist of song.featured_artists) {
+        if (ft_artist.name.includes(artist_name)) {
+          is_ft_artist = true
+        }
+      }
+    }
+
+    if ((song.primary_artist.name.includes(artist_name)) ) {
+      const songInfo: SongInfo = {
+        song_title: song.full_title,
+        song_short_title: song.title,
+        genius_url: song.url,
+        song_slug: song.path.split('/').pop()?.split('-lyrics')[0].split('-annotated')[0],
+        genius_id: parseInt(song.id),
+        artist_name: song.primary_artist.name,
+        artist_id: parseInt(song.primary_artist.id),
+        artist_slug: song.primary_artist.url.split('/').pop(),
+        header_image_url: song.header_image_url,
+        song_art_url: song.song_art_image_url,
+        release_date: song.release_date_for_display,
+      };
+      songInfoArray.push(songInfo)
+    }
+    
+  }
+  
+  
+  
+  
+
+
+    
+  console.log(current_page)
+
+
+    
+    return {songInfoArray: songInfoArray, is_last_page: data.response.next_page == null};
+}
+
 
 
 async function getArtistInfo(artist_slug: string) {
@@ -29,55 +90,40 @@ async function getArtistInfo(artist_slug: string) {
 }
 
 
-async function QueueTopSongs(artist_slug_input: string) {
-    const prisma = new PrismaClient()
-    const songs = await prisma.songs.findMany({
-        where: {
-            artist_slug: artist_slug_input
-        },
-        include: {
-            song_meaning: true
-        },
-        orderBy: {
-          viewCount: "desc",
-        },
-        take: 15,
-    });
-    
-  
-    await prisma.$disconnect()
-    const songInfoArray: SongInfo[] = songs.map((song) => {
-        const songInfo: SongInfo = {
-            song_title: song.song_title,
-            song_short_title: song.song_short_title,
-            genius_url: song.genius_url,
-            song_slug: song.song_slug,
-            artist_id: song.artist_id,
-            genius_id: song.genius_id,
-            artist_name: song.artist_name,
-            artist_slug: song.artist_slug,
-            header_image_url: song.header_image_url,
-            song_art_url: song.song_image_url,
-            release_date: song.release_date,
-        };
-            return songInfo
-        })
-
-    return songInfoArray
-}
 
 
 
 
 
-
-export default async function ArtistPage({ params }: {
-    params: { artist_slug : string } 
+export default async function ArtistPage({ 
+    params,
+    searchParams
+ }: {
+    params: { artist_slug : string }, 
+    searchParams?: { [key: string]: string | undefined};
     }) {
+        let page_number = 1;
+        if (searchParams?.page != null) {
+          page_number = parseInt(searchParams?.page)
+        }
+
+        let prev_disabled = false
+        let next_disabled = false
+
+        if (page_number == 1) {
+          prev_disabled = true
+        }
         
         // const songInfoArray = await QueueSong(params.artist_slug)
         const artist = await getArtistInfo(params.artist_slug)
         console.log(artist)
+        const response = await GetArtistSongs(artist!.genius_id, artist!.name,  page_number, 28)
+        const songInfoArray = response.songInfoArray
+        const is_last_page = response.is_last_page
+        if (is_last_page) {
+          next_disabled = true
+        }
+
         if (artist == null) {
             return(
                 <main className="flex flex-col items-center px-4 py-8">
@@ -169,8 +215,24 @@ export default async function ArtistPage({ params }: {
                             <div className='font-mono rounded-md border w-full flex items-center justify-center mt-20 mb-8'>
                                 <h1>All Songs related to {artist.name}</h1>
                             </div>
+                            <div className="flex justify-between font-mono ml-3 mr-3 sm:mr-10 mb-2">
+                              {prev_disabled ? <div className="text-gray-400">prev</div> : <Link  href={`/artists/${params.artist_slug}?page=${page_number - 1}`}>prev</Link>}
+                              {next_disabled ? <div className="text-gray-400">next</div> : <Link href={`/artists/${params.artist_slug}?page=${page_number + 1}`}>next</Link>}
+                            </div>
+                            <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 md:gap-4">
+                              {songInfoArray.map((song_info, index) => {
+                                  return (
+                                      <div key={index} className='flex items-start'>
+                                        
+                                          <ArtistSongItem songInfo={song_info} />
+                                          
+                                      </div>
+                                  );
+                              })}
+              
+                            </div>
                 
-                            <Suspense 
+                            {/* <Suspense 
                               fallback={
                                 <div className="flex items-center justify-center">
                                   <Loader2 size={32} className="animate-spin" />
@@ -178,7 +240,7 @@ export default async function ArtistPage({ params }: {
                               }
                             >
                               <ArtistTotalSongs artist_id={artist.genius_id} artist_name={artist.name}  />
-                            </Suspense>
+                            </Suspense> */}
                           </div>
                           
                         </CardContent>

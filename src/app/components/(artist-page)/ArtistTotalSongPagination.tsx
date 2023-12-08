@@ -86,7 +86,7 @@ interface ArtistTotalSongsProps {
     artist_name: string;
     }
 
-const ArtistTotalSongs: React.FC<ArtistTotalSongsProps> = async (props) => {
+const ArtistTotalSongPagination: React.FC<ArtistTotalSongsProps> = async (props) => {
     const songInfoArray = await getArtistSongs(props.artist_id, props.artist_name, 1, 30)
     
 
@@ -119,4 +119,4 @@ const ArtistTotalSongs: React.FC<ArtistTotalSongsProps> = async (props) => {
 
 
 
-export default ArtistTotalSongs;
+export default ArtistTotalSongPagination;
