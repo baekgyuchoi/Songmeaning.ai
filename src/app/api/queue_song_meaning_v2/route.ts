@@ -55,6 +55,7 @@ export async function POST(req: Request) {
     const song_info = await req.json() as SongInfo
     try {      
         const song_lyrics = await getSongLyrics(song_info.genius_id)
+        console.log(song_lyrics)
         const prisma = new PrismaClient();
         await prisma.$connect()
 
@@ -69,7 +70,7 @@ export async function POST(req: Request) {
         })
         await prisma.$disconnect()
        
-        const shorted_lyrics = song_lyrics.slice(0,min(song_lyrics.length - 1, 5000))
+        const shorted_lyrics = song_lyrics.slice(0,min(song_lyrics.length - 1, 3000))
         const songMeaningContext = `Song: ${song_info.song_title}\nArtist: ${song_info.artist_name}\nLyrics: ${shorted_lyrics}\n\nMeaning:`
 
         const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: songMeaningContext + songMeaningPrompt }]

@@ -11,7 +11,7 @@ export const SongInfoSchema = z.object({
     artist_slug: z.string(),
     header_image_url: z.string(),
     song_art_url: z.string(),
-    release_date: z.string(),
+    release_date: z.string().optional(),
 })
 
 //array of messages validator
