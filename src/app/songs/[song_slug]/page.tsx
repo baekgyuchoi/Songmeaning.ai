@@ -116,7 +116,7 @@ export default async function SongPage({ params }: {
                             <CardTitle className="mt-12 text-4xl font-bold text-gray-800 flex justify-between">
                               <div>
                               
-                                <div className='flex'><p>{song_name}&nbsp;</p> <br></br> <div className="flex text-gray-600 hover:text-gray-500"> by &nbsp; <ArtistLink artist_id={song_info.artist_id} artist_name={song_info.artist_name} artist_slug={song_info.artist_slug}></ArtistLink></div></div>
+                                <div><p>{song_name}&nbsp;</p> <div className="flex text-gray-600 hover:text-gray-500"> <ArtistLink artist_id={song_info.artist_id} artist_name={song_info.artist_name} artist_slug={song_info.artist_slug}></ArtistLink></div></div>
                               </div>
                               
                             </CardTitle>

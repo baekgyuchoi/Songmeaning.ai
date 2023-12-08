@@ -67,7 +67,7 @@ const ArtistLink: React.FC<ArtistLinkProps> = (props) => {
                         </div>
                     ) : (
                         
-                        <div className="text-gray-600 underline">
+                        <div className="text-gray-600 ">
                             {props.artist_name}
                         </div>
                         

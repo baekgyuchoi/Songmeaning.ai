@@ -32,16 +32,8 @@ async function GetArtistSongs(artist_id: number, artist_name: string, current_pa
   }
   const data = await response.json();
   
-  let is_ft_artist = false
-  
   for (let song of data.response.songs) {
-    if (song.featured_artists ) {
-      for (let ft_artist of song.featured_artists) {
-        if (ft_artist.name.includes(artist_name)) {
-          is_ft_artist = true
-        }
-      }
-    }
+    
 
     if ((song.primary_artist.name.includes(artist_name)) ) {
       const songInfo: SongInfo = {
@@ -117,7 +109,7 @@ export default async function ArtistPage({
         // const songInfoArray = await QueueSong(params.artist_slug)
         const artist = await getArtistInfo(params.artist_slug)
         console.log(artist)
-        const response = await GetArtistSongs(artist!.genius_id, artist!.name,  page_number, 28)
+        const response = await GetArtistSongs(artist!.genius_id, artist!.name,  page_number, 48)
         const songInfoArray = response.songInfoArray
         const is_last_page = response.is_last_page
         if (is_last_page) {
