@@ -4,6 +4,7 @@ import React from 'react';
 import SearchItemButton from '../(search-page)/SearchItemButton';
 import BadgeSongItem from './BadgeSongItem';
 import Link from 'next/link';
+import { SongData } from '@/lib/validators/song_data_response';
 
 
 async function QueueSong(badge_name: string) {
@@ -29,7 +30,7 @@ async function QueueSong(badge_name: string) {
       }
   });
   
-  let songs = []
+  let songs: SongData[] = []
 
   for (let i = 0; i < Math.min(badgesOnSongs.length, top_many_songs); i++) {
       let badgeOnSong = badgesOnSongs[i]
@@ -41,7 +42,7 @@ async function QueueSong(badge_name: string) {
               badges: true,
               song_meaning: true,
           }
-      })
+      }) as SongData
       songs.push(song)
   }
   
@@ -50,7 +51,7 @@ async function QueueSong(badge_name: string) {
       await prisma.$disconnect()
       return null
   }
-  console.log(songs)
+
 
   await prisma.$disconnect()
   

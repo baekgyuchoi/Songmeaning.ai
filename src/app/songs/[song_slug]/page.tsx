@@ -5,8 +5,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { SongInfo } from '@/lib/validators/song_info';
 import SearchItemButton from '@/app/components/(search-page)/SearchItemButton';
 import { Suspense } from 'react';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import ArtistSongsScroll from '@/app/components/(song-page)/ArtistSongsScroll';
 import SongMeaningContent from '@/app/components/(song-page)/SongMeaningContent';
 import { Car } from 'lucide-react';
 import TrendingSongs from '@/app/components/TrendingSongs';
