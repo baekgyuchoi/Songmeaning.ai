@@ -28,7 +28,7 @@ const submitSearch = (searchQuery: string | null) => {
         value={searchQuery || ""}
         onChange={(event) => setSearchQuery(event.target.value)}
         onKeyDown={(event) => {if (event.key === 'Enter') {submitSearch(searchQuery)}}    }
-        className="px-5 py-1 sm:px-5 sm:py-3 flex-1 border-gray-300 text-black bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 rounded-full   placeholder:text-black-400"
+        className="px-5 py-1 sm:px-5 sm:py-3 flex-1 border-gray-300 text-black bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 rounded-full justify-center placeholder:text-black-400"
         placeholder="Search a song here"
       />
     </div>
