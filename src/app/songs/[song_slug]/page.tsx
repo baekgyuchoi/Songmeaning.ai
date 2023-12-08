@@ -43,7 +43,7 @@ async function QueueSong(song_slug_input: string) {
         }
     })
     }
-    console.log(song?.viewCount)
+  
     await prisma.$disconnect()
     return song
 }
@@ -65,7 +65,7 @@ export default async function SongPage({ params }: {
         const song_data = await QueueSong(params.song_slug) as SongData
           
         
-        console.log(song_data?.isValid)
+        console.log(song_data?.lyrics)
         if (song_data != null){
           console.log("songs in db")
             
