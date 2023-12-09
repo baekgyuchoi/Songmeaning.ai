@@ -94,7 +94,7 @@ export async function POST(req: Request) {
         }))
 
         const payload: OpenAIStreamPayload = {
-            model: 'gpt-3.5-turbo',
+            model: 'ft:gpt-3.5-turbo-1106:personal::8TTC6hNk',
             messages: outboundMessages,
             temperature: 0.8,
             top_p: 1,
