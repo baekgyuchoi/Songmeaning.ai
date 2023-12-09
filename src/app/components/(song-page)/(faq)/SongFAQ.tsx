@@ -33,8 +33,8 @@ const SongFAQ: React.FC<SongFAQProps> = async (props) => {
                     />
                 </div>
                 {faq_prompts.map((prompt, index) => (
-                    <div className='p-2 '>
-                        <SongFAQItem key={index} prompt={prompt[0]} question={prompt[1]} song_data={props.songData} faq_slug={props.songData.song_slug+"_faq_"+(index).toString()} />
+                    <div key={index} className='p-2 '>
+                        <SongFAQItem prompt={prompt[0]} question={prompt[1]} song_data={props.songData} faq_slug={props.songData.song_slug+"_faq_"+(index).toString()} />
                     </div>
                 ))
                 }
