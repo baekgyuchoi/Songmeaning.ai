@@ -53,7 +53,7 @@ const AlternateMeaningFAQContent: React.FC<AlternateMeaningFAQContentProps> = (p
                     setStreamContent(paragraphs);
                 }
 
-                console.log("done")
+     
                 const meaning_payload: FAQ = {
                     "song_slug": song_data.song_slug,
                     "faq_slug": props.faq_slug,
@@ -61,8 +61,7 @@ const AlternateMeaningFAQContent: React.FC<AlternateMeaningFAQContentProps> = (p
                     "answer": result,
                     "prompt": "given the song meaning and lyrics above, give an alternate meaning for the song that is qualitatively different from the given song meaning. Give a summary analysis paragraph (of how this alternate meaning is different), emotional journey paragraph (delve into a different take from the song meaning given above on an emotional journey this song can take the audience on), quote analysis (pull quotes as evidence to back up your alternate meaning), and conclusion (concluding upon the alternate meaning's outlook and insights gained) :\n\n"               
                 }
-                console.log(meaning_payload)
-                console.log(JSON.stringify(meaning_payload))
+     
                 const res = await fetch('/api/faq/post_alternate_meaning', {
                     method: 'POST',
                     headers: {
@@ -70,9 +69,8 @@ const AlternateMeaningFAQContent: React.FC<AlternateMeaningFAQContentProps> = (p
                     },
                     body: JSON.stringify(meaning_payload),
                 });
-                console.log("songmeaning created")
                 console.log(res)
-                        
+                
                     
                 }
                 } catch (error) {

@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     
     const faq_answer = await request.json() as FAQ
     
-    console.log(faq_answer)
+   
     // query if song_id exists in database or use song_slug instead
     // if song exists, return "song already exists"
     // if song does not exist, create song in database

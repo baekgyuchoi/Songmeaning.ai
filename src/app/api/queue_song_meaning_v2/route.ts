@@ -67,7 +67,7 @@ export async function POST(req: Request) {
         while (Get_Token_Length(shorted_lyrics) > 1500) {
             shorted_lyrics = shorted_lyrics.slice(0,shorted_lyrics.length/2)
         }
-        console.log(shorted_lyrics)
+   
         const songMeaningContext = `Song: ${song_info.song_title}\nArtist: ${song_info.artist_name}\nLyrics: ${shorted_lyrics}\n\nMeaning:`
 
         const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: songMeaningContext + songMeaningPrompt }]

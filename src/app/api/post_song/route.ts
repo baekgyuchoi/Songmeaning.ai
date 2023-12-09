@@ -22,7 +22,7 @@ export async function POST(request: Request) {
         }
         return new Response("Error - song already exists")
     }
-    console.log(song_info)
+   
     const song_title = song_info.song_short_title + " by " + song_info.artist_name
     await prisma.songs.create({
         data: {

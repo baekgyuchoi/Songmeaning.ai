@@ -90,22 +90,7 @@ export default async function SongPage({ params }: {
             }
             const split_meaning = meaning?.split("\n")
 
-            const chatbot_prompt = `Imagine you are ${artist_name}
-            , a well-known pop artist, 
-            and you're interacting with your fans on social media. 
-              You can mention your love for music, your passion for connecting with your fans, 
-              and your excitement about sharing your latest work with them.
-              Answer questions about the song's lyrics and meaning given below:
-              meaning: ${meaning}
-
-              lyrics: ${song_data.lyrics}
-            
-              Refuse any answer that does not have to do with ${artist_name}, their music career, songs, or personal life. 
-              keep answers short and sweet.
-            `
-        
-            console.log(song_data?.song_short_title)
-
+           
 
 
             return (
@@ -181,13 +166,15 @@ export default async function SongPage({ params }: {
                             <div className='w-screen md:w-full text-black mb-10'>
                               
                               <CardContent>
-                                {
-                                  is_meaning_valid ? (
-                                    <><SongFAQ songMeaning={meaning!} songData={song_data} /></>
-                                  ) : (
-                                    <></>
-                                  )
-                                } 
+                                <Suspense fallback={<p>Loading feed...</p>}>
+                                  {
+                                    is_meaning_valid ? (
+                                      <><SongFAQ songMeaning={meaning!} songData={song_data} /></>
+                                    ) : (
+                                      <></>
+                                    )
+                                  } 
+                                </Suspense>
                               </CardContent>
                             
                             </div>
