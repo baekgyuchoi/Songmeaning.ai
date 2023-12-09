@@ -120,7 +120,7 @@ export default async function SongPage({ params }: {
                         
                           <div className='flex flex-col  items-center '> 
                             <div className="w-full md:pr-4 md:mr-4 md:pl-4">
-                              <CardContent className="p-1 md:p-3  mb-12" style={{ minHeight: '600px', minWidth: '200px' }}>
+                              <CardContent className="p-1 md:p-3  mb-5" style={{ minHeight: '600px', minWidth: '200px' }}>
                                   {
                                     song_data?.isValid ? (
                                       <div className='w-full'>
@@ -163,6 +163,21 @@ export default async function SongPage({ params }: {
                                 
                               </CardContent>
                             </div>
+                            <div className='flex w-full mb-12'>
+                              <CardContent>
+                              <div className='flex flex-col text-black items-start justify-between ml-8'>
+                                
+                                
+                                <Suspense fallback={<p></p>}>
+                                  <SongBadges songData = {song_data}/>
+                                </Suspense>
+                              </div>
+                              </CardContent>
+                              <div>
+
+                              </div>
+                 
+                            </div>
                             <div className='w-screen md:w-full text-black mb-10'>
                               
                               <CardContent>
@@ -178,24 +193,7 @@ export default async function SongPage({ params }: {
                               </CardContent>
                             
                             </div>
-                            <div className='flex w-full '>
-                              <CardContent>
-                              <div className='flex flex-col text-black items-start justify-between ml-10'>
-                                
-                                <div className='flex items-center'>
-                                  
-                                  <h1 className='text-bold text-black p-2 '> Badges  </h1> <span className='text-gray-500 text-sm'> given by ai</span>
-                                </div>
-                                <Suspense fallback={<p></p>}>
-                                  <SongBadges songData = {song_data}/>
-                                </Suspense>
-                              </div>
-                              </CardContent>
-                              <div>
-
-                              </div>
-                 
-                            </div>
+                            
                             
                             <div className='  flex text-black flex-col lg:flex-row items-start '>
                               
