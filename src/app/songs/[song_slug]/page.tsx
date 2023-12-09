@@ -103,6 +103,10 @@ export default async function SongPage({ params }: {
               keep answers short and sweet.
             `
         
+            console.log(song_data?.song_short_title)
+
+
+
             return (
                 <main className="min-w-screen flex flex-col items-center md:px-4 py-8 ">
                     
