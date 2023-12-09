@@ -6,6 +6,7 @@ import { SongData } from '@/lib/validators/song_data_response';
 import { Song } from 'genius-lyrics';
 import LoadingFAQ from './LoadingFAQ';
 import { FAQ } from '@/lib/validators/FAQ';
+import { useRouter } from 'next/navigation'
 
 
 interface AlternateMeaningFAQContentProps {
@@ -20,7 +21,7 @@ const AlternateMeaningFAQContent: React.FC<AlternateMeaningFAQContentProps> = (p
     console.log("song meaning content rendered")
     const [streamContent, setStreamContent] = useState<string[]>([]);
     const song_data = props.song_data
-   
+    const router = useRouter()
     let first_render = true
     const fetchData = async (song_data: SongData) => {
         try {
@@ -70,7 +71,7 @@ const AlternateMeaningFAQContent: React.FC<AlternateMeaningFAQContentProps> = (p
                     body: JSON.stringify(meaning_payload),
                 });
                 console.log(res)
-                
+                router.refresh()
                     
                 }
                 } catch (error) {

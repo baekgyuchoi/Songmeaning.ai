@@ -19,8 +19,8 @@ async function GetFAQ(faq_slug: string) {
     const faq = await prisma.fAQs.findUnique({
       where: {
         faq_slug: faq_slug
-      }
-    })
+      },
+    },)
     await prisma.$disconnect()
   
     if (faq == null) {
@@ -31,7 +31,7 @@ async function GetFAQ(faq_slug: string) {
   }
 
 const AlternateMeaningFAQContainer: React.FC<AlternateMeaningFAQContainerProps> = async (props) => {
- 
+   
     const faq_in_db = await GetFAQ(props.faq_slug)
     const split_meaning = faq_in_db?.answer.split("\n\n")
     return (

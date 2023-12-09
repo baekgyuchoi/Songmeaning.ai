@@ -1,7 +1,7 @@
 export const songs_faq_prompts = [
-    [`Given the song, artist, lyrics, and meaning above: provide 2 songs by this artist that are similar to this song and deeply analyze the similarities in meanings. Please break this analysis down for each song. DO NOT include more than 2 quotes from each song's lyrics. 
+    [`Given the above information: provide 2 songs by this artist that are similar to this song and deeply analyze the similarities in meanings. Please break this analysis down for each song. DO NOT include more than 2 quotes from each song's lyrics. 
     `,"Songs with Lyrics Similar to This Song"],
-    [`Given the song, artist, lyric, and meanings, what occasion, setting, atmosphere would suit this song? Give an in-depth reasoning for each decision.  
+    [`Given the above information: what setting would best suit this song? Give an in-depth reasoning regarding the mood, atmosphere, and occasion for each decision.  
     `,"Best Atmosphere/Setting for This Song"],
     [`Given two words that the song represents, give a good explanation about why each word fits with the song's lyrics. one paragraph for each word.
     `,"Breakdown of Song Badges"],

@@ -48,6 +48,7 @@ const FAQAlternateMeaning: React.FC<SongFAQItemProps> = async (props) => {
                     </AccordionTrigger>
                     <AccordionContent className='font-sans'>
                       <AlternateMeaningFAQContainer prompt={props.prompt} faq_slug={props.faq_slug} song_data={props.song_data}  />
+                      {/* //REGENERATE FAQ BUTTON IN FUTURE */}
                     </AccordionContent>
                     
                 </div>

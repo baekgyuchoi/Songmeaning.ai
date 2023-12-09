@@ -7,6 +7,7 @@ import { SongData } from '@/lib/validators/song_data_response';
 import LoadingFAQ from './LoadingFAQ';
 import { FAQ } from '@/lib/validators/FAQ';
 import { songs_faq_prompts } from '@/app/helpers/constants/songs-faq-prompt';
+import { useRouter } from 'next/navigation'
 
 
 interface FAQItemContentProps {
@@ -21,7 +22,7 @@ const FAQItemContent: React.FC<FAQItemContentProps> = (props) => {
     console.log("song meaning content rendered")
     const [streamContent, setStreamContent] = useState<string[]>([]);
     const song_data = props.song_data
-    
+    const router = useRouter()
     let first_render = true
     const request_body = {"song_data": song_data, "faq_index": props.faq_index}
     const fetchData = async (song_data: SongData) => {
@@ -72,6 +73,7 @@ const FAQItemContent: React.FC<FAQItemContentProps> = (props) => {
                         body: JSON.stringify(meaning_payload),
                     });
                     console.log("songmeaning created")
+                    router.refresh()
                     }catch(error){
                         console.log("error - songmeaning not created")
                         console.log(error)
