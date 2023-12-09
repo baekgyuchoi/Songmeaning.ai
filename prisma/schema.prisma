@@ -71,22 +71,15 @@ model SongMeaning {
   createdAt DateTime @default(now())
 }
 
-model FAQAnswers {
-  id        Int      @id @default(autoincrement())
-  song_slug String   @unique
-  FAQs      FAQs[]   
-  createdAt DateTime @default(now())
-  
-}
 
 model FAQs {
   id        Int      @id @default(autoincrement())
-  faq_slug  String   
+  faq_slug  String   @unique
   song_slug String  
   question  String   @db.Text
   prompt    String   @db.Text
   answer    String   @db.Text
-  FAQAnswer FAQAnswers @relation(fields: [song_slug], references: [song_slug])
+
   createdAt DateTime @default(now())
 
   @@index([song_slug, faq_slug])

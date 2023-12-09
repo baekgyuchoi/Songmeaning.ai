@@ -1,10 +1,12 @@
 'use client'
-import { SongInfo } from '@/lib/validators/song_info';
+
 import React, { Suspense, useEffect, useState } from 'react';
-import LoadingQueue from '../../(search-page)/LoadingQueue';
+
 import { SongData } from '@/lib/validators/song_data_response';
-import { Song } from 'genius-lyrics';
-import { request } from 'http';
+
+import LoadingFAQ from './LoadingFAQ';
+import { FAQ } from '@/lib/validators/FAQ';
+import { songs_faq_prompts } from '@/app/helpers/constants/songs-faq-prompt';
 
 
 interface FAQItemContentProps {
@@ -19,21 +21,7 @@ const FAQItemContent: React.FC<FAQItemContentProps> = (props) => {
     console.log("song meaning content rendered")
     const [streamContent, setStreamContent] = useState<string[]>([]);
     const song_data = props.song_data
-    const song_info: SongInfo = {
-        song_slug: song_data.song_slug,
-        song_title: song_data.song_title,
-        artist_name: song_data.artist_name,
-        release_date: song_data.release_date || "",
-        artist_id: song_data.artist_id,
-        header_image_url: song_data.header_image_url,
-        song_art_url: song_data.song_image_url,
-        genius_id: song_data.genius_id,
-        song_short_title: song_data.song_short_title,
-        artist_slug: song_data.artist_slug,
-        genius_url: song_data.genius_url,
-
-
-    }
+    
     let first_render = true
     const request_body = {"song_data": song_data, "faq_index": props.faq_index}
     const fetchData = async (song_data: SongData) => {
@@ -68,12 +56,15 @@ const FAQItemContent: React.FC<FAQItemContentProps> = (props) => {
                 }
 
                 console.log("done")
-                const meaning_payload = {
+                const meaning_payload: FAQ = {
                     song_slug: song_data.song_slug,
-                    meaning: result
+                    question: songs_faq_prompts[props.faq_index][1],
+                    answer: result,
+                    faq_slug: props.faq_slug,
+                    prompt: songs_faq_prompts[props.faq_index][0]
                 }
                 try{
-                    await fetch('/api/post_song_meaning', {
+                    await fetch('/api/faq/post_FAQ_item', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -106,7 +97,7 @@ const FAQItemContent: React.FC<FAQItemContentProps> = (props) => {
                     {streamContent.map((paragraph, i) => {
                         return (
                             <p key={i} 
-                            className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-500">
+                            className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-800">
                                 {paragraph}
                             </p>
                         )
@@ -115,7 +106,7 @@ const FAQItemContent: React.FC<FAQItemContentProps> = (props) => {
             ):(
                 <div className='flex items-center justify-center'>
                     <div className='mt-24'>
-                        <LoadingQueue songInfo={song_info}/>
+                        <LoadingFAQ />
                     </div>
                 </div>
             )}

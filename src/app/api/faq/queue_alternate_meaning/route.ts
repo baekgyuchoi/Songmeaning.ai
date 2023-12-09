@@ -36,11 +36,11 @@ export async function POST(req: Request) {
     await prisma.$disconnect()
     
     
-    const songMeaningContext = `Song: ${song_data.song_title}\nArtist: ${song_data.artist_name}\nLyrics: ${song_lyrics}\n\nMeaning: ${song_meaning} \n\n`
+    const songMeaningContext = `Song: ${song_data.song_title}\nArtist: ${song_data.artist_name}\n`
     const songMeaningPrompt = `given the song meaning and lyrics above, give an alternate meaning for the song that is qualitatively different from the given song meaning. Give a summary analysis paragraph (of how this alternate meaning is different), emotional journey paragraph (delve into a different take from the song meaning given above on an emotional journey this song can take the audience on), quote analysis (pull quotes as evidence to back up your alternate meaning), and conclusion (concluding upon the alternate meaning's outlook and insights gained) :\n\n`
 
 
-    const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: songMeaningContext + songMeaningPrompt }]
+    const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: "Within 400 words, answer the following prompt: \n" + songMeaningContext + songMeaningPrompt  }]
     const parsedMessages = MessageArraySchema.parse(messages)
 
     const outboundMessages: ChatGPTMessage[] = parsedMessages.map((message) => ({

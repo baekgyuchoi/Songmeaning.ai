@@ -32,8 +32,10 @@ async function GetFAQ(faq_slug: string) {
 
 const SongFAQItem: React.FC<SongFAQItemProps> = async (props) => {
  
- const faq_index = parseInt(props.faq_slug.split("_faq_")[1])
-  
+  const faq_index = parseInt(props.faq_slug.split("_faq_")[1])
+  const faq_in_db = await GetFAQ(props.faq_slug)
+  const split_meaning = faq_in_db?.answer.split("\n\n")
+
   
   return (
     <div>
@@ -48,9 +50,18 @@ const SongFAQItem: React.FC<SongFAQItemProps> = async (props) => {
                         {props.question}
                     </AccordionTrigger>
                     <AccordionContent className='font-sans'>
-                      <div className='p-8'>
-                        <FAQItemContent song_data={props.song_data} faq_index={faq_index} faq_slug={props.faq_slug} />
-                      </div>
+                      {faq_in_db != null ? (
+                        <div className='p-8'>
+                          {split_meaning?.map((paragraph, index) => (
+                            <p key={index} className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-800">{paragraph}</p>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className='p-8'>
+                          <FAQItemContent song_data={props.song_data} faq_index={faq_index} faq_slug={props.faq_slug} />
+                        </div>
+                      )}
+                      
                         
                     </AccordionContent>
                     

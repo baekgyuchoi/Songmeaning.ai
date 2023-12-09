@@ -4,11 +4,15 @@ import React, { Suspense, useEffect, useState } from 'react';
 import LoadingQueue from '../../(search-page)/LoadingQueue';
 import { SongData } from '@/lib/validators/song_data_response';
 import { Song } from 'genius-lyrics';
+import LoadingFAQ from './LoadingFAQ';
+import { FAQ } from '@/lib/validators/FAQ';
 
 
 interface AlternateMeaningFAQContentProps {
     // Define your component props here
     song_data: SongData
+    faq_slug: string
+    prompt: string
   }
   
 
@@ -16,21 +20,7 @@ const AlternateMeaningFAQContent: React.FC<AlternateMeaningFAQContentProps> = (p
     console.log("song meaning content rendered")
     const [streamContent, setStreamContent] = useState<string[]>([]);
     const song_data = props.song_data
-    const song_info: SongInfo = {
-        song_slug: song_data.song_slug,
-        song_title: song_data.song_title,
-        artist_name: song_data.artist_name,
-        release_date: song_data.release_date || "",
-        artist_id: song_data.artist_id,
-        header_image_url: song_data.header_image_url,
-        song_art_url: song_data.song_image_url,
-        genius_id: song_data.genius_id,
-        song_short_title: song_data.song_short_title,
-        artist_slug: song_data.artist_slug,
-        genius_url: song_data.genius_url,
-
-
-    }
+   
     let first_render = true
     const fetchData = async (song_data: SongData) => {
         try {
@@ -64,23 +54,26 @@ const AlternateMeaningFAQContent: React.FC<AlternateMeaningFAQContentProps> = (p
                 }
 
                 console.log("done")
-                const meaning_payload = {
-                    song_slug: song_data.song_slug,
-                    meaning: result
+                const meaning_payload: FAQ = {
+                    "song_slug": song_data.song_slug,
+                    "faq_slug": props.faq_slug,
+                    "question": props.prompt,
+                    "answer": result,
+                    "prompt": "given the song meaning and lyrics above, give an alternate meaning for the song that is qualitatively different from the given song meaning. Give a summary analysis paragraph (of how this alternate meaning is different), emotional journey paragraph (delve into a different take from the song meaning given above on an emotional journey this song can take the audience on), quote analysis (pull quotes as evidence to back up your alternate meaning), and conclusion (concluding upon the alternate meaning's outlook and insights gained) :\n\n"               
                 }
-                try{
-                    await fetch('/api/post_song_meaning', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(meaning_payload),
-                    });
-                    console.log("songmeaning created")
-                    }catch(error){
-                        console.log("error - songmeaning not created")
-                        console.log(error)
-                    }
+                console.log(meaning_payload)
+                console.log(JSON.stringify(meaning_payload))
+                const res = await fetch('/api/faq/post_alternate_meaning', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(meaning_payload),
+                });
+                console.log("songmeaning created")
+                console.log(res)
+                        
+                    
                 }
                 } catch (error) {
                     console.error('Error:', error);
@@ -102,7 +95,7 @@ const AlternateMeaningFAQContent: React.FC<AlternateMeaningFAQContentProps> = (p
                     {streamContent.map((paragraph, i) => {
                         return (
                             <p key={i} 
-                            className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-500">
+                            className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-800">
                                 {paragraph}
                             </p>
                         )
@@ -111,7 +104,7 @@ const AlternateMeaningFAQContent: React.FC<AlternateMeaningFAQContentProps> = (p
             ):(
                 <div className='flex items-center justify-center'>
                     <div className='mt-24'>
-                        <LoadingQueue songInfo={song_info}/>
+                        <LoadingFAQ />
                     </div>
                 </div>
             )}
