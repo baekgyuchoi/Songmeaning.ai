@@ -12,7 +12,7 @@ return (
         </div>
         
         <div className="w-1/2 flex items-center justify-center">
-          <div className="w-full md:w-1/2">
+          <div className="w-full md:w-2/3 lg:w-1/2" >
             <SearchInput />
           </div>
         
