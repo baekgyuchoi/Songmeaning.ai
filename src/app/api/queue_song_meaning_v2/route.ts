@@ -20,12 +20,13 @@ import OpenAI from 'openai'
 import { Message, MessageArraySchema } from "@/lib/validators/message";
 import { ChatGPTMessage, OpenAIStream, OpenAIStreamPayload } from "@/lib/openai-stream";
 import { nanoid } from "nanoid";
-import { get_encoding, encoding_for_model } from "@dqbd/tiktoken";
+import { get_encoding } from "@dqbd/tiktoken";
 
 
 function Get_Token_Length(input:string) {
     const encoding = get_encoding("cl100k_base")
     const tokens = encoding.encode(input)
+    encoding.free()
     return tokens.length
     
 }
