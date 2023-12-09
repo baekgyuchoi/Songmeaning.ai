@@ -5,13 +5,12 @@ import { songMeaningPrompt } from "@/app/helpers/constants/queue-songmeaning-pro
 import { Message, MessageArraySchema } from "@/lib/validators/message";
 import { ChatGPTMessage, OpenAIStream, OpenAIStreamPayload } from "@/lib/openai-stream";
 import { nanoid } from "nanoid";
-import { get_encoding } from "@dqbd/tiktoken";
+import { getEncoding } from "js-tiktoken";
 
 
 function Get_Token_Length(input:string) {
-    const encoding = get_encoding("cl100k_base")
-    const tokens = encoding.encode(input)
-    encoding.free()
+    const encoding = getEncoding("cl100k_base");
+    const tokens = encoding.encode(input);
     return tokens.length
     
 }

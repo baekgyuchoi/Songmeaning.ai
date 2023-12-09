@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@dqbd/tiktoken": "^1.0.7",
     "@nextui-org/react": "^2.2.9",
     "@prisma/client": "^5.5.2",
     "@radix-ui/react-accordion": "^1.1.2",
@@ -22,6 +21,7 @@
     "eventsource-parser": "^1.1.1",
     "framer-motion": "^10.6.8",
     "genius-lyrics": "^4.4.6",
+    "js-tiktoken": "^1.0.8",
     "lucide-react": "^0.290.0",
     "nanoid": "^5.0.2",
     "next": "14.0.0",
