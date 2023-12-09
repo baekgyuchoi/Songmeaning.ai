@@ -84,7 +84,7 @@ export default async function SongPage({ params }: {
                 genius_url: song_data?.genius_url,
                 header_image_url: song_data?.header_image_url,
                 song_art_url: song_data?.song_image_url,
-                release_date: (song_data?.release_date == null)? "" : song_data.release_date,
+                release_date: song_data.release_date || "",
                 song_short_title: song_data?.song_short_title,
             }
             const split_meaning = meaning?.split("\n")

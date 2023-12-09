@@ -43,7 +43,7 @@ async function QueueArtist(artist_slug_input: string) {
           song_short_title: artist_song?.song_short_title,
           header_image_url: artist_song?.header_image_url,
           song_art_url: artist_song?.song_image_url,
-          release_date: artist_song?.release_date? artist_song.release_date: "",
+          release_date: artist_song.release_date || "",
         }
         songs.push(song)
       }

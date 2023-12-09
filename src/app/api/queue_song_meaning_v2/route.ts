@@ -1,22 +1,7 @@
-// setIsMessageUpdating(true)
-
-//       const reader = stream.getReader()
-//       const decoder = new TextDecoder()
-//       let done = false
-
-//       while (!done) {
-//         const { value, done: doneReading } = await reader.read()
-//         done = doneReading
-//         const chunkValue = decoder.decode(value)
-//         updateMessage(id, (prev) => prev + chunkValue)
-//       }
-
-
 import * as Genius from "genius-lyrics";
 import { SongInfo } from "@/lib/validators/song_info";
 import { PrismaClient } from '@prisma/client'
 import { songMeaningPrompt } from "@/app/helpers/constants/queue-songmeaning-prompt";
-import OpenAI from 'openai'  
 import { Message, MessageArraySchema } from "@/lib/validators/message";
 import { ChatGPTMessage, OpenAIStream, OpenAIStreamPayload } from "@/lib/openai-stream";
 import { nanoid } from "nanoid";

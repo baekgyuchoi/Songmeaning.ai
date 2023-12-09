@@ -33,7 +33,7 @@ async function getSearchResults(searchQuery: string | undefined) {
             artist_slug: hit.result.primary_artist.url.split('/').pop(),
             header_image_url: hit.result.header_image_url,
             song_art_url: hit.result.song_art_image_url,
-            release_date: hit.result.release_date_for_display,
+            release_date: hit.result.release_date_for_display || "",
         };
         songInfoArray.push(songInfo);
     }

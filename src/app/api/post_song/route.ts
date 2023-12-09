@@ -36,7 +36,7 @@ export async function POST(request: Request) {
             song_short_title: song_info.song_short_title,
             header_image_url: song_info.header_image_url,
             song_image_url: song_info.song_art_url,
-            release_date: song_info.release_date,
+            release_date: song_info.release_date || "",
         }
     })
     await prisma.$disconnect()
@@ -47,8 +47,4 @@ export async function POST(request: Request) {
 
 
 
-// async function updateLyrics(songInfo: SongInfo) {
-//     const Client = new Genius.Client("oNwFSu_AIjtrw3owTLM9p_RYc2o9EjyJTNv9Lf05GDgl7adlODR9DQwiUlz8FzDZ");
-//     const search = await Client.songs.get(songInfo.genius_id);
-//     const lyrics = await search[0].lyrics();
-// }   
+ 
