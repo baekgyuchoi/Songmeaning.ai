@@ -16,6 +16,7 @@ import ChatPopover from '@/app/components/(chat-components)/ChatPopover';
 import ArtistLink from '@/app/components/(song-page)/ArtistLink';
 import SongChat from '@/app/components/(chat-components)/SongChat';
 import { SongData } from '@/lib/validators/song_data_response';
+import SongFAQ from '@/app/components/(song-page)/(faq)/SongFAQ';
 
 
 
@@ -178,7 +179,17 @@ export default async function SongPage({ params }: {
                               </CardContent>
                             </div>
                             <div className='w-screen md:w-full text-black mb-10'>
-                              <SongChat song_info={song_info} chatbot_prompt={chatbot_prompt}/>
+                              
+                              <CardContent>
+                                {
+                                  is_meaning_valid ? (
+                                    <><SongFAQ songMeaning={meaning!} songData={song_data} /></>
+                                  ) : (
+                                    <></>
+                                  )
+                                } 
+                              </CardContent>
+                            
                             </div>
                             <div className='flex w-full '>
                               <CardContent>
