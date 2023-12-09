@@ -30,7 +30,7 @@ export async function POST(req: Request) {
         FAQContext = `Artist: ${song_data.artist_name}\n\n`
     }
     if (faq_index == 2) {
-        FAQContext = `Two Words: ${song_data.two_word_description}\n\n`
+        FAQContext = `Song: ${song_data.song_title}\nArtist: ${song_data.artist_name} Two Words: ${song_data.two_word_description}\n\n`
     }
     if (faq_index == 3) {
         FAQContext = `Song: ${song_data.song_title}\nArtist: ${song_data.artist_name}\nLyrics: ${song_lyrics}\n\nMeaning: ${song_meaning} \n\n`
