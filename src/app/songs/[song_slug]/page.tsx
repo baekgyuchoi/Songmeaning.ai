@@ -17,9 +17,15 @@ import ArtistLink from '@/app/components/(song-page)/ArtistLink';
 import SongChat from '@/app/components/(chat-components)/SongChat';
 import { SongData } from '@/lib/validators/song_data_response';
 import SongFAQ from '@/app/components/(song-page)/(faq)/SongFAQ';
+import FormattedMeaningContent from '@/app/components/(song-page)/FormattedMeaningContent';
 
 
-
+type formatted_meaning = {
+  "summary_analysis": string,
+  "emotional_journey": string,
+  "quotes": string,
+  "conclusion": string,
+}
 
 async function QueueSong(song_slug_input: string) {
     const prisma = new PrismaClient()
@@ -88,9 +94,50 @@ export default async function SongPage({ params }: {
                 release_date: song_data.release_date || "",
                 song_short_title: song_data?.song_short_title,
             }
-            const split_meaning = meaning?.split("\n")
+    
+            
+            const song_meaning_split = meaning?.split("\n")
+            
+            let formatted_meaning : formatted_meaning = {} as formatted_meaning
+            console.log(song_meaning_split)
+            let text: string[] = []
+            
+            if (song_meaning_split != null) {
+              for(let paragraph of song_meaning_split){
+                if (paragraph == "") {
+                  continue
+                }
+                console.log(paragraph)
+          
+                if (paragraph == "Summary Analysis:") { 
+                  
+                 
 
-           
+                }
+                else if (paragraph.includes("Emotional Journey:")) {
+                  formatted_meaning.summary_analysis = text.join("\n")
+                  text = []
+                  
+
+                }
+                else if (paragraph.includes("Conclusion:")) {
+                  formatted_meaning.quotes = text.join("\n")
+                  text = []
+
+                }
+                else if (paragraph.includes("Quote Analysis:")) {
+                  formatted_meaning.emotional_journey = text.join("\n")
+                  text = []
+                  
+
+                }
+                else{
+                  text.push(paragraph)
+                }
+              }
+              formatted_meaning.conclusion = text.join("\n")
+              
+            }
 
 
             return (
@@ -102,20 +149,13 @@ export default async function SongPage({ params }: {
                   
                         <div className=''>
                           <CardHeader>
-                            <CardTitle className="mt-12 text-4xl font-bold text-gray-800 flex justify-between">
+                            <CardTitle className="mt-12 mb-6 text-4xl font-bold text-gray-800 flex justify-between">
                               <div>
                               
-                                <div><p>{song_name}&nbsp;</p> <div className="flex text-gray-600 hover:text-gray-500"> <ArtistLink artist_id={song_info.artist_id} artist_name={song_info.artist_name} artist_slug={song_info.artist_slug}></ArtistLink></div></div>
+                                <div><p>{song_name}&nbsp;</p> <div className="flex justify-start items-start text-gray-600 hover:text-gray-500 mt-2"> <ArtistLink artist_id={song_info.artist_id} artist_name={song_info.artist_name} artist_slug={song_info.artist_slug}></ArtistLink></div></div>
                               </div>
                               
                             </CardTitle>
-                            
-                            <div className="flex justify-start w-full ">
-                              <CardDescription className="mt-16">
-                                <>Created: {created_at}</>
-                              </CardDescription>
-                            </div>
-                            
                           </CardHeader>
                         
                           <div className='flex flex-col  items-center '> 
@@ -126,14 +166,15 @@ export default async function SongPage({ params }: {
                                       <div className='w-full'>
                                       {
                                         is_meaning_valid ? (
-                                          <>{split_meaning?.map((paragraph, i) => (
-                                            <p
-                                              key={i}
-                                              className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-700 md:hover:text-indigo-500" 
-                                            >
-                                              {paragraph}
-                                            </p>
-                                          ))}</>
+                                          // <>{split_meaning?.map((paragraph, i) => (
+                                          //   <p
+                                          //     key={i}
+                                          //     className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-700 md:hover:text-indigo-500" 
+                                          //   >
+                                          //     {paragraph}
+                                          //   </p>
+                                          // ))}</>
+                                          <FormattedMeaningContent formatted_meaning={formatted_meaning} />
                                         ) : (
                                           <Suspense fallback={<div className='flex items-center bg-black'>Loading feed...</div>}>
                                             <SongMeaningContent song_info={song_info} />
@@ -196,6 +237,12 @@ export default async function SongPage({ params }: {
                             
                             
                             <div className='  flex text-black flex-col lg:flex-row items-start '>
+
+                              <CardContent className="">                               
+                                <Suspense fallback={<p>Loading feed...</p>}>
+                                  <MoreFromArtist artist_id={song_data.artist_id} song_slug={song_data.song_slug} artist_name={song_data.artist_name} artist_slug={song_data.artist_slug} />
+                                </Suspense>
+                              </CardContent>
                               
                               <CardContent className="">
                                 <Suspense fallback={<p>Loading feed...</p>}>
@@ -203,11 +250,7 @@ export default async function SongPage({ params }: {
                                 </Suspense>
                               </CardContent>
                               
-                              <CardContent className="">                               
-                                <Suspense fallback={<p>Loading feed...</p>}>
-                                  <MoreFromArtist artist_id={song_data.artist_id} song_slug={song_data.song_slug} artist_name={song_data.artist_name} artist_slug={song_data.artist_slug} />
-                                </Suspense>
-                              </CardContent>
+                             
                             
                             </div>
                           </div>

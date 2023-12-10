@@ -54,7 +54,7 @@ const ArtistLink: React.FC<ArtistLinkProps> = (props) => {
         router.push("/artists/" + props.artist_slug);
     };
     return (
-        <div className='flex items-center justify-center'>
+        <div className='flex items-start justify-start'>
             <button
                 disabled = {isLoading}
                 onClick={buttonClick}
@@ -67,7 +67,7 @@ const ArtistLink: React.FC<ArtistLinkProps> = (props) => {
                         </div>
                     ) : (
                         
-                        <div className="text-gray-600 ">
+                        <div className="text-gray-600">
                             {props.artist_name}
                         </div>
                         

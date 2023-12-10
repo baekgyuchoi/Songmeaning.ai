@@ -2,6 +2,7 @@
 import { SongInfo } from '@/lib/validators/song_info';
 import React, { Suspense, useEffect, useState } from 'react';
 import LoadingQueue from '../(search-page)/LoadingQueue';
+import { useRouter } from 'next/navigation';
 
 
 interface SongMeaningContentProps {
@@ -12,6 +13,7 @@ interface SongMeaningContentProps {
 
 const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
     console.log("song meaning content rendered")
+    const router = useRouter()
     const [streamContent, setStreamContent] = useState<string[]>([]);
     const song_info = props.song_info;
     let first_render = true
@@ -60,6 +62,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
                         body: JSON.stringify(meaning_payload),
                     });
                     console.log("songmeaning created")
+                    router.refresh()
                     }catch(error){
                         console.log("error - songmeaning not created")
                         console.log(error)

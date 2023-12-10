@@ -70,7 +70,7 @@ const AlternateMeaningFAQContent: React.FC<AlternateMeaningFAQContentProps> = (p
                     },
                     body: JSON.stringify(meaning_payload),
                 });
-                console.log(res)
+          
                 router.refresh()
                     
                 }
