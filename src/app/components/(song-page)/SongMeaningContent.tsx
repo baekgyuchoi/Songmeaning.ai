@@ -88,7 +88,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
                     {streamContent.map((paragraph, i) => {
                         return (
                             <p key={i} 
-                            className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-500">
+                            className="text-gray-800 mt-4 text-base sm:text-lg transition duration-300 ">
                                 {paragraph}
                             </p>
                         )

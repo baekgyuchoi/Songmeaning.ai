@@ -20,7 +20,7 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
         return(
             <>
                 <p
-                    className="text-gray-800 ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300 hover:text-indigo-700 md:hover:text-indigo-500" 
+                    className="text-gray-800 ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300" 
                 >
                     {formatted_meaning.conclusion}
                 </p>
@@ -34,7 +34,7 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
                 <div className='w-full flex justify-start border-b font-mono font-bold '><h1 className='ml-2'>Summary Analysis</h1></div>
                 <p
                 
-                    className="ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300 hover:text-indigo-700 md:hover:text-indigo-500" 
+                    className="ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300 " 
                 >
                     {formatted_meaning.summary_analysis}
                 </p>
@@ -44,7 +44,7 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
                 <div className='w-full flex justify-start border-b font-mono font-bold '><h1 className='ml-2'>Emotional Journey</h1></div>
                 <p
                 
-                    className="ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300 hover:text-indigo-700 md:hover:text-indigo-500" 
+                    className="ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300 " 
                 >
                     {formatted_meaning.emotional_journey}
                 </p>
@@ -54,7 +54,7 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
                 <div className='w-full flex justify-start border-b font-mono font-bold'><h1 className='ml-2'>Quotes</h1></div>
                 <div
                 
-                    className="ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300 hover:text-indigo-700 md:hover:text-indigo-500" 
+                    className="ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300 " 
                 >
                     {formatted_meaning.quotes.split('\n').map((item, i) => {
                       
@@ -81,7 +81,7 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
                 <div className='w-full flex justify-start border-b font-mono font-bold'><h1 className='ml-2'>Conclusion</h1></div>
                 <p
                 
-                    className="ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300 hover:text-indigo-700 md:hover:text-indigo-500" 
+                    className="ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300" 
                 >
                     {formatted_meaning.conclusion}
                 </p>

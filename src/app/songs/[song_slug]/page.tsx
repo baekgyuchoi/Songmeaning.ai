@@ -169,7 +169,7 @@ export default async function SongPage({ params }: {
                                           // <>{split_meaning?.map((paragraph, i) => (
                                           //   <p
                                           //     key={i}
-                                          //     className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-700 md:hover:text-indigo-500" 
+                                          //     className="text-gray-800 mt-4 text-lg transition duration-300 " 
                                           //   >
                                           //     {paragraph}
                                           //   </p>
@@ -204,21 +204,7 @@ export default async function SongPage({ params }: {
                                 
                               </CardContent>
                             </div>
-                            <div className='flex w-full mb-12'>
-                              <CardContent>
-                              <div className='flex flex-col text-black items-start justify-between ml-8'>
-                                
-                                
-                                <Suspense fallback={<p></p>}>
-                                  <SongBadges songData = {song_data}/>
-                                </Suspense>
-                              </div>
-                              </CardContent>
-                              <div>
-
-                              </div>
-                 
-                            </div>
+                         
                             <div className='w-screen md:w-full text-black mb-10'>
                               
                               <CardContent>

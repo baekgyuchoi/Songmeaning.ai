@@ -38,11 +38,8 @@ const SongFAQItem: React.FC<SongFAQItemProps> = async (props) => {
   const faq_in_db = await GetFAQ(props.faq_slug)
   const split_meaning = faq_in_db?.answer.split("\n\n")
   let question = props.question
-  let is_badges_faq = false
-  if (props.faq_slug.split("_faq_")[1] == "2") {
-    is_badges_faq = true
-    question = "Breakdown of Song "
-  }
+  
+ 
   
   return (
     <div>
@@ -57,18 +54,17 @@ const SongFAQItem: React.FC<SongFAQItemProps> = async (props) => {
                       <div className='flex justify-start'>
                         <div className='mr-2'>{question}</div>
                        
-                        {is_badges_faq ? (<Badge> Badges</Badge>):(<></>)}
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent className='font-sans'>
+                    <AccordionContent className='font-sans text-base sm:text-lg'>
                       {faq_in_db != null ? (
-                        <div className='p-8'>
+                        <div className='p-4 sm:p-8 '>
                           {split_meaning?.map((paragraph, index) => (
-                            <p key={index} className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-800">{paragraph}</p>
+                            <p key={index} className="text-gray-800 mt-4  transition duration-300 ">{paragraph}</p>
                           ))}
                         </div>
                       ) : (
-                        <div className='p-8'>
+                        <div className='p-4 sm:p-8'>
                           <FAQItemContent song_data={props.song_data} faq_index={faq_index} faq_slug={props.faq_slug} />
                         </div>
                       )}

@@ -99,7 +99,7 @@ const FAQItemContent: React.FC<FAQItemContentProps> = (props) => {
                     {streamContent.map((paragraph, i) => {
                         return (
                             <p key={i} 
-                            className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-800">
+                            className="text-gray-800 mt-4 transition duration-300">
                                 {paragraph}
                             </p>
                         )

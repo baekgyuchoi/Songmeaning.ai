@@ -35,16 +35,16 @@ const ArtistBackgroundFAQContainer: React.FC<ArtistBackgroundFAQContainerProps> 
     const faq_in_db = await GetFAQ(props.faq_slug)
     const split_meaning = faq_in_db?.answer.split("\n\n")
     return (
-        <div>
+        <div className='text-base sm:text-lg'>
         
         {faq_in_db != null ? (
-            <div className='p-8'>
+            <div className='p-4 sm:p-8'>
                 {split_meaning?.map((paragraph, index) => (
-                <p key={index} className="text-gray-800 mt-4 text-lg transition duration-300 hover:text-indigo-800">{paragraph}</p>
+                <p key={index} className="text-gray-800 mt-4  transition duration-300 ">{paragraph}</p>
                 ))}
             </div>
             ):(
-            <div className='p-8'>
+            <div className='p-4 sm:p-8'>
                 <ArtistBackgroundFAQContent prompt={props.prompt} faq_slug={props.faq_slug} song_data={props.song_data}  />
             </div>
             )}
