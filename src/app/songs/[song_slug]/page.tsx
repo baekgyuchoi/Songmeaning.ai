@@ -160,10 +160,10 @@ export default async function SongPage({ params }: {
                         
                           <div className='flex flex-col  items-center '> 
                             <div className="w-full md:pr-4 md:mr-4 md:pl-4">
-                              <CardContent className="p-1 md:p-3  mb-5" style={{ minHeight: '600px', minWidth: '200px' }}>
+                              <CardContent className="p-1 md:p-3 flex flex-col items-center  mb-5" style={{ minHeight: '600px', minWidth: '200px' }}>
                                   {
                                     song_data?.isValid ? (
-                                      <div className='w-full'>
+                                      <div className='w-screen p-4 sm:p-0 sm:w-full'>
                                       {
                                         is_meaning_valid ? (
                                           // <>{split_meaning?.map((paragraph, i) => (
@@ -176,7 +176,7 @@ export default async function SongPage({ params }: {
                                           // ))}</>
                                           <FormattedMeaningContent formatted_meaning={formatted_meaning} />
                                         ) : (
-                                          <Suspense fallback={<div className='flex items-center bg-black'>Loading feed...</div>}>
+                                          <Suspense fallback={<div className='flex items-center container justify-center'>Loading feed...</div>}>
                                             <SongMeaningContent song_info={song_info} />
                                           </Suspense>
                                         )
