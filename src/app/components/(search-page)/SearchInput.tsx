@@ -23,14 +23,15 @@ const submitSearch = (searchQuery: string | null) => {
 
 
   return (
-    <div className="flex justify-center w-full  rounded p-2 transition ">
+    <div className="flex flex-col justify-center w-full rounded p-2 transition ">
       <input
         value={searchQuery || ""}
         onChange={(event) => setSearchQuery(event.target.value)}
         onKeyDown={(event) => {if (event.key === 'Enter') {submitSearch(searchQuery)}}    }
-        className="px-5 py-1 sm:px-5 sm:py-3 flex-1 border-gray-300 text-black bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 text-sm md:text-md rounded-full justify-center placeholder:text-black-400"
+        className="px-5 py-1 sm:px-5 sm:py-3 flex-1 border-gray-300 text-black bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 placeholder:text-xs md:placeholder:text-sm rounded-full justify-center placeholder:text-black-400"
         placeholder="Search a song with artist name"
       />
+   
     </div>
   );
 };
