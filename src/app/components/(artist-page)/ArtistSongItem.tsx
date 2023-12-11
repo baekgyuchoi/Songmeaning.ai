@@ -26,17 +26,17 @@ const ArtistSongItem: React.FC<Props> = (props) => {
        
             <Link 
                 href={"/songs/" + songInfo.song_slug + "?song=" + songInfo.genius_id}
-                className='w-full overflow-hidden"' 
+                className='w-full overflow-hidden flex flex-col items-center ' 
                
             >
-                <div className='flex flex-shrink items-center justify-center aspect-square m-4 mb-2 h-36 w-auto'>
+                <div className=' flex flex-shrink items-center justify-center aspect-square m-4 mb-2 h-36 w-auto'>
                     <img
                     src={songInfo.song_art_url}
                     alt='song art'
                     className="object-cover rounded-md w-9/10 h-36 w-auto "
                     />
                 </div>
-                <div className=" ml-4 text-xs text-muted-foreground w-4/5 truncate mb-2 flex flex-col items-start pl-3">
+                <div className=" text-xs text-left text-muted-foreground w-36 truncate mb-2 flex flex-col items-start justify-center ">
                     <div className='text-black'>
                     {songInfo.song_short_title}
                     </div>

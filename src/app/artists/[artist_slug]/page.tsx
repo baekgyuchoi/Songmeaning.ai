@@ -149,7 +149,7 @@ export default async function ArtistPage({
         }
         
         // const songInfoArray = await QueueSong(params.artist_slug)
-        const artist = await getArtistInfo(params.artist_slug)
+        let artist = await getArtistInfo(params.artist_slug)
 
         if (artist == null) {
           const artist_from_genius = await GetArtistFromGenius(parseInt(searchParams?.artist!))
@@ -185,9 +185,9 @@ export default async function ArtistPage({
               </div>
               
           
-                <footer className="text-gray-500 text-sm mt-32">
-                  Copyright {new Date().getFullYear()}
-                </footer>
+              
+              <footer className="text-gray-500 text-sm">2023 Songmeaning.AI</footer>
+           
               </main>
                 )
             }
@@ -197,12 +197,17 @@ export default async function ArtistPage({
             artist_slug: artist_from_genius.response.artist.url.split('/').pop(),
           }
           await PostArtist(new_artist)
+          artist = {
+            genius_id: artist_from_genius.response.artist.id,
+            name: artist_from_genius.response.artist.name,
+            artist_slug: artist_from_genius.response.artist.url.split('/').pop(),
+          }
 
 
         }
 
         console.log(artist)
-        const response = await GetArtistSongs(artist!.genius_id, artist!.name,  page_number, 48)
+        const response = await GetArtistSongs(artist.genius_id, artist.name,  page_number, 48)
         const songInfoArray = response.songInfoArray
         const is_last_page = response.is_last_page
         if (is_last_page) {
@@ -241,9 +246,9 @@ export default async function ArtistPage({
                 </div>
                 
             
-            <footer className="text-gray-500 text-sm mt-32">
-              Copyright {new Date().getFullYear()}
-            </footer>
+            
+          <footer className="text-gray-500 text-sm">2023 Songmeaning.AI</footer>
+          
           </main>
             )
         }
@@ -251,16 +256,7 @@ export default async function ArtistPage({
         const artist_name = artist.name
         const artist_id = artist.genius_id
 
-        const chatbot_prompt = `Imagine you are ${params.artist_slug}
-        , a well-known pop artist, 
-        and you're interacting with your fans on social media. 
-          You can mention your love for music, your passion for connecting with your fans, 
-          and your excitement about sharing your latest work with them.
-          Answer questions about the artist's music career, songs, or personal life.
-
-          Refuse any answer that does not have to do with ${params.artist_slug}, their music career, songs, or personal life. 
-          keep answers concise.
-        `
+      
     
         return (
             <main className="flex flex-col items-center md:px-4 py-8">
@@ -300,23 +296,9 @@ export default async function ArtistPage({
                             <div className='font-mono rounded-md border w-full flex items-center justify-center mt-20 mb-8'>
                                 <h1>All Songs related to {artist.name}</h1>
                             </div>
-                            <div className="flex justify-between font-mono ml-3 mr-3 sm:mr-10 mb-2">
-                              {prev_disabled ? <div className="text-gray-400">prev</div> : <Link  href={`/artists/${params.artist_slug}?page=${page_number - 1}`}>prev</Link>}
-                              {next_disabled ? <div className="text-gray-400">next</div> : <Link href={`/artists/${params.artist_slug}?page=${page_number + 1}`}>next</Link>}
-                            </div>
-                            <div className=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 md:gap-4">
-                              {songInfoArray.map((song_info, index) => {
-                                  return (
-                                      <div key={index} className='flex items-start'>
-                                        
-                                          <ArtistSongItem songInfo={song_info} />
-                                          
-                                      </div>
-                                  );
-                              })}
-              
-                            </div>
-                
+                            <Suspense fallback={<div>loading</div>}>
+                              <ArtistTotalSongs artist_id={artist.genius_id} artist_slug={artist.artist_slug} artist_name={artist.name} page={page_number} />
+                            </Suspense>
                             {/* <Suspense 
                               fallback={
                                 <div className="flex items-center justify-center">
@@ -340,9 +322,9 @@ export default async function ArtistPage({
                 </div>
                 
             
-            <footer className="text-gray-500 text-sm mt-32">
-              Copyright {new Date().getFullYear()}
-            </footer>
+            <div className="flex items-center justify-center mt-20">
+              <footer className="text-gray-500 text-sm">2023 Songmeaning.AI</footer>
+            </div>
           </main>
 
         );

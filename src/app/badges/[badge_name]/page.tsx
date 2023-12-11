@@ -71,9 +71,9 @@ export default async function BadgesPage({ params }: {
                 
                 
             
-            <footer className="text-gray-500 text-sm mt-32">
-              Copyright {new Date().getFullYear()}
-            </footer>
+            <div className="flex items-center justify-center mt-20">
+                <footer className="text-gray-500 text-sm">2023 Songmeaning.AI</footer>
+            </div>
           </main>
 
         );
