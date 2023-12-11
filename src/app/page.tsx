@@ -4,10 +4,10 @@ import HomeButton from "./components/HomeButton";
 import SearchInput from "./components/(search-page)/SearchInput";
 import HomeTypewriter from "./components/(home-components)/HomeTypewriter";
 import { PrismaClient } from "@prisma/client";
-import SearchItemButton from "./components/(search-page)/SearchItemButton";
+
 import TrendingSongs from "./components/TrendingSongs";
 import HomeSearchInput from "./components/(home-components)/HomeSearchInput";
-import { Card } from "@/components/ui/card";
+
 
 
 

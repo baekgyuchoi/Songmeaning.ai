@@ -83,10 +83,11 @@ async function getArtistSongs(artist_id: number, artist_name: string, current_pa
 interface ArtistTotalSongsProps {
     artist_id: number;
     artist_name: string;
+    page: number;
     }
 
 const ArtistTotalSongs: React.FC<ArtistTotalSongsProps> = async (props) => {
-    const songInfoArray = await getArtistSongs(props.artist_id, props.artist_name, 1, 30)
+    const songInfoArray = await getArtistSongs(props.artist_id, props.artist_name, props.page, 30)
     
 
     

@@ -7,12 +7,25 @@ import SearchItemButton from "@/app/components/(search-page)/SearchItemButton";
 import SongMeaningContent from "@/app/components/(song-page)/SongMeaningContent";
 import TrendingSongs from "@/app/components/TrendingSongs";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Artist } from "@/lib/validators/artist";
 import { SongData } from "@/lib/validators/song_data_response";
 import { SongInfo } from "@/lib/validators/song_info";
 import { PrismaClient } from "@prisma/client";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
+
+async function GetArtistFromGenius(artist_id: number) {
+  const response = await fetch('https://api.genius.com/artists/'+ artist_id, {
+      headers: {
+          'Authorization': 'Bearer ' + process.env.GENIUS_API_KEY_1
+      },
+  });
+  const data = await response.json();
+
+  return data
+
+}
 
 
 async function GetArtistSongs(artist_id: number, artist_name: string, current_page: number, per_page: number) {
@@ -82,7 +95,35 @@ async function getArtistInfo(artist_slug: string) {
 }
 
 
+export async function PostArtist(artist: Artist) {
+  const prisma = new PrismaClient()
+  await prisma.$connect()
+  // query if song_id exists in database or use song_slug instead
+  // if song exists, return "song already exists"
+  // if song does not exist, create song in database
+  const artist_in_db = await prisma.artist.findUnique({
+      where: {
+          artist_slug: artist.artist_slug,
+          },
+      })
+  if (artist_in_db != null) {
+      await prisma.$disconnect()
+      
+      return "error: artist already exists"
+  }
 
+  
+  await prisma.artist.create({
+      data: {
+          artist_slug: artist.artist_slug,
+          name: artist.name,
+          genius_id: artist.genius_id,
+      }
+  })
+  await prisma.$disconnect()
+  return "Success"
+
+}
 
 
 
@@ -95,6 +136,7 @@ export default async function ArtistPage({
     searchParams?: { [key: string]: string | undefined};
     }) {
         let page_number = 1;
+        
         if (searchParams?.page != null) {
           page_number = parseInt(searchParams?.page)
         }
@@ -108,6 +150,57 @@ export default async function ArtistPage({
         
         // const songInfoArray = await QueueSong(params.artist_slug)
         const artist = await getArtistInfo(params.artist_slug)
+
+        if (artist == null) {
+          const artist_from_genius = await GetArtistFromGenius(parseInt(searchParams?.artist!))
+          if (artist_from_genius == null) {
+            return(
+              <main className="flex flex-col items-center px-4 py-8">
+              
+              <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
+                <Card className=" w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
+            
+                  <div className='md:ml-12 ml-0'>
+                    <CardHeader>
+                      <CardTitle className="mt-12 text-4xl font-bold text-gray-800">
+                      
+                            Artist Not Found
+                        
+                      </CardTitle>
+                      
+                      
+                    </CardHeader>
+                  
+                    <div className='flex flex-col md:flex-row  '> 
+                      <div className="w-full md:w-2/3 flex-grow">
+                        
+                      </div>
+                      
+                    </div>
+                  
+                
+                    
+                  </div>
+                </Card>
+              </div>
+              
+          
+                <footer className="text-gray-500 text-sm mt-32">
+                  Copyright {new Date().getFullYear()}
+                </footer>
+              </main>
+                )
+            }
+          const new_artist: Artist = {
+            genius_id: artist_from_genius.response.artist.id,
+            name: artist_from_genius.response.artist.name,
+            artist_slug: artist_from_genius.response.artist.url.split('/').pop(),
+          }
+          await PostArtist(new_artist)
+          
+
+        }
+
         console.log(artist)
         const response = await GetArtistSongs(artist!.genius_id, artist!.name,  page_number, 48)
         const songInfoArray = response.songInfoArray

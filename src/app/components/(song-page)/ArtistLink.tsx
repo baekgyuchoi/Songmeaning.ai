@@ -1,28 +1,7 @@
-'use client'
+import { Link } from 'lucide-react';
+import React from 'react';
 
-import { Artist } from '@/lib/validators/artist';
-import { Loader2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
 
-async function DoesArtistExist(artist_slug: string) {
-    const url = '/api/does_artist_exist?q=' + artist_slug
-    const res = await fetch(url)
-    const data = await res.json()
-    return data['song_exists']
-}
-
-async function PostArtistToDB(artist: Artist) {
-    const url = '/api/post_artist'
-    const res = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(artist),
-    })
-    return res
-}
 
 interface ArtistLinkProps {
     // Define your component props here
@@ -33,48 +12,21 @@ interface ArtistLinkProps {
 
 
 const ArtistLink: React.FC<ArtistLinkProps> = (props) => {
-    const router = useRouter();
-    const [isLoading, setIsLoading] = useState(false);
-    const artist: Artist = {
-        genius_id: props.artist_id,
-        name: props.artist_name,
-        artist_slug: props.artist_slug,
-    };
 
-    const buttonClick = async () => {
-        
-        const song_exists = await DoesArtistExist(props.artist_slug)
-        console.log(song_exists)
-        if (!song_exists) {
-            setIsLoading(true);
-            await PostArtistToDB(artist);
-            
-        }
-        setIsLoading(false);
-        router.push("/artists/" + props.artist_slug);
-    };
+
+
+   
     return (
         <div className='flex items-start justify-start'>
-            <button
-                disabled = {isLoading}
-                onClick={buttonClick}
-                className='w-full overflow-hidden' 
+            <Link
+                href={`/artists/${props.artist_slug}/?artist=${props.artist_id}`}
+                className='w-full overflow-hidden text-gray-600' 
                
-            >
-                {isLoading ? (
-                        <div className='w-full container flex items-center justify-center'>
-                            <p className="text-2xl font-bold text-center text-gray-800 animate-pulse">
-                                ...
-                            </p>
-                        </div>
-                    ) : (
-                        
-                        <div className="text-gray-600">
-                            {props.artist_name}
-                        </div>
-                        
-                    )}
-            </button>
+            >   
+             
+                {props.artist_name}
+            
+            </Link>
       
         </div>
     );

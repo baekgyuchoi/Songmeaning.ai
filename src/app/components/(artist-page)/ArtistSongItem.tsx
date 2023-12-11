@@ -1,10 +1,8 @@
-'use client'
-import { Card } from '@/components/ui/card';
+
 import { SongInfo } from '@/lib/validators/song_info';
-import { Loader2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import React from 'react';
-import { useState } from "react";
+
 // make 
 
 
@@ -13,46 +11,11 @@ interface Props {
     songInfo: SongInfo
 }
 
-// use either useQuery or useMutation later - TO IMPLEMENT
-async function DoesSongExist(song_slug: string) {
-    const url = '/api/does_song_exist?q=' + song_slug
-    const res = await fetch(url)
-    const data = await res.json()
-    return data['song_exists']
-}
-
-async function PostSongToDB(song_info: SongInfo) {
-    const url = '/api/post_song'
-    const res = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(song_info),
-    })
-    return res
-}
-
-
-
 
 
 const ArtistSongItem: React.FC<Props> = (props) => {
     // Define your component logic here
-    const router = useRouter();
-    const [isLoading, setIsLoading] = useState(false);
     
-    const buttonClick = async () => {
-        
-        const song_exists = await DoesSongExist(props.songInfo.song_slug)
-        if (!song_exists) {
-            setIsLoading(true);
-            await PostSongToDB(props.songInfo);
-            
-        }
-        setIsLoading(false);
-        router.push("/songs/" + props.songInfo.song_slug);
-    };
     const songInfo = props.songInfo
     
     
@@ -61,9 +24,8 @@ const ArtistSongItem: React.FC<Props> = (props) => {
         // Return your JSX here 
         
        
-            <button
-                disabled = {isLoading}
-                onClick={buttonClick}
+            <Link 
+                href={"/songs/" + songInfo.song_slug + "?song=" + songInfo.genius_id}
                 className='w-full overflow-hidden"' 
                
             >
@@ -83,7 +45,7 @@ const ArtistSongItem: React.FC<Props> = (props) => {
                     </div>
                 
                 </div>
-            </button>
+            </Link>
 
     );
 };

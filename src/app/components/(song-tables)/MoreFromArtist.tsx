@@ -79,7 +79,15 @@ const MoreFromArtist: React.FC<MoreFromArtistProps> = async (props) => {
         <div className='rounded-md font-mono border flex flex-row items-center w-full justify-center mb-2 truncate'>
           <h1 className=' pl-2'>More from: </h1>
           <div className='truncate overflow-elipsis underline'>
-            <ArtistLink artist_slug={artist_slug} artist_id={props.artist_id} artist_name={artist_name} />
+            <Link
+                href={`/artists/${props.artist_slug}/?artist=${props.artist_id}`}
+                className='w-full overflow-hidden text-gray-600' 
+              
+              >   
+            
+                {props.artist_name}
+            
+            </Link>
           </div>
         </div>
       
