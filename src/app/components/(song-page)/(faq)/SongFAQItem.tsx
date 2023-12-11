@@ -49,8 +49,8 @@ const SongFAQItem: React.FC<SongFAQItemProps> = async (props) => {
             collapsible 
             className=' font-mono '>
             <AccordionItem value='item-1'>
-                <div className='w-full  border rounded-md overflow:hidden  '>
-                    <AccordionTrigger className='px-6 border-b border-zinc-300 font-mono truncate'>
+                <div className='w-full   rounded-md overflow:hidden  '>
+                    <AccordionTrigger className='px-6 rounded-md border-1 border-b-2 border-purple-900/25 font-mono truncate'>
                       <div className='flex justify-start'>
                         <div className='mr-2'>{question}</div>
                        

@@ -19,14 +19,14 @@ const LoadingQueue: React.FC<Props> = (props) => {
         <div className="flex flex-col items-center justify-center">
 
 
-            <p className="text-2xl font-bold text-gray-800 animate-pulse">
+            <p className="text-2xl font-bold text-purple-800  animate-pulse">
             Loading...
             </p>
 
             <div className="text-black mt-10">
                 <TypewriterComponent
                 options={{
-                    strings: [`You are first to explore this song!`, `Analyzing ${song_title} lyrics...`, `Reading ${props.songInfo.artist_name}'s mind` ],
+                    strings: [`You are first to explore this song!`, `Analyzing ${song_title} lyrics...` ],
                     autoStart: true,
                     loop: true,
                     delay: 50,

@@ -31,7 +31,7 @@ const SearchItemButton: React.FC<Props> = (props) => {
         // Return your JSX here 
     
             <Link href={"/songs/" + songInfo.song_slug + "?song=" + songInfo.genius_id} className='w-full overflow-hidden'>
-                <Card className='rounded-box'>              
+                <Card className='border-1 border-b-2 border-purple-900/25 '>              
                     <div className="flex flex-row w-full  p-2 pl-4 pr-4">
                         <div className="group flex items-center gap-x-4 py-3">
                             <div className="relative flex w-12 h-12 overflow-hidden">

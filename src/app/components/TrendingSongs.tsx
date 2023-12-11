@@ -59,11 +59,11 @@ const TrendingSongs: React.FC<TrendingSongsProps> = async (className) => {
         // Return your JSX here
         <div className='w-full md:w-3/5 flex flex-col items-center mt-12'>
 
-          <div className="text-l md:text-2xl text-gray-800 mb-5 font-mono">
+          <div className="text-l md:text-2xl text-gray-500 mb-5 font-mono">
             <p>Trending Songs</p>
           </div>
 
-          <div className='carousel carousel-center bg-gray-100 rounded-box w-full flex'>
+          <div className='carousel carousel-center  rounded-box w-full flex'>
            
             {songInfoArray.map((song_info) => (
                 <div 
