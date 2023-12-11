@@ -9,7 +9,7 @@ const LoadingFAQ: React.FC = () => {
     return(
         <div className="">
 
-        <div className="container flex flex-col items-center justify-center">
+        <div className="container flex flex-col items-center justify-center pb-8">
 
 
             <Loader2 className="text-black animate-spin mb-8" size={64} />

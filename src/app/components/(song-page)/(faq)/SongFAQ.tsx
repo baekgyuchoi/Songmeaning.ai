@@ -27,8 +27,8 @@ const SongFAQ: React.FC<SongFAQProps> = async (props) => {
             <div className='p-2 text-sm md:text-lg'>
                 <div className='p-2 '>
                     <FAQArtistBackground 
-                        prompt="What is the meaning of this song?"
-                        faq_slug={props.songData.song_slug+"_faq_4"}
+                        prompt="Can you provide background information about (Artist name)? Including details about their early life/family background, dating life, career beginnings and career progression, notable achievements, notable controversies, fun facts, details of personal life that only the most fervent fans would be aware of, significant albums or songs, and any impact or influence they've had on the music industry or culture? Please do not feel limited and go as deep into the weeds as possible.  For example, if you were discussing Enya you would want to include details of how she decorates her castle, details of her attempted kidnappings, how and why she does not tour.  For Taylor Swift you would want to discuss her notable controversies in detail such as how kanye came on stage. Please also include 3-5 important quotes from the artist about their career, philosophy or anything that speaks to them as a person."
+                        faq_slug={props.songData.artist_slug+"_faq_5"}
                         song_data={props.songData}
                         
                     />

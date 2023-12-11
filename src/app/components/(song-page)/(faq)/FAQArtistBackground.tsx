@@ -31,7 +31,7 @@ async function GetFAQ(faq_slug: string) {
 }
 
 const FAQArtistBackground: React.FC<SongFAQItemProps> = async (props) => {
-  const question = "Give an Alternate Interpretation of this Song"
+  const question = "Artist Background"
   
   
   return (

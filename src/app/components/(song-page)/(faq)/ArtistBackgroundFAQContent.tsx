@@ -1,15 +1,12 @@
 'use client'
-import { SongInfo } from '@/lib/validators/song_info';
 import React, { Suspense, useEffect, useState } from 'react';
-import LoadingQueue from '../../(search-page)/LoadingQueue';
 import { SongData } from '@/lib/validators/song_data_response';
-import { Song } from 'genius-lyrics';
 import LoadingFAQ from './LoadingFAQ';
 import { FAQ } from '@/lib/validators/FAQ';
 import { useRouter } from 'next/navigation'
 
 
-interface AlternateMeaningFAQContentProps {
+interface ArtistBackgroundFAQContentProps {
     // Define your component props here
     song_data: SongData
     faq_slug: string
@@ -17,7 +14,7 @@ interface AlternateMeaningFAQContentProps {
   }
   
 
-const AlternateMeaningFAQContent: React.FC<AlternateMeaningFAQContentProps> = (props) => {
+const ArtistBackgroundFAQContent: React.FC<ArtistBackgroundFAQContentProps> = (props) => {
     console.log("song meaning content rendered")
     const [streamContent, setStreamContent] = useState<string[]>([]);
     const song_data = props.song_data
@@ -114,5 +111,5 @@ const AlternateMeaningFAQContent: React.FC<AlternateMeaningFAQContentProps> = (p
     );
 };
 
-export default AlternateMeaningFAQContent;
+export default ArtistBackgroundFAQContent;
 
