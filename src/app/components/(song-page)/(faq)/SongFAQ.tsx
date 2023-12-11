@@ -33,14 +33,14 @@ const SongFAQ: React.FC<SongFAQProps> = async (props) => {
                         
                     />
                 </div>
-                <div className='pt-2 pb-2 md:pl-2 md:pr-2 '>
+                {/* <div className='pt-2 pb-2 md:pl-2 md:pr-2 '>
                     <FAQAlternateMeaning 
                         prompt="What is the meaning of this song?"
                         faq_slug={props.songData.song_slug+"_faq_4"}
                         song_data={props.songData}
                         
                     />
-                </div>
+                </div> */}
                 {faq_prompts.map((prompt, index) => (
                     <div key={index} className='pt-2 pb-2 md:pl-2 md:pr-2 '>
                         <SongFAQItem prompt={prompt[0]} question={prompt[1]} song_data={props.songData} faq_slug={props.songData.song_slug+"_faq_"+(index).toString()} />
