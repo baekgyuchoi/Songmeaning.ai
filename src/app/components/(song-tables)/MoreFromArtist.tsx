@@ -26,6 +26,7 @@ async function QueueArtist(artist_slug_input: string) {
         orderBy: {
           viewCount: "desc",
         },
+        take: 15,
     });
     let songs: SongInfo[] = []
     
@@ -71,7 +72,7 @@ const MoreFromArtist: React.FC<MoreFromArtistProps> = async (props) => {
     // JSX code for your component
     <main className=''>
       
-      {(artist_songs.length <= 1) ? (
+      {(artist_songs.length <= 4) ? (
       <></>
       ):(
       <div>
