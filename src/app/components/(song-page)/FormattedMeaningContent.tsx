@@ -71,7 +71,7 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
                         // }
                         return (
                             
-                            <p className='mt-2'>{item}</p>
+                            <p className='mt-2' key={i}>{item}</p>
                         )
                     })}
                 </div>
