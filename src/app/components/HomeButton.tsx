@@ -19,7 +19,7 @@ const HomeButton: React.FC<Props> = ({ /* Destructure your props here */ }) => {
                 href="/"
                 className="bg-transparent hover:bg-gray-200 text-gray font-bold text-4xl tracking-tight hover:text-gray-300 focus:outline-none focus:shadow-outline">
               
-               <h1 className="font-mono text-2xl md:text-3xl font-medium">Songmeanings.<span className="font-sans">AI</span></h1>
+               <h1 className="font-mono text-2xl md:text-3xl font-medium">Songmeaning.<span className="font-sans">AI</span></h1>
             </Link>
         </div>
     );
