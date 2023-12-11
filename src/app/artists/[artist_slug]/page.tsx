@@ -95,7 +95,7 @@ async function getArtistInfo(artist_slug: string) {
 }
 
 
-export async function PostArtist(artist: Artist) {
+async function PostArtist(artist: Artist) {
   const prisma = new PrismaClient()
   await prisma.$connect()
   // query if song_id exists in database or use song_slug instead
@@ -197,7 +197,7 @@ export default async function ArtistPage({
             artist_slug: artist_from_genius.response.artist.url.split('/').pop(),
           }
           await PostArtist(new_artist)
-          
+
 
         }
 
