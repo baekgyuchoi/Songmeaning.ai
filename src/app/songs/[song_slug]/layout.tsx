@@ -17,7 +17,7 @@ export const viewport: Viewport = {
     children: React.ReactNode
   }) {
     return (
-      <div className="w-screen overflow-hidden">
+      <div className=" overflow-hidden">
           <NavBar />
           <div className="">
             {children}
