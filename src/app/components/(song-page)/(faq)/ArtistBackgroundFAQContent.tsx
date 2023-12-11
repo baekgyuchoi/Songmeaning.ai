@@ -22,7 +22,7 @@ const ArtistBackgroundFAQContent: React.FC<ArtistBackgroundFAQContentProps> = (p
     let first_render = true
     const fetchData = async (song_data: SongData) => {
         try {
-            const response = await fetch('/api/faq/queue_alternate_meaning', {
+            const response = await fetch('/api/faq/queue_artist_background', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

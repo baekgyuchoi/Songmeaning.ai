@@ -1,17 +1,19 @@
 import { SongInfo } from "@/lib/validators/song_info";
 
 import SearchItemButton from "../components/(search-page)/SearchItemButton";
+import { Suspense } from "react";
 
 
 
-const geniusAPISearchURL = 'https://api.genius.com/search?q='
-const genius_access_token = "oNwFSu_AIjtrw3owTLM9p_RYc2o9EjyJTNv9Lf05GDgl7adlODR9DQwiUlz8FzDZ"
+
+
 
 
 async function getSearchResults(searchQuery: string | undefined) {
+  const geniusAPISearchURL = 'https://api.genius.com/search?q='
     const response = await fetch(geniusAPISearchURL + searchQuery, {
         headers: {
-            'Authorization': 'Bearer ' + genius_access_token
+            'Authorization': 'Bearer ' + process.env.GENIUS_API_KEY_1,
         }
     });
     if (!response.ok) {
@@ -56,24 +58,23 @@ export default async function SearchPage({
           
           <div className="container max-w-4xl ">
       
-            <h1 className="text-2xl text-gray-800 mb-5 font-mono mt-16">
-              Search results for: {searchQuery}
-            </h1>
-            <div className="mt-4 grid grid-cols-1 gap-x-8 md:mt-6 md:grid-cols-1 md:gap-y-2 block">
-              <ul className="">
-                {data.map((result, index) => (
-                  <li 
-                    key={index}
-                    className="py-2 w-full flex flex-col flex-row "
-                  >
-                    <div className="flex bg-transparent text-gray  tracking-tight text-l md:text-3xl sm:text-3xl hover:outline-blue focus:outline-none focus:shadow-outline">
-                      <SearchItemButton songInfo={result} />
-                    </div>
-                    
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <Suspense fallback={<div>Loading...</div>}>
+              <div className="mt-4 grid grid-cols-1 gap-x-8 md:mt-6 md:grid-cols-1 md:gap-y-2 block">
+                <ul className="">
+                  {data.map((result, index) => (
+                    <li 
+                      key={index}
+                      className="py-2 w-full flex flex-col flex-row "
+                    >
+                      <div className="flex bg-transparent text-gray  tracking-tight text-l md:text-3xl sm:text-3xl hover:outline-blue focus:outline-none focus:shadow-outline">
+                        <SearchItemButton songInfo={result} />
+                      </div>
+                      
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Suspense>
             
             
           </div>

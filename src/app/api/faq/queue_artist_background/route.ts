@@ -6,6 +6,20 @@ import { SongData } from "@/lib/validators/song_data_response";
 
 
 
+async function GetArtist(artist_id: number) {
+    const geniusAPIArtistURL = 'https://api.genius.com/artists/'
+
+    const artist_info = await fetch(geniusAPIArtistURL + artist_id,{
+        headers: {
+            Authorization: `Bearer ${process.env.GENIUS_API_KEY_1}`
+        }
+    })
+    const artist_info_json = await artist_info.json()
+ 
+    return artist_info_json.response.artist.description.dom
+}
+
+
 
 
 export const maxDuration = 300 
@@ -17,10 +31,11 @@ export async function POST(req: Request) {
     if (song_lyrics == null) {
         return new Response("Error - song lyrics not found")
     }
+    const artist = await GetArtist(song_data.artist_id)
+    const artist_info = JSON.stringify(artist)
 
-    
-
-    const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: "Can you provide background information about (Artist name)? Including details about their early life/family background, dating life, career beginnings and career progression, notable achievements, notable controversies, fun facts, details of personal life that only the most fervent fans would be aware of, significant albums or songs, and any impact or influence they've had on the music industry or culture? Please do not feel limited and go as deep into the weeds as possible.  For example, if you were discussing Enya you would want to include details of how she decorates her castle, details of her attempted kidnappings, how and why she does not tour.  For Taylor Swift you would want to discuss her notable controversies in detail such as how kanye came on stage. Please also include 3-5 important quotes from the artist about their career, philosophy or anything that speaks to them as a person."  }]
+    const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: `Given this information: \n ${artist_info} \nCan you provide background information about ${song_data.artist_name}? Including details about their early life/family background, dating life, career beginnings and career progression, notable achievements, notable controversies, fun facts, details of personal life that only the most fervent fans would be aware of, significant albums or songs, and any impact or influence they've had on the music industry or culture? Please do not feel limited and go as deep into the weeds as possible.  For example, if you were discussing Enya you would want to include details of how she decorates her castle, details of her attempted kidnappings, how and why she does not tour.  For Taylor Swift you would want to discuss her notable controversies in detail such as how kanye came on stage. Please also include 3-5 important quotes from the artist about their career, philosophy or anything that speaks to them as a person.
+    `  }]
     const parsedMessages = MessageArraySchema.parse(messages)
 
     const outboundMessages: ChatGPTMessage[] = parsedMessages.map((message) => ({

@@ -1,7 +1,7 @@
 import { SongData } from '@/lib/validators/song_data_response';
 import React from 'react';
-import AlternateMeaningFAQContent from './AlternateMeaningFAQContent';
 import { PrismaClient } from '@prisma/client';
+import ArtistBackgroundFAQContent from './ArtistBackgroundFAQContent';
 
 
 
@@ -45,7 +45,7 @@ const ArtistBackgroundFAQContainer: React.FC<ArtistBackgroundFAQContainerProps> 
             </div>
             ):(
             <div className='p-8'>
-                <AlternateMeaningFAQContent prompt={props.prompt} faq_slug={props.faq_slug} song_data={props.song_data}  />
+                <ArtistBackgroundFAQContent prompt={props.prompt} faq_slug={props.faq_slug} song_data={props.song_data}  />
             </div>
             )}
         </div>

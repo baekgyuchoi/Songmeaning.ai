@@ -1,33 +1,16 @@
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { SongData } from '@/lib/validators/song_data_response';
-import { PrismaClient } from '@prisma/client';
+
 import React from 'react';
-import AlternateMeaningFAQContent from './AlternateMeaningFAQContent';
-import AlternateMeaningFAQContainer from './AlternateMeaningFAQContainer';
+
+import ArtistBackgroundFAQContainer from './ArtistBackgroundFAQContainer';
 
 
 interface SongFAQItemProps {
     prompt: string;
     faq_slug: string;
     song_data: SongData;
-}
-
-async function GetFAQ(faq_slug: string) {
-  const prisma = new PrismaClient()
-  await prisma.$connect()
-  const faq = await prisma.fAQs.findUnique({
-    where: {
-      faq_slug: faq_slug
-    }
-  })
-  await prisma.$disconnect()
-
-  if (faq == null) {
-    console.log("faq not found")
-    return null
-  }
-  return faq
 }
 
 const FAQArtistBackground: React.FC<SongFAQItemProps> = async (props) => {
@@ -47,7 +30,7 @@ const FAQArtistBackground: React.FC<SongFAQItemProps> = async (props) => {
                         {question}
                     </AccordionTrigger>
                     <AccordionContent className='font-sans'>
-                      <AlternateMeaningFAQContainer prompt={props.prompt} faq_slug={props.faq_slug} song_data={props.song_data}  />
+                      <ArtistBackgroundFAQContainer prompt={props.prompt} faq_slug={props.faq_slug} song_data={props.song_data}  />
                       {/* //REGENERATE FAQ BUTTON IN FUTURE */}
                     </AccordionContent>
                     

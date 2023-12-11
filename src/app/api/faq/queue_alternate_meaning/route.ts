@@ -1,6 +1,4 @@
 
-import { PrismaClient } from '@prisma/client'
-
 import { Message, MessageArraySchema } from "@/lib/validators/message";
 import { ChatGPTMessage, OpenAIStream, OpenAIStreamPayload } from "@/lib/openai-stream";
 import { nanoid } from "nanoid";
@@ -21,19 +19,7 @@ export async function POST(req: Request) {
         return new Response("Error - song lyrics not found")
     }
     
-    const prisma = new PrismaClient();
-    await prisma.$connect()
-
-    await prisma.songs.update({
-        where: {
-            song_slug: song_data.song_slug,
-        },
-        data: {
-            lyrics: song_lyrics,
-
-        }
-    })
-    await prisma.$disconnect()
+    
     
     
     const songMeaningContext = `Song: ${song_data.song_title}\nArtist: ${song_data.artist_name}\n`
