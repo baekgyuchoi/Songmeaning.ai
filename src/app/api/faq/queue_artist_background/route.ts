@@ -15,7 +15,7 @@ async function GetArtist(artist_id: number) {
         }
     })
     const artist_info_json = await artist_info.json()
- 
+    console.log(artist_info_json)
     return artist_info_json.response.artist.description.dom
 }
 
@@ -26,15 +26,44 @@ export const maxDuration = 300
 
 export async function POST(req: Request) {
     const song_data = await req.json() as SongData
-    const song_lyrics = song_data.lyrics
+   
 
-    if (song_lyrics == null) {
-        return new Response("Error - song lyrics not found")
-    }
+    
     const artist = await GetArtist(song_data.artist_id)
-    const artist_info = JSON.stringify(artist)
+    let artist_info = ""
+    for (let child of artist.children) {
+        if (child.tag == "p") {
+            
+            for (let grandchild of child.children) {
+                console.log(typeof(grandchild))
+                if (typeof(grandchild) == "string") {
+                    artist_info += " " + grandchild
+                }
+                else{
+                    for (let greatgrandchild of grandchild.children) {
+                        if (typeof(greatgrandchild) == "string") {
+                            artist_info += " " + greatgrandchild
+                        }
+                        else{
+                            for (let greatgreatgrandchild of greatgrandchild.children) {
+                                if (typeof(greatgreatgrandchild) == "string") {
+                                    artist_info += " " + greatgreatgrandchild
+                                }
+                            }
+                        }
+                    }
+                
+                }
+            }
+        
+        }
+    }
 
-    const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: `Given this information: \n ${artist_info} \nCan you provide background information about ${song_data.artist_name}? Including details about their early life/family background, dating life, career beginnings and career progression, notable achievements, notable controversies, fun facts, details of personal life that only the most fervent fans would be aware of, significant albums or songs, and any impact or influence they've had on the music industry or culture? Please do not feel limited and go as deep into the weeds as possible.  For example, if you were discussing Enya you would want to include details of how she decorates her castle, details of her attempted kidnappings, how and why she does not tour.  For Taylor Swift you would want to discuss her notable controversies in detail such as how kanye came on stage. Please also include 3-5 important quotes from the artist about their career, philosophy or anything that speaks to them as a person.
+   
+    console.log(artist_info)
+    console.log(song_data.artist_id)
+
+    const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: `Adding this information to what you know: \n ${artist_info} \n Can you provide a written background on the artist: ${song_data.artist_name}? Including details about what is widely known about their early life/family background, dating life, career beginnings and career progression, notable achievements, notable controversies, fun facts, details of personal life that only the most fervent fans would be aware of, significant albums or songs, and any impact or influence they've had on the music industry or culture? Please do not feel limited and go as deep into the weeds as possible.  For example, if you were discussing Enya you would want to include details of how she decorates her castle, details of her attempted kidnappings, how and why she does not tour.  For Taylor Swift you would want to discuss her notable controversies in detail such as how kanye came on stage. Please also include 3-5 important quotes from the artist about their career, philosophy or anything that speaks to them as a person. if there is insufficient information, write short paragraph using the information given.
     `  }]
     const parsedMessages = MessageArraySchema.parse(messages)
 

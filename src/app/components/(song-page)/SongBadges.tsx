@@ -176,7 +176,7 @@ async function GenerateTwoWord(songData: SongData) {
   await prisma.$disconnect()
 
  
-  console.log(two_badges)
+ 
 }
 
 
@@ -202,7 +202,7 @@ const SongBadges: React.FC<SongBadgesProps> = async (props) => {
   })
   
   const badges = songData1?.two_word_description.split("/")
-  console.log(badges)
+
 
   await prisma.$disconnect()
   return (

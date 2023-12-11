@@ -70,7 +70,7 @@ export default async function SongPage({ params }: {
         const song_data = await QueueSong(params.song_slug) as SongData
           
         
-        console.log(song_data?.lyrics)
+
         if (song_data != null){
           console.log("songs in db")
             
@@ -99,7 +99,7 @@ export default async function SongPage({ params }: {
             const song_meaning_split = meaning?.split("\n")
             
             let formatted_meaning : formatted_meaning = {} as formatted_meaning
-            console.log(song_meaning_split)
+        
             let text: string[] = []
             
             if (song_meaning_split != null) {
@@ -107,7 +107,7 @@ export default async function SongPage({ params }: {
                 if (paragraph == "") {
                   continue
                 }
-                console.log(paragraph)
+    
           
                 if (paragraph == "Summary Analysis:") { 
                   
@@ -141,7 +141,7 @@ export default async function SongPage({ params }: {
 
 
             return (
-                <main className="min-w-screen flex flex-col items-center md:px-4 py-8 ">
+                <main className=" flex flex-col items-center md:px-4 py-8 ">
                     
 
                     <div className='md:mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
@@ -219,7 +219,7 @@ export default async function SongPage({ params }: {
                               </div>
                  
                             </div>
-                            <div className='w-screen md:w-full text-black mb-10'>
+                            <div className='w-full md:w-full text-black mb-10'>
                               
                               <CardContent>
                                 <Suspense fallback={<p>Loading feed...</p>}>

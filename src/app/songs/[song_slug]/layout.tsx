@@ -1,10 +1,15 @@
-import Chat from "@/app/components/(chat-components)/Chat"
 import NavBar from "@/app/components/NavBar"
+import { Viewport } from 'next'
 
 export const metadata = {
     title: `...`,
     description: `...`
   }
+
+export const viewport: Viewport = {
+  maximumScale: 1,
+}
+
   
   export default function Layout({
     children,
@@ -12,7 +17,7 @@ export const metadata = {
     children: React.ReactNode
   }) {
     return (
-      <div className="">
+      <div className="w-screen h-screen overflow-hidden">
           <NavBar />
           <div className="">
             {children}

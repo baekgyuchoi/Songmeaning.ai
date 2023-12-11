@@ -2,8 +2,12 @@ import { SongInfo } from "@/lib/validators/song_info";
 
 import SearchItemButton from "../components/(search-page)/SearchItemButton";
 import { Suspense } from "react";
+import { Viewport } from "next";
 
 
+export const viewport: Viewport = {
+  maximumScale: 1,
+}
 
 
 
@@ -56,10 +60,10 @@ export default async function SearchPage({
     return (
         <main className="flex flex-col items-center p-4 ">
           
-          <div className="container max-w-4xl ">
+          
       
             <Suspense fallback={<div>Loading...</div>}>
-              <div className="mt-4 grid grid-cols-1 gap-x-8 md:mt-6 md:grid-cols-1 md:gap-y-2 block">
+              <div className="w-full md:w-2/3 mt-4 grid grid-cols-1 gap-x-8 md:mt-6 md:grid-cols-1 md:gap-y-2 block">
                 <ul className="">
                   {data.map((result, index) => (
                     <li 
@@ -77,7 +81,7 @@ export default async function SearchPage({
             </Suspense>
             
             
-          </div>
+      
           
           <footer className="text-gray-500 text-sm mt-32">
             Copyright {new Date().getFullYear()}
