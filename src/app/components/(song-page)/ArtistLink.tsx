@@ -62,8 +62,10 @@ const ArtistLink: React.FC<ArtistLinkProps> = (props) => {
                
             >
                 {isLoading ? (
-                        <div className='flex items-center justify-center'>
-                        <Loader2 className="animate-spin" size={16} />
+                        <div className='w-full container flex items-center justify-center'>
+                            <p className="text-2xl font-bold text-center text-gray-800 animate-pulse">
+                                ...
+                            </p>
                         </div>
                     ) : (
                         

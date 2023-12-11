@@ -19,7 +19,7 @@ const LoadingQueue: React.FC<Props> = (props) => {
         <div className="flex flex-col items-center justify-center">
 
 
-            <p className="text-2xl font-bold text-indigo-600 animate-pulse">
+            <p className="text-2xl font-bold text-gray-800 animate-pulse">
             Loading...
             </p>
 

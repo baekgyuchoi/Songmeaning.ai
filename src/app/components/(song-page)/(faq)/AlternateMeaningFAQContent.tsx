@@ -1,9 +1,6 @@
 'use client'
-import { SongInfo } from '@/lib/validators/song_info';
-import React, { Suspense, useEffect, useState } from 'react';
-import LoadingQueue from '../../(search-page)/LoadingQueue';
+import React, { useEffect, useState } from 'react';
 import { SongData } from '@/lib/validators/song_data_response';
-import { Song } from 'genius-lyrics';
 import LoadingFAQ from './LoadingFAQ';
 import { FAQ } from '@/lib/validators/FAQ';
 import { useRouter } from 'next/navigation'
