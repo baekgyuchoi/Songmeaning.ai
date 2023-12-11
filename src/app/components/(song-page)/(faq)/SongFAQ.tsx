@@ -19,12 +19,12 @@ const SongFAQ: React.FC<SongFAQProps> = async (props) => {
    
   
     return (
-        <div className=''>
-            <div className='w-full border rounded-md overflow:hidden font-mono flex justify-center mb-4'>
+        <div className='flex flex-col items-center justify-center'>
+            <div className='w-screen sm:w-full border rounded-md overflow:hidden font-mono flex justify-center mb-4'>
             {/* Your component code here */}
             FAQs
             </div>
-            <div className='w-full  pt-2 pb-2 text-xs sm:text-sm md:text-lg'>
+            <div className='w-screen sm:w-full  pt-2 pb-2 text-xs sm:text-sm md:text-lg'>
                 <div className='pt-2 pb-2 md:pl-2 md:pr-2 '>
                     <FAQArtistBackground 
                         prompt="Can you provide background information about (Artist name)? Including details about their early life/family background, dating life, career beginnings and career progression, notable achievements, notable controversies, fun facts, details of personal life that only the most fervent fans would be aware of, significant albums or songs, and any impact or influence they've had on the music industry or culture? Please do not feel limited and go as deep into the weeds as possible.  For example, if you were discussing Enya you would want to include details of how she decorates her castle, details of her attempted kidnappings, how and why she does not tour.  For Taylor Swift you would want to discuss her notable controversies in detail such as how kanye came on stage. Please also include 3-5 important quotes from the artist about their career, philosophy or anything that speaks to them as a person."
