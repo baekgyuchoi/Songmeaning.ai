@@ -22,6 +22,18 @@ export async function POST(request: Request) {
     }
     const prisma = new PrismaClient()
     await prisma.$connect()
+
+    const faq_in_db = await prisma.fAQs.findUnique({
+        where: {
+            faq_slug: faq_answer.faq_slug
+        }
+    })
+    if (faq_in_db != null) {
+        console.log("Error - faq already exists")
+        await prisma.$disconnect()
+        return new Response("Error - faq already exists")
+    }
+
     await prisma.fAQs.create({
         data: {
             song_slug: faq_answer.song_slug,

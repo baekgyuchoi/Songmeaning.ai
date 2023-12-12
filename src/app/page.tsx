@@ -1,9 +1,6 @@
 
-import TypewriterComponent from "typewriter-effect";
 import HomeButton from "./components/HomeButton";
-import SearchInput from "./components/(search-page)/SearchInput";
 import HomeTypewriter from "./components/(home-components)/HomeTypewriter";
-import { PrismaClient } from "@prisma/client";
 
 import TrendingSongs from "./components/TrendingSongs";
 import HomeSearchInput from "./components/(home-components)/HomeSearchInput";
