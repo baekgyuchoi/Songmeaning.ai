@@ -42,8 +42,8 @@ async function QueueArtist(artist_slug_input: string) {
           genius_id: artist_song?.genius_id,
           genius_url: artist_song?.genius_url,
           song_short_title: artist_song?.song_short_title,
-          header_image_url: artist_song?.header_image_url,
-          song_art_url: artist_song?.song_image_url,
+          header_image_url: artist_song.header_image_url || "",
+          song_art_url: artist_song.song_image_url || "",
           release_date: artist_song.release_date || "",
         }
         songs.push(song)
@@ -76,8 +76,8 @@ const MoreFromArtist: React.FC<MoreFromArtistProps> = async (props) => {
       <></>
       ):(
       <div>
-        <div className='w-96 h-auto'>
-        <div className='rounded-md font-mono border flex flex-row items-center w-full justify-center mb-2 truncate'>
+        <div className='w-full '>
+        <div className='rounded-md font-mono border-b border-t p-1 flex flex-row items-center w-full justify-center mb-6 truncate'>
           <h1 className=' pl-2'>More from: </h1>
           <div className='truncate overflow-elipsis underline'>
             <Link

@@ -27,8 +27,8 @@ async function GetArtistTopSongs(artist_slug: string) {
             genius_id: song.genius_id,
             artist_name: song.artist_name,
             artist_slug: song.artist_slug,
-            header_image_url: song.header_image_url,
-            song_art_url: song.song_image_url,
+            header_image_url: song.header_image_url || "",
+            song_art_url: song.song_image_url || "" ,
             release_date: song.release_date || "",
         };
         return songInfo;

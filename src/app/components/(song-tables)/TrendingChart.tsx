@@ -30,8 +30,8 @@ const TrendingChart: React.FC = async () => {
       artist_id: song.artist_id,
       artist_name: song.artist_name,
       artist_slug: song.artist_slug,
-      header_image_url: song.header_image_url,
-      song_art_url: song.song_image_url,
+      header_image_url: song.header_image_url || "",
+      song_art_url: song.song_image_url || "",
       release_date: song.release_date || "",
     };
     return songInfo;
@@ -39,7 +39,7 @@ const TrendingChart: React.FC = async () => {
 
   return (
     <main>
-      <div className='font-mono rounded-md border flex items-center justify-center mb-2'>
+      <div className='font-mono rounded-md border-b border-t flex items-center justify-center mb-6 p-1'>
         <h1>Trending Chart</h1>
       </div>
       <div className='carousel carousel-center carousel-vertical h-96 rounded-box bg-white w-full flex'>

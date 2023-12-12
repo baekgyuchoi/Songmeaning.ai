@@ -20,7 +20,7 @@ const SongFAQ: React.FC<SongFAQProps> = async (props) => {
   
     return (
         <div className='flex flex-col items-center justify-center'>
-            <div className='w-screen sm:w-full border rounded-md overflow:hidden font-mono text-lg flex justify-center mb-4'>
+            <div className='w-screen sm:w-full border-b border-t rounded-md p-1 overflow:hidden font-mono text-lg flex justify-center mb-4'>
             {/* Your component code here */}
             FAQ
             </div>

@@ -149,8 +149,8 @@ export default async function SongPage({ params, searchParams }: {
             artist_slug: song_from_genius.artist_slug,
             genius_id: song_from_genius.genius_id,
             genius_url: song_from_genius.genius_url,
-            header_image_url: song_from_genius.header_image_url,
-            song_image_url: song_from_genius.song_art_url,
+            header_image_url: song_from_genius.header_image_url || "",
+            song_image_url: song_from_genius.song_art_url || "",
             release_date: song_from_genius.release_date || "",
             isValid: true,
             id: 0,
@@ -175,6 +175,7 @@ export default async function SongPage({ params, searchParams }: {
               </div>
             )
           }
+          console.log(song_data_genius)
         await PostSongToDB(song_from_genius)
           
           song_data = song_data_genius
@@ -203,7 +204,7 @@ export default async function SongPage({ params, searchParams }: {
               song_short_title: song_data?.song_short_title,
           }
 
-          
+          console.log(song_info)
           const song_meaning_split = meaning?.split("\n")
           
           let formatted_meaning : formatted_meaning = {} as formatted_meaning

@@ -41,8 +41,8 @@ async function getArtistSongs(artist_id: number, artist_name: string, current_pa
         artist_name: song.primary_artist.name,
         artist_id: parseInt(song.primary_artist.id),
         artist_slug: song.primary_artist.url.split('/').pop(),
-        header_image_url: song.header_image_url,
-        song_art_url: song.song_art_image_url,
+        header_image_url: song.header_image_url || "",
+        song_art_url: song.song_art_image_url || "",
         release_date: song.release_date_for_display || "",
       };
       songInfoArray.push(songInfo)
