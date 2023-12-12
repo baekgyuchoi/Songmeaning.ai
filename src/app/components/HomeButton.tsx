@@ -18,7 +18,7 @@ const HomeButton: React.FC<Props> = ({ /* Destructure your props here */ }) => {
         <Link 
         href="/"
         className="">
-        <div className='flex items-center justify-center hover:bg-gray-200 '>
+        <div className='flex items-center justify-center  '>
             <div className=" flex items-center justify-center rounded p-2 transition text-gray-600  " >
                 <div className='w-1/6 mr-2 flex items-center'>
                     <img src='/Songmeaning_favicon.png' />
