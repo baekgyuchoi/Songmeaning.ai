@@ -3,7 +3,6 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { SongData } from '@/lib/validators/song_data_response';
 import { PrismaClient } from '@prisma/client';
 import React from 'react';
-import AlternateMeaningFAQContent from './AlternateMeaningFAQContent';
 import AlternateMeaningFAQContainer from './AlternateMeaningFAQContainer';
 
 
@@ -43,7 +42,7 @@ const FAQAlternateMeaning: React.FC<SongFAQItemProps> = async (props) => {
             className=' font-mono '>
             <AccordionItem value='item-1'>
                 <div className='w-full  border rounded-md overflow:hidden  '>
-                    <AccordionTrigger className='px-6 border-b border-zinc-300 font-mono truncate'>
+                    <AccordionTrigger className='px-6 border-b border-zinc-300 font-bold font-mono truncate'>
                         {question}
                     </AccordionTrigger>
                     <AccordionContent className='font-sans'>

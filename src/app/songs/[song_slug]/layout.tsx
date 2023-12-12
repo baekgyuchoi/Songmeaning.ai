@@ -18,10 +18,11 @@ export const viewport: Viewport = {
   }) {
     return (
       <div className=" overflow-hidden">
-          <NavBar />
-          <div className="">
-            {children}
-          </div>
+        <div id="fb-root"></div>
+        <NavBar />
+        <div className="">
+          {children}
+        </div>
       </div>
     )
   }

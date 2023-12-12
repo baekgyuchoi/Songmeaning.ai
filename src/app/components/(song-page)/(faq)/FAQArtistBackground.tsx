@@ -23,10 +23,10 @@ const FAQArtistBackground: React.FC<SongFAQItemProps> = async (props) => {
       <Accordion 
             type='single' 
             collapsible 
-            className=' font-mono '>
+            className=' font-mono'>
             <AccordionItem value='item-1'>
                 <div className='w-full   rounded-md overflow:hidden  '>
-                    <AccordionTrigger className='px-6 rounded-md border-1 border-b-2 border-purple-900/25 font-mono truncate'>
+                    <AccordionTrigger className='px-6 rounded-md border-1 border-b-2 font-bold border-purple-900/25 font-mono truncate'>
                         {question}
                     </AccordionTrigger>
                     <AccordionContent className='font-sans'>

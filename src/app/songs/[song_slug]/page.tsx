@@ -1,17 +1,17 @@
 
 import { PrismaClient } from '@prisma/client'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SongInfo } from '@/lib/validators/song_info';
 import { Suspense } from 'react';
 import SongMeaningContent from '@/app/components/(song-page)/SongMeaningContent';
 import TrendingChart from '@/app/components/(song-tables)/TrendingChart';
 import MoreFromArtist from '@/app/components/(song-tables)/MoreFromArtist';
-import ArtistLink from '@/app/components/(song-page)/ArtistLink';
 import { SongData } from '@/lib/validators/song_data_response';
 import SongFAQ from '@/app/components/(song-page)/(faq)/SongFAQ';
 import FormattedMeaningContent from '@/app/components/(song-page)/FormattedMeaningContent';
 import LoadingFAQ from '@/app/components/(song-page)/(faq)/LoadingFAQ';
 import Link from 'next/link';
+import PaymentContainer from '@/app/components/(payment)/PaymentContainer';
 
 
 type formatted_meaning = {
@@ -254,13 +254,13 @@ export default async function SongPage({ params, searchParams }: {
               <main className=" flex flex-col items-center md:px-4 py-8 ">
                   
 
-                  <div className='md:mx-auto max-w-6xl px-0 md:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
+                  <div className='md:mx-auto max-w-6xl px-0 md:px-6 lg:px-8  flex w-full flex-1 flex-col pl-0 pr-0 '>
                     <Card className=" w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10  md:p-16">
                 
                       <div className=''>
                         <CardHeader>
                           <CardTitle className="mt-12 mb-6 text-4xl font-bold text-gray-800 flex justify-between">
-                            <div>
+                          
                             
                               <div>
                                 <p>{song_name}</p> 
@@ -276,7 +276,7 @@ export default async function SongPage({ params, searchParams }: {
                                   </Link>
                                 </div>
                               </div>
-                            </div>
+                            
                             
                           </CardTitle>
                         </CardHeader>
@@ -363,6 +363,11 @@ export default async function SongPage({ params, searchParams }: {
                             
                             
                           
+                          </div>
+                          <div className='w-screen sm:w-full text-sm md:w-2/3 mt-10'>
+                            <CardContent>
+                              <PaymentContainer song_slug={song_data.song_slug} />
+                            </CardContent>
                           </div>
                         </div>
                       

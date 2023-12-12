@@ -12,8 +12,6 @@ export async function POST(request: Request) {
     // if song exists, return "song already exists"
     // if song does not exist, create song in database
   
-    
-    
     if (faq_answer.answer[faq_answer.answer.length - 1] != ".") {
 
         
@@ -29,8 +27,8 @@ export async function POST(request: Request) {
         }
     })
     if (faq_in_db != null) {
-        console.log("Error - faq already exists")
         await prisma.$disconnect()
+        console.log("Error - faq already exists")
         return new Response("Error - faq already exists")
     }
 

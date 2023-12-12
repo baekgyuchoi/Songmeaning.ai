@@ -4,8 +4,7 @@ import { SongData } from '@/lib/validators/song_data_response';
 import { PrismaClient } from '@prisma/client';
 import React from 'react';
 import FAQItemContent from './FAQItemContent';
-import SongBadges from '../SongBadges';
-import { Badge } from '@/components/ui/badge';
+
 
 
 interface SongFAQItemProps {
@@ -50,7 +49,7 @@ const SongFAQItem: React.FC<SongFAQItemProps> = async (props) => {
             className=' font-mono '>
             <AccordionItem value='item-1'>
                 <div className='w-full   rounded-md overflow:hidden  '>
-                    <AccordionTrigger className='px-6 rounded-md border-1 border-b-2 border-purple-900/25 font-mono truncate'>
+                    <AccordionTrigger className='px-6 rounded-md border-1 border-b-2 border-purple-900/25 font-mono font-bold truncate'>
                       <div className='flex justify-start'>
                         <div className='mr-2'>{question}</div>
                        
