@@ -32,12 +32,18 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
         <>
             <div className='text-gray-800'>
                 <div className='w-full flex justify-start border-b font-mono font-bold '><h1 className='ml-2'>Summary Analysis</h1></div>
-                <p
+                <ul
                 
-                    className="ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300 " 
+                    className="list-disc ml-8 mr-2 mt-3 text-base sm:text-lg transition duration-300 " 
                 >
-                    {formatted_meaning.summary_analysis}
-                </p>
+                    {formatted_meaning.summary_analysis.split('. ').map((item, i) => {
+                        return (
+                            <li key={i} className='mt-2'>
+                                {item.split('.')[0]}
+                            </li>
+                        )
+                    })}
+                </ul>
                 
             </div>
             <div className='text-gray-800 mt-8'>
