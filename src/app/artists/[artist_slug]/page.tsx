@@ -7,6 +7,7 @@ import { SongInfo } from "@/lib/validators/song_info";
 import prisma from "@/lib/db";
 import { Loader2 } from "lucide-react";
 import { Suspense } from "react";
+import FooterContainer from "@/app/components/(footer)/FooterContainer";
 
 async function GetArtistFromGenius(artist_id: number) {
   const response = await fetch('https://api.genius.com/artists/'+ artist_id, {
@@ -140,38 +141,41 @@ export default async function ArtistPage({
 
         if (artist == null) {
             return(
-                <main className="flex flex-col items-center px-4 py-8">
+              <main>
+                <div className="flex flex-col items-center px-4 py-8">
+
+                  
+                  
+                  <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
+                    <Card className=" w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
                 
-                <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
-                  <Card className=" w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
-              
-                    <div className='md:ml-12 ml-0'>
-                      <CardHeader>
-                        <CardTitle className="mt-12 text-4xl font-bold text-gray-800">
-                        
-                              Artist Not Found
+                      <div className='md:ml-12 ml-0'>
+                        <CardHeader>
+                          <CardTitle className="mt-12 text-4xl font-bold text-gray-800">
                           
-                        </CardTitle>
-                        
-                        
-                      </CardHeader>
-                    
-                      <div className='flex flex-col md:flex-row  '> 
-                        <div className="w-full md:w-2/3 flex-grow">
+                                Artist Not Found
+                            
+                          </CardTitle>
+                          
+                          
+                        </CardHeader>
+                      
+                        <div className='flex flex-col md:flex-row  '> 
+                          <div className="w-full md:w-2/3 flex-grow">
+                            
+                          </div>
                           
                         </div>
+                      
+                    
                         
                       </div>
-                    
-                  
-                      
-                    </div>
-                  </Card>
-                </div>
-                
+                    </Card>
+                  </div>
+                </div>  
             
             
-          <footer className="text-gray-500 text-sm">2023 Songmeaning.AI</footer>
+            <FooterContainer />
           
           </main>
             )
@@ -183,7 +187,8 @@ export default async function ArtistPage({
       
     
         return (
-            <main className="flex flex-col items-center md:px-4 py-8">
+            <main>
+              <div className="flex flex-col items-center md:px-4 py-8">
                 <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
                   <Card className=" w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
               
@@ -237,9 +242,8 @@ export default async function ArtistPage({
                 </div>
                 
             
-            <div className="flex items-center justify-center mt-20">
-              <footer className="text-gray-500 text-sm">2023 Songmeaning.AI</footer>
             </div>
+            <FooterContainer />
           </main>
 
         );

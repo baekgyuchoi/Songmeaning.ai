@@ -15,7 +15,7 @@ const PaymentLink: React.FC = () => {
     <Link href={'https://buy.stripe.com/dR6aIo6RL0fSd6U144'}>
       <Button
         href={'https://buy.stripe.com/dR6aIo6RL0fSd6U144'}
-        className='bg-gradient-to-tr from-purple-800 to-yellow-500 hover:bg-purple-800/75 text-white font-bold py-2 px-8 rounded-full'
+        className='bg-purple-600/75 hover:bg-purple-800/75 text-white font-bold py-2 px-8 rounded-full'
         color="primary"
       >
           Pay   

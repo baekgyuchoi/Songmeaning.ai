@@ -16,7 +16,7 @@ const NavBarHomeButton: React.FC<Props> = ({ /* Destructure your props here */ }
     return (
         // Return your JSX here
        
-        <div className='flex items-center justify-center hover:bg-gray-200 w-2/3  '>
+        <div className='flex items-center justify-center w-2/3  '>
             <Link 
             href="/"
             className="">
@@ -30,7 +30,7 @@ const NavBarHomeButton: React.FC<Props> = ({ /* Destructure your props here */ }
                     className="flex items-center justify-center  text-purple-900 font-bold text-2xl tracking-tight hover:text-gray-300 focus:outline-none focus:shadow-outline"
                 >
                 
-                    <h1 className="font-mono text-base sm:text-xl md:text-2xl font-medium">Songmeaning.<span className="text-gray-600 hover:text-gray-300 font-sans">AI</span></h1>
+                    <h1 className="font-mono text-base sm:text-xl md:text-2xl font-medium">Songmeaning.AI</h1>
                 </div>
             </div>
             </Link> 

@@ -24,19 +24,19 @@ interface LinksContainerProps {
 const LinksContainer: React.FC<LinksContainerProps> = (props) => {
     const song_url = `https://www.songmeanings-ai.vercel.app/songs/${props.song_slug}`
     return (
-        <div className='flex flex-col items-center  ml-2 '>
-            <div className='flex flex-col items-center'>
+        <div className='flex items-center justify-between w-full mt-3 ml-2 '>
+            <div className='flex flex-col items-center '>
                 <ShareLink />
-                <div className='flex  justify-between mb-10'>
+                <div className='flex justify-between mb-10'>
                    
                     <FacebookShareButton url={song_url} >
-                        <FacebookIcon size={32} round/>
+                        <FacebookIcon size={32} round className='mr-1'/>
                     </FacebookShareButton>
                     <TwitterShareButton url={song_url} >
-                        <TwitterIcon size={32} round/>
+                        <TwitterIcon size={32} round className='mr-1'/>
                     </TwitterShareButton>
                     <LinkedinShareButton url={song_url} >
-                        <LinkedinIcon size={32} round/>
+                        <LinkedinIcon size={32} round className='mr-1'/>
                     </LinkedinShareButton>
                     <RedditShareButton url={song_url} >
                         <RedditIcon size={32} round/>
@@ -46,7 +46,7 @@ const LinksContainer: React.FC<LinksContainerProps> = (props) => {
             </div>
           
    
-            <div className=''>
+            <div className='mb-2 mr-4'>
                 <PaymentLink />
             </div>
         

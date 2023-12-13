@@ -29,7 +29,7 @@ const HomeButton: React.FC<Props> = ({ /* Destructure your props here */ }) => {
                     className="flex items-center justify-center  text-purple-900 font-bold text-4xl tracking-tight hover:text-gray-300 focus:outline-none focus:shadow-outline"
                 >
                 
-                    <h1 className="font-mono text-2xl md:text-3xl font-medium">Songmeaning.<span className="text-gray-600 hover:text-gray-300 font-sans">AI</span></h1>
+                    <h1 className="font-mono text-2xl md:text-3xl font-medium">Songmeaning.AI</h1>
                 </div>
             </div>
         </div>

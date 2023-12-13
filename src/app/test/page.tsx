@@ -4,6 +4,7 @@ import SongMeaningContent from '../components/(song-page)/SongMeaningContent';
 import { SongInfo } from '@/lib/validators/song_info';
 import MoreFromArtist from '../components/(song-tables)/MoreFromArtist';
 import TrendingChart from '../components/(song-tables)/TrendingChart';
+import FooterContainer from '../components/(footer)/FooterContainer';
 
 
 
@@ -25,6 +26,7 @@ const TestPage: React.FC = () => {
     return (
         <div>
             <TrendingChart />
+            <FooterContainer />
         </div>
     );
 };

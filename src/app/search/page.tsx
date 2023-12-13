@@ -3,6 +3,7 @@ import { SongInfo } from "@/lib/validators/song_info";
 import SearchItemButton from "../components/(search-page)/SearchItemButton";
 import { Suspense } from "react";
 import { Viewport } from "next";
+import FooterContainer from "../components/(footer)/FooterContainer";
 
 
 export const viewport: Viewport = {
@@ -58,7 +59,8 @@ export default async function SearchPage({
     const data = await getSearchResults(searchQuery);
    
     return (
-        <main className="flex flex-col items-center p-4 ">
+        <main>
+          <div className="flex flex-col items-center p-4 mb-4">
           
           
       
@@ -82,10 +84,8 @@ export default async function SearchPage({
             
             
       
-          
-          <div className="flex items-center justify-center mt-20">
-            <footer className="text-gray-500 text-sm">2023 Songmeaning.AI</footer>
           </div>
+        <FooterContainer />
       
         </main>
       );

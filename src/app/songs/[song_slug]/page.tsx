@@ -12,6 +12,7 @@ import FormattedMeaningContent from '@/app/components/(song-page)/FormattedMeani
 import LoadingFAQ from '@/app/components/(song-page)/(faq)/LoadingFAQ';
 import Link from 'next/link';
 import PaymentContainer from '@/app/components/(payment)/PaymentContainer';
+import FooterContainer from '@/app/components/(footer)/FooterContainer';
 
 
 type formatted_meaning = {
@@ -241,136 +242,138 @@ export default async function SongPage({ params, searchParams }: {
 
 
           return (
-              <main className=" flex flex-col items-center md:px-4 py-8 ">
+              <main className="">
+                  <div className='flex flex-col items-center md:px-4 py-8'>
+
                   
 
-                  <div className='md:mx-auto max-w-6xl px-0 md:px-6 lg:px-8  flex w-full flex-1 flex-col pl-0 pr-0 '>
-                    <Card className=" w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10  md:p-16">
-                
-                      <div className=''>
-                        <CardHeader>
-                          <CardTitle className="mt-12 mb-6 text-4xl font-bold text-gray-800 flex justify-between">
-                          
+                    <div className='md:mx-auto max-w-6xl px-0 md:px-6 lg:px-8  flex w-full flex-1 flex-col pl-0 pr-0 '>
+                      <Card className=" w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10  md:p-16">
+                  
+                        <div className=''>
+                          <CardHeader>
+                            <CardTitle className="mt-8 text-center sm:text-left sm:mt-12 mb-6 text-4xl font-bold text-gray-800 ">
                             
-                              <div>
-                                <p>{song_name}</p> 
-                                <div className="flex justify-start items-start text-gray-600 hover:text-gray-500 mt-2"> 
-                                  <Link
-                                      href={`/artists/${song_data.artist_slug}/?artist=${song_data.artist_id}`}
-                                      className='w-full overflow-hidden text-gray-600' 
-                                    
-                                    >   
-                                  
-                                      {song_data.artist_name}
-                                  
-                                  </Link>
-                                </div>
-                              </div>
-                            
-                            
-                          </CardTitle>
-                        </CardHeader>
-                      
-                        <div className='flex flex-col  items-center '> 
-                          <div className="w-full md:pr-4 md:mr-4 md:pl-4">
-                            <CardContent className="p-1 md:p-3 flex flex-col items-center  mb-5" style={{ minHeight: '600px', minWidth: '200px' }}>
-                                {
-                                  song_data?.isValid ? (
-                                    <div className='w-screen p-4 sm:p-0 sm:w-full'>
-                                    {
-                                      is_meaning_valid ? (
-                                        // <>{split_meaning?.map((paragraph, i) => (
-                                        //   <p
-                                        //     key={i}
-                                        //     className="text-gray-800 mt-4 text-lg transition duration-300 " 
-                                        //   >
-                                        //     {paragraph}
-                                        //   </p>
-                                        // ))}</>
-                                        <FormattedMeaningContent formatted_meaning={formatted_meaning} />
-                                      ) : (
-                                        <Suspense fallback={<div className='flex items-center container justify-center'>Loading feed...</div>}>
-                                          <SongMeaningContent song_info={song_info} />
-                                        </Suspense>
-                                      )
-                                    } 
-                                    </div> 
-                                  ) : (
-                                    <div className='container flex items-center justify-center mt-10'>
-                                      <Card className="mb-0.5 flex-1  bg-white px-4 pt-4 pb-4 sm:mb-8 sm:flex-initial rounded-md md:px-10 md:pt-9 md:pb-10 ">
-                      
-                                        <CardHeader className="bg-beige-200 rounded-t-lg px-6 py-4">
-                                          <CardTitle className="text-xl font-bold text-gray-800">This song is invalid</CardTitle>
-                                          
-                                        </CardHeader>
-                                  
-                                        <CardContent className="p-6 text-gray-700">
-                                          <p className="text-gray-700">Song does not have lyrics or</p>
-                                          <p>  Data corruption </p>
-                                        </CardContent>
-                                  
-                                        
-                                        
-                                      </Card>
-                                    </div>
-                                  )
-                                }
-                                                                              
                               
-                            </CardContent>
-                          </div>
+                                <div>
+                                  <p>{song_name}</p> 
+                                  <div className="flex justify-start items-start text-gray-600 hover:text-gray-500 mt-2"> 
+                                    <Link
+                                        href={`/artists/${song_data.artist_slug}/?artist=${song_data.artist_id}`}
+                                        className='w-full overflow-hidden text-gray-600' 
+                                      
+                                      >   
+                                    
+                                        {song_data.artist_name}
+                                    
+                                    </Link>
+                                  </div>
+                                </div>
+                              
+                              
+                            </CardTitle>
+                          </CardHeader>
                         
-                          <div className='w-screen md:w-full text-black mt-10 mb-10'>
+                          <div className='flex flex-col  items-center '> 
+                            <div className="w-full md:pr-4 md:mr-4 md:pl-4">
+                              <CardContent className="p-1 md:p-3 flex flex-col items-center  mb-5" style={{ minHeight: '600px', minWidth: '200px' }}>
+                                  {
+                                    song_data?.isValid ? (
+                                      <div className='w-screen p-4 sm:p-0 sm:w-full'>
+                                      {
+                                        is_meaning_valid ? (
+                                          // <>{split_meaning?.map((paragraph, i) => (
+                                          //   <p
+                                          //     key={i}
+                                          //     className="text-gray-800 mt-4 text-lg transition duration-300 " 
+                                          //   >
+                                          //     {paragraph}
+                                          //   </p>
+                                          // ))}</>
+                                          <FormattedMeaningContent formatted_meaning={formatted_meaning} />
+                                        ) : (
+                                          <Suspense fallback={<div className='flex items-center container justify-center'>Loading feed...</div>}>
+                                            <SongMeaningContent song_info={song_info} />
+                                          </Suspense>
+                                        )
+                                      } 
+                                      </div> 
+                                    ) : (
+                                      <div className='container flex items-center justify-center mt-10'>
+                                        <Card className="mb-0.5 flex-1  bg-white px-4 pt-4 pb-4 sm:mb-8 sm:flex-initial rounded-md md:px-10 md:pt-9 md:pb-10 ">
+                        
+                                          <CardHeader className="bg-beige-200 rounded-t-lg px-6 py-4">
+                                            <CardTitle className="text-xl font-bold text-gray-800">This song is invalid</CardTitle>
+                                            
+                                          </CardHeader>
+                                    
+                                          <CardContent className="p-6 text-gray-700">
+                                            <p className="text-gray-700">Song does not have lyrics or</p>
+                                            <p>  Data corruption </p>
+                                          </CardContent>
+                                    
+                                          
+                                          
+                                        </Card>
+                                      </div>
+                                    )
+                                  }
+                                                                                
+                                
+                              </CardContent>
+                            </div>
+                          
+                            <div className='w-screen md:w-full text-black mt-10 mb-10'>
+                              
+                              <CardContent>
+                                <Suspense fallback={<LoadingFAQ />}>
+                                  {
+                                    is_meaning_valid ? (
+                                      <><SongFAQ songMeaning={meaning!} songData={song_data} /></>
+                                    ) : (
+                                      <></>
+                                    )
+                                  } 
+                                </Suspense>
+                              </CardContent>
                             
-                            <CardContent>
-                              <Suspense fallback={<LoadingFAQ />}>
-                                {
-                                  is_meaning_valid ? (
-                                    <><SongFAQ songMeaning={meaning!} songData={song_data} /></>
-                                  ) : (
-                                    <></>
-                                  )
-                                } 
-                              </Suspense>
-                            </CardContent>
-                          
-                          </div>
-                          
-                          
-                          <div className='  flex text-black flex-col lg:flex-row items-start '>
+                            </div>
+                            
+                            
+                            <div className='  flex text-black flex-col lg:flex-row items-start '>
 
-                            <CardContent className="">                               
-                              <Suspense fallback={<p>Loading feed...</p>}>
-                                <MoreFromArtist artist_id={song_data.artist_id} song_slug={song_data.song_slug} artist_name={song_data.artist_name} artist_slug={song_data.artist_slug} />
-                              </Suspense>
-                            </CardContent>
+                              <CardContent className="">                               
+                                <Suspense fallback={<p>Loading feed...</p>}>
+                                  <MoreFromArtist artist_id={song_data.artist_id} song_slug={song_data.song_slug} artist_name={song_data.artist_name} artist_slug={song_data.artist_slug} />
+                                </Suspense>
+                              </CardContent>
+                              
+                              <CardContent className="">
+                                <Suspense fallback={<p>Loading feed...</p>}>
+                                  <TrendingChart />
+                                </Suspense>
+                              </CardContent>
+                              
+                              
                             
-                            <CardContent className="">
-                              <Suspense fallback={<p>Loading feed...</p>}>
-                                <TrendingChart />
-                              </Suspense>
-                            </CardContent>
-                            
-                            
-                          
+                            </div>
+                            <div className='w-screen sm:w-full text-sm lg:w-2/3 mt-16'>
+                              <CardContent>
+                                <PaymentContainer song_slug={song_data.song_slug} />
+                              </CardContent>
+                            </div>
                           </div>
-                          <div className='w-screen sm:w-full text-sm md:w-2/3 mt-10'>
-                            <CardContent>
-                              <PaymentContainer song_slug={song_data.song_slug} />
-                            </CardContent>
-                          </div>
-                        </div>
-                      
-                    
                         
-                      </div>
-                    </Card>
-                  </div>
-                  
-              
-              <div className="flex items-center justify-center mt-20">
-                <footer className="text-gray-500 text-sm">2023 Songmeaning.AI</footer>
+                      
+                          
+                        </div>
+                      </Card>
+                    </div>
+                    
+                
+                
               </div>
+              <FooterContainer />
             </main>
 
           );
