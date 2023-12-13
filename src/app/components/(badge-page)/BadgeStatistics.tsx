@@ -1,9 +1,8 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/db';
 import React from 'react';
 
 async function getBadgeSongCount(badge_name: string) {
-  const prisma = new PrismaClient()
-  await prisma.$connect()
+
   const badge = await prisma.badges.findUnique({
     where: {
       badge_name: badge_name
@@ -14,22 +13,17 @@ async function getBadgeSongCount(badge_name: string) {
       badge_id: badge?.id
     },
   });
-  await prisma.$disconnect()
+
   return badgesOnSongs
 
 }
 
 async function getBadgeCreatedDate(badge_name: string) {
-    const prisma = new PrismaClient()
-    await prisma.$connect()
     const badge = await prisma.badges.findUnique({
         where: {
             badge_name: badge_name
         }
     })
-    
-
-    await prisma.$disconnect()
     
     return badge?.created_at
 }

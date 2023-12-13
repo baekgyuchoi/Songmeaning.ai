@@ -1,5 +1,5 @@
 import { FAQ } from '@/lib/validators/FAQ'
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/lib/db'
 
 
 //maybe POST to alter databasenext c
@@ -18,8 +18,6 @@ export async function POST(request: Request) {
         console.log("Error - song meaning cut off")
         return new Response("Error - song does not exist")
     }
-    const prisma = new PrismaClient()
-    await prisma.$connect()
 
     const faq_in_db = await prisma.fAQs.findUnique({
         where: {
@@ -27,7 +25,6 @@ export async function POST(request: Request) {
         }
     })
     if (faq_in_db != null) {
-        await prisma.$disconnect()
         console.log("Error - faq already exists")
         return new Response("Error - faq already exists")
     }
@@ -42,8 +39,6 @@ export async function POST(request: Request) {
         }
     })
    
-    
-    await prisma.$disconnect()
     return new Response("Success!")
  
 }

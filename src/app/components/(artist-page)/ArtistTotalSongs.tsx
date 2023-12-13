@@ -1,9 +1,6 @@
 
-import { ScrollArea } from '@/components/ui/scroll-area';
+
 import { SongInfo } from '@/lib/validators/song_info';
-import { Pagination, PaginationCursor, PaginationItem } from '@nextui-org/react';
-import { PrismaClient } from '@prisma/client';
-import { get } from 'http';
 import Link from 'next/link';
 import React from 'react';
 import ArtistSongItem from './ArtistSongItem';

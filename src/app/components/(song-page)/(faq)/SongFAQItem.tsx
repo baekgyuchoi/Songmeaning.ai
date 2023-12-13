@@ -1,7 +1,7 @@
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { SongData } from '@/lib/validators/song_data_response';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/db';
 import React from 'react';
 import FAQItemContent from './FAQItemContent';
 
@@ -15,17 +15,13 @@ interface SongFAQItemProps {
 }
 
 async function GetFAQ(faq_slug: string) {
-  const prisma = new PrismaClient()
-  await prisma.$connect()
   const faq = await prisma.fAQs.findUnique({
     where: {
       faq_slug: faq_slug
     }
   })
-  await prisma.$disconnect()
 
   if (faq == null) {
-    console.log("faq not found")
     return null
   }
   return faq

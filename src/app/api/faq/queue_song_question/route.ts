@@ -1,5 +1,5 @@
 
-import { PrismaClient } from '@prisma/client'
+
 
 import { Message, MessageArraySchema } from "@/lib/validators/message";
 import { ChatGPTMessage, OpenAIStream, OpenAIStreamPayload } from "@/lib/openai-stream";

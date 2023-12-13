@@ -2,14 +2,8 @@
 
 
 import React, { HTMLAttributes } from 'react';
-import SearchItemButton from './(search-page)/SearchItemButton';
-import { PrismaClient } from '@prisma/client';
-import ShortSearchButton from './(search-page)/ShortSearchButton';
+import prisma from '@/lib/db';
 import { SongInfo, SongInfoArraySchema } from '@/lib/validators/song_info';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-
-import Image from "next/image"
-import { Card } from '@/components/ui/card';
 import Link from 'next/link';
 
 
@@ -22,15 +16,12 @@ interface TrendingSongsProps extends HTMLAttributes<HTMLDivElement>
 
 
 async function GetTrendingSongs() {
-    const prisma = new PrismaClient();
-    await prisma.$connect();
     const trending_songs = await prisma.songs.findMany({
       orderBy: {
         viewCount: "desc",
       },
       take: 15,
     });
-    await prisma.$disconnect();
     return trending_songs
   }
 

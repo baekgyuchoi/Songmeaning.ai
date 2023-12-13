@@ -1,5 +1,5 @@
 
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/lib/db';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SongInfo } from '@/lib/validators/song_info';
 import { Suspense } from 'react';
@@ -57,15 +57,12 @@ async function SongInGenius(song_id: number) {
 
 
 async function PostSongToDB(song_info: SongInfo) {
-  const prisma = new PrismaClient()
-  await prisma.$connect()
   const song_in_db = await prisma.songs.findUnique({
       where: {
           song_slug: song_info.song_slug,
           },
       })
   if (song_in_db != null) {
-      await prisma.$disconnect()
       if (song_in_db.isValid === false) {
           return "Error - song is not valid "
       }
@@ -88,13 +85,10 @@ async function PostSongToDB(song_info: SongInfo) {
           release_date: song_info.release_date || "",
       }
   })
-  await prisma.$disconnect()
   return "Success"
 }
 
 async function QueueSong(song_slug_input: string) {
-    const prisma = new PrismaClient()
-    await prisma.$connect()
     const song = await prisma.songs.findUnique({
         where: {
             song_slug: song_slug_input
@@ -115,7 +109,6 @@ async function QueueSong(song_slug_input: string) {
     })
     }
   
-    await prisma.$disconnect()
     return song
 }
 
@@ -134,7 +127,6 @@ export default async function SongPage({ params, searchParams }: {
         const searchQuery = searchParams?.song;
 
         const song_id = parseInt(searchQuery!)
-        console.log(song_id)
 
     
         let song_data = await QueueSong(params.song_slug) as SongData
@@ -176,7 +168,6 @@ export default async function SongPage({ params, searchParams }: {
               </div>
             )
           }
-          console.log(song_data_genius)
         await PostSongToDB(song_from_genius)
           
           song_data = song_data_genius
@@ -205,7 +196,6 @@ export default async function SongPage({ params, searchParams }: {
               song_short_title: song_data?.song_short_title,
           }
 
-          console.log(song_info)
           const song_meaning_split = meaning?.split("\n")
           
           let formatted_meaning : formatted_meaning = {} as formatted_meaning

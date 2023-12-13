@@ -1,7 +1,7 @@
 
 import { Badge } from '@/components/ui/badge';
 import { SongData } from '@/lib/validators/song_data_response';
-import { BadgesOnSongs, PrismaClient } from '@prisma/client';
+import prisma from '@/lib/db';
 import React from 'react';
 import OpenAI from 'openai';
 import Link from 'next/link';
@@ -15,8 +15,6 @@ interface SongBadgesProps {
 // Set up your OpenAI API credentials
 
 async function AddSongToBadge(badge_id: number, song_id: number) {
-  const prisma = new PrismaClient()
-  await prisma.$connect()
   
   const badge = await prisma.badges.findUnique({
     where: {
@@ -25,8 +23,6 @@ async function AddSongToBadge(badge_id: number, song_id: number) {
   })
 
   if (badge == null) {
-    console.log("badge not found")
-    await prisma.$disconnect()
     return null
   }
 
@@ -66,22 +62,15 @@ async function AddSongToBadge(badge_id: number, song_id: number) {
       }
     }
   })
-  console.log("song added to badge")
-  console.log(badge.songs_count)
-  console.log(badge)
-  await prisma.$disconnect()
 }
 
 
 async function IsBadgeInDB(badge_name: string) {
-  const prisma = new PrismaClient()
-  await prisma.$connect()
   const badge = await prisma.badges.findUnique({
     where: {
       badge_name: badge_name
     }
   })
-  await prisma.$disconnect()
   if (badge != null) {
     return badge
   }else{
@@ -90,8 +79,6 @@ async function IsBadgeInDB(badge_name: string) {
 }
 
 async function QueueBadges(badge_name:string, song_slug: string, song_id: number) {
-  const prisma = new PrismaClient()
-  await prisma.$connect()
   const badge = await prisma.badges.create({
     data: {
       badge_name: badge_name,
@@ -126,7 +113,6 @@ async function QueueBadges(badge_name:string, song_slug: string, song_id: number
   })
 
   
-  await prisma.$disconnect()
   return null
 }
 
@@ -142,26 +128,22 @@ async function GenerateTwoWord(songData: SongData) {
   });
   const two_badges = completion.choices[0].message.content?.split('/')
   if (two_badges == null || two_badges.length != 2) {
-    console.log("two badges error")
+
     return null
   }
   for (let i = 0; i < two_badges.length; i++) {
     const badge = two_badges[i]
     const badge_in_db = await IsBadgeInDB(badge)
-    console.log(badge_in_db)
+
     if (badge_in_db == null) {
-      console.log("badge not in db")
       await QueueBadges(badge, songData.song_slug, songData.id)
     }
     else{
       //badge in db, add song to badge
-      console.log("badge in db")
+
       await AddSongToBadge(badge_in_db.id, songData.id)
     }
   }
-
-  const prisma = new PrismaClient()
-  await prisma.$connect()
   await prisma.songs.update({
     where: {
       id: songData.id
@@ -170,10 +152,6 @@ async function GenerateTwoWord(songData: SongData) {
       two_word_description: two_badges[0] + "/" + two_badges[1]
     }
   })
-  console.log ("two word description added to song")
-
- 
-  await prisma.$disconnect()
 
  
  
@@ -191,9 +169,6 @@ const SongBadges: React.FC<SongBadgesProps> = async (props) => {
   if (props.songData.two_word_description == "default/default") {
     await GenerateTwoWord(props.songData)
   }
-  
-  const prisma = new PrismaClient()
-  await prisma.$connect()
 
   const songData1 = await prisma.songs.findUnique({
     where: {
@@ -203,8 +178,6 @@ const SongBadges: React.FC<SongBadgesProps> = async (props) => {
   
   const badges = songData1?.two_word_description.split("/")
 
-
-  await prisma.$disconnect()
   return (
     <div>
       {/* Your component code here */}

@@ -1,12 +1,9 @@
 import { SongInfo } from '@/lib/validators/song_info';
-import { PrismaClient } from '@prisma/client';
-import Link from 'next/link';
+import prisma from '@/lib/db';
 import React, { HTMLAttributes } from 'react';
 import ArtistSongItem from './ArtistSongItem';
 
 async function GetArtistTopSongs(artist_slug: string) {
-    const prisma = new PrismaClient()
-    await prisma.$connect()
     const songs = await prisma.songs.findMany({
         where: {
             artist_slug: artist_slug
@@ -16,7 +13,6 @@ async function GetArtistTopSongs(artist_slug: string) {
         },
         take: 15,
     });
-    await prisma.$disconnect()
     const songInfoArray = songs.map((song) => {
         const songInfo: SongInfo = {
             song_title: song.song_title,

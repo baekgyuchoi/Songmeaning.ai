@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/lib/db'
 
 //maybe POST to alter databasenext c
 export async function POST(request: Request) {
@@ -7,17 +7,13 @@ export async function POST(request: Request) {
     // query if song_id exists in database or use song_slug instead
     // if song exists, return "song already exists"
     // if song does not exist, create song in database
-  
-    const prisma = new PrismaClient()
-    await prisma.$connect()
+
     const song_in_db = await prisma.songs.findUnique({
         where: {
             song_slug: song_meaning.song_slug,
             },
         })
     if (song_in_db == null || song_meaning.meaning[song_meaning.meaning.length - 1] != ".") {
-
-        await prisma.$disconnect()
         console.log("Error - song does not exist")
         return new Response("Error - song does not exist")
     }
@@ -33,8 +29,6 @@ export async function POST(request: Request) {
         }
     })
    
-    
-    await prisma.$disconnect()
     return new Response("Success!")
  
 }

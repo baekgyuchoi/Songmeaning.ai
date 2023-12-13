@@ -1,11 +1,10 @@
-import { PrismaClient } from "@prisma/client"
+import prisma from '@/lib/db'
 
 
 
 export async function GET(request: Request) {
     const url = new URL(request.url)
     const queryParam = url.searchParams
-    const prisma = new PrismaClient()
     
     try{
         const req_slug = (queryParam.get('q') || "0")
@@ -16,12 +15,12 @@ export async function GET(request: Request) {
             },
         });
         
-        await prisma.$disconnect()
+
 
         return new Response(JSON.stringify(faq))
     }
     catch{
-        await prisma.$disconnect()
+
         return new Response("Error")
     }
     // const url = new URL(request.url)

@@ -19,7 +19,6 @@ interface FAQItemContentProps {
   
 
 const FAQItemContent: React.FC<FAQItemContentProps> = (props) => {
-    console.log("song meaning content rendered")
     const [streamContent, setStreamContent] = useState<string[]>([]);
     const song_data = props.song_data
     const router = useRouter()
@@ -46,17 +45,11 @@ const FAQItemContent: React.FC<FAQItemContentProps> = (props) => {
                     }
                     const val = new TextDecoder().decode(value);
 
-                    if (val.includes("\n\n")) {
-                        console.log("new paragraph")
-                    }
-
-
                     result += val;
                     const paragraphs = result.split("\n\n")
                     setStreamContent(paragraphs);
                 }
 
-                console.log("done")
                 const meaning_payload: FAQ = {
                     song_slug: song_data.song_slug,
                     question: songs_faq_prompts[props.faq_index][1],
@@ -72,7 +65,6 @@ const FAQItemContent: React.FC<FAQItemContentProps> = (props) => {
                         },
                         body: JSON.stringify(meaning_payload),
                     });
-                    console.log("songmeaning created")
                     router.refresh()
                     }catch(error){
                         console.log("error - songmeaning not created")
@@ -86,7 +78,6 @@ const FAQItemContent: React.FC<FAQItemContentProps> = (props) => {
     useEffect(() => {
         if (first_render) {
             first_render = false;
-            console.log("use effect called")
             fetchData(song_data);
         }
 

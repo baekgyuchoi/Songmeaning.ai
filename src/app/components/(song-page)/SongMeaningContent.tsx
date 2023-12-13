@@ -12,7 +12,6 @@ interface SongMeaningContentProps {
   
 
 const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
-    console.log("song meaning content rendered")
     const router = useRouter()
     const [streamContent, setStreamContent] = useState<string[]>([]);
     const song_info = props.song_info;
@@ -38,17 +37,13 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
                     }
                     const val = new TextDecoder().decode(value);
 
-                    if (val.includes("\n\n")) {
-                        console.log("new paragraph")
-                    }
-
 
                     result += val;
                     const paragraphs = result.split("\n\n")
                     setStreamContent(paragraphs);
                 }
 
-                console.log("done")
+       
                 const meaning_payload = {
                     song_slug: song_info.song_slug,
                     meaning: result
@@ -61,11 +56,9 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
                         },
                         body: JSON.stringify(meaning_payload),
                     });
-                    console.log("songmeaning created")
+             
                     router.refresh()
                     }catch(error){
-                        console.log("error - songmeaning not created")
-                        console.log(error)
                     }
                 }
                 } catch (error) {
@@ -75,7 +68,6 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
     useEffect(() => {
         if (first_render) {
             first_render = false;
-            console.log("use effect called")
             fetchData(song_info);
         }
 

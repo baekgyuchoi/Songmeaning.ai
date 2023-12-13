@@ -1,13 +1,10 @@
 
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+
 import React from 'react';
-import SearchItemButton from '../(search-page)/SearchItemButton';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/db';
 import { SongInfo } from '@/lib/validators/song_info';
-import ShortSearchButton from '../(search-page)/ShortSearchButton';
 import TrendingChartItem from './TrendingChartItem';
 import Link from 'next/link';
-import ArtistLink from '../(song-page)/ArtistLink';
 
 interface MoreFromArtistProps {
   // Define your component props here
@@ -18,7 +15,6 @@ interface MoreFromArtistProps {
 }
 
 async function QueueArtist(artist_slug_input: string) {
-    const prisma = new PrismaClient()
     const artist_songs = await prisma.songs.findMany({
         where: {
             artist_slug: artist_slug_input
@@ -48,11 +44,9 @@ async function QueueArtist(artist_slug_input: string) {
         }
         songs.push(song)
       }
-      await prisma.$disconnect()
       return songs
     }else{
       console.log("no artist error")
-      await prisma.$disconnect()
       return null
     }
   }

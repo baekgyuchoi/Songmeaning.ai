@@ -2,7 +2,7 @@
 import React from 'react';
 
 const PaymentContent: React.FC = () => {
-    const text = `Songmeaning.AI is dedicated to delivering in-depth interpretations of your favorite songs, free of charge. If we have enriched your life, please support us by either sharing with your community or paying whatever makes your feel comfortable :)`
+    const text = `The creators of Songmeaning.AI are dedicated to delivering our users the most deep and comprehensive song analysis without ads, and free of charge. `
   return (
     <div>
       {/* Your component content goes here */}

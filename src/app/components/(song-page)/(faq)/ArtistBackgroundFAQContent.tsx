@@ -15,7 +15,6 @@ interface ArtistBackgroundFAQContentProps {
   
 
 const ArtistBackgroundFAQContent: React.FC<ArtistBackgroundFAQContentProps> = (props) => {
-    console.log("song meaning content rendered")
     const [streamContent, setStreamContent] = useState<string[]>([]);
     const song_data = props.song_data
     const router = useRouter()
@@ -40,10 +39,6 @@ const ArtistBackgroundFAQContent: React.FC<ArtistBackgroundFAQContentProps> = (p
                         break;
                     }
                     const val = new TextDecoder().decode(value);
-
-                    if (val.includes("\n\n")) {
-                        console.log("new paragraph")
-                    }
 
 
                     result += val;
@@ -78,7 +73,6 @@ const ArtistBackgroundFAQContent: React.FC<ArtistBackgroundFAQContentProps> = (p
     useEffect(() => {
         if (first_render) {
             first_render = false;
-            console.log("use effect called")
             fetchData(song_data);
         }
 

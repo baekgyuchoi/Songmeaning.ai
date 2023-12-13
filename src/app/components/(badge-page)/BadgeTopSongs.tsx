@@ -1,14 +1,12 @@
-import { SongInfo } from '@/lib/validators/song_info';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/db';
 import React from 'react';
-import SearchItemButton from '../(search-page)/SearchItemButton';
+
 import BadgeSongItem from './BadgeSongItem';
 import Link from 'next/link';
 import { SongData } from '@/lib/validators/song_data_response';
 
 
 async function QueueSong(badge_name: string) {
-  const prisma = new PrismaClient()
   const top_many_songs = 20
 
   const badge = await prisma.badges.findUnique({
@@ -48,12 +46,8 @@ async function QueueSong(badge_name: string) {
   
   if (songs == null || songs[0] == null ) {
       console.log("badge has no songs error")
-      await prisma.$disconnect()
       return null
   }
-
-
-  await prisma.$disconnect()
   
   
   return songs

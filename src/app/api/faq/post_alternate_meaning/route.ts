@@ -1,5 +1,5 @@
 import { FAQ } from '@/lib/validators/FAQ'
-import { PrismaClient } from '@prisma/client'
+import prisma from '@/lib/db'
 
 
 //maybe POST to alter databasenext c
@@ -20,8 +20,6 @@ export async function POST(request: Request) {
         console.log("Error - song meaning cut off")
         return new Response("Error - song does not exist")
     }
-    const prisma = new PrismaClient()
-    await prisma.$connect()
     await prisma.fAQs.create({
         data: {
             song_slug: faq_answer.song_slug,
@@ -32,8 +30,7 @@ export async function POST(request: Request) {
         }
     })
    
-    
-    await prisma.$disconnect()
+
     return new Response("Success!")
  
 }

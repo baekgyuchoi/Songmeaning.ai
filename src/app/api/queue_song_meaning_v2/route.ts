@@ -1,6 +1,6 @@
 import * as Genius from "genius-lyrics";
 import { SongInfo } from "@/lib/validators/song_info";
-import { PrismaClient } from '@prisma/client'
+import prisma from "@/lib/db";
 import { songMeaningPrompt } from "@/app/helpers/constants/queue-songmeaning-prompt";
 import { Message, MessageArraySchema } from "@/lib/validators/message";
 import { ChatGPTMessage, OpenAIStream, OpenAIStreamPayload } from "@/lib/openai-stream";
@@ -48,9 +48,6 @@ export async function POST(req: Request) {
     const song_info = await req.json() as SongInfo
     try {      
         const song_lyrics = await getSongLyrics(song_info.genius_id)
-        
-        const prisma = new PrismaClient();
-        await prisma.$connect()
 
         await prisma.songs.update({
             where: {
@@ -61,7 +58,6 @@ export async function POST(req: Request) {
 
             }
         })
-        await prisma.$disconnect()
         
         let shorted_lyrics = song_lyrics.slice(0,min(song_lyrics.length - 1, 3000))
         while (Get_Token_Length(shorted_lyrics) > 1500) {
@@ -97,9 +93,6 @@ export async function POST(req: Request) {
     } catch (error) {
         console.error('An error occurred:', error)
         console.log("songlyrics are null")
-            const prisma = new PrismaClient();
-            await prisma.$connect()
-
             await prisma.songs.update({
                 where: {
                     song_slug: song_info.song_slug,
@@ -108,7 +101,6 @@ export async function POST(req: Request) {
                     isValid: false,
                 }
             })
-            await prisma.$disconnect()
         return new Response('Error occurred: This song does not have lyrics', { status: 500 })
     }
 }

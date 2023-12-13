@@ -1,20 +1,18 @@
 
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/db';  
 import React from 'react';
 import TrendingChartItem from './TrendingChartItem';
 import { SongInfo } from '@/lib/validators/song_info';
 
 
 async function GetTrendingSongs() {
-  const prisma = new PrismaClient();
-  await prisma.$connect();
   const trending_songs = await prisma.songs.findMany({
     orderBy: {
       viewCount: "desc",
     },
     take: 15,
   });
-  await prisma.$disconnect();
+
   return trending_songs
 }
 

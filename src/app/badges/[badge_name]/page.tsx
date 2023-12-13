@@ -1,24 +1,16 @@
 import BadgeContent from "@/app/components/(badge-page)/BadgeContent";
-import BadgeStatistics from "@/app/components/(badge-page)/BadgeStatistics";
-import BadgeTopSongs from "@/app/components/(badge-page)/BadgeTopSongs";
-import Chat from "@/app/components/(chat-components)/Chat";
-import SearchItemButton from "@/app/components/(search-page)/SearchItemButton";
-import SongMeaningContent from "@/app/components/(song-page)/SongMeaningContent";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { SongData } from "@/lib/validators/song_data_response";
-import { SongInfo } from "@/lib/validators/song_info";
-import { PrismaClient } from "@prisma/client";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+
+import prisma from "@/lib/db";
 import { Suspense } from "react";
 
 async function IsBadgeInDB(badge_name: string) {
-    const prisma = new PrismaClient()
     const badge = await prisma.badges.findUnique({
         where: {
             badge_name: badge_name
         }
     })
-    await prisma.$disconnect()
     if (badge == null) {
         return false
     }else{
