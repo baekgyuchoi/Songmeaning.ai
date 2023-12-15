@@ -19,6 +19,7 @@ const HomeSearchInput = () => {
   const router = useRouter();
   const [songInfoArray, setSongInfoArray] = useState<SongInfo[] | null>(null);
   const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [isMouseOnPreview, setIsMouseOnPreview] = useState<boolean>(false);
   const submitSearch = (searchQuery: string | null) => {
       if (typeof searchQuery !== "string") {
           return
@@ -54,28 +55,35 @@ useEffect(() => {
         <input
           value={searchQuery || ""}
           onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onBlur={() => {if (!isMouseOnPreview){setIsFocused(false)}}}
           onChange={(event) => setSearchQuery(event.target.value)}
           onKeyDown={(event) => {if (event.key === 'Enter') {submitSearch(searchQuery)}}    }
           className="px-5 py-2 sm:px-5 sm:py-3 font-mono w-full flex-1 border-gray-300 text-black  hover:bg-gray-200 focus:bg-gray-200 rounded-full placeholder:text-base"
           placeholder="Search a song with artist name"
         />
-        {searchQuery === null ||searchQuery?.length === 0||!isFocused? (
-          <div className="bg-transparent"></div>
-        ):(
-          <div className=" absolute mt-1 w-full p-2   max-h-96 overflow-y-auto">
-            <ul>
-              {songInfoArray?.map((songInfo,index) => (
-                
-                <li key={index}>
-                  <PreviewSearchItemButton songInfo={songInfo} key={index}/>
-                </li>
-                
-              )
-              )}
-            </ul>
-          </div>
-        )}
+        <div 
+          className="bg-transparent z-index-100" 
+          onMouseDown={(e) => e.preventDefault()}
+        >
+          {searchQuery === null ||searchQuery?.length === 0||!isFocused? (
+            <></>
+          ):(
+            <div className=" absolute mt-1 w-full p-2   max-h-96 overflow-y-auto  "
+            >
+              <ul>
+                {songInfoArray?.map((songInfo,index) => (
+                  
+                  <li key={index}>
+                    <PreviewSearchItemButton songInfo={songInfo} key={index}/>
+                  </li>
+                  
+                )
+                )}
+              </ul>
+            </div>
+          )}
+        </div>
+        
       </div>
     </div>
   );
