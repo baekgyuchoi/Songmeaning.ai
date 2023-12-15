@@ -1,7 +1,7 @@
-'use client'
+
 import Link from 'next/link';
 import React from 'react';
-import {Button} from "@nextui-org/react";
+
 
 
 const PaymentLink: React.FC = () => {
@@ -13,13 +13,13 @@ const PaymentLink: React.FC = () => {
       </p>
     </Link> */}
     <Link href={'https://buy.stripe.com/dR6aIo6RL0fSd6U144'}>
-      <Button
-        href={'https://buy.stripe.com/dR6aIo6RL0fSd6U144'}
-        className='bg-purple-600/75 hover:bg-purple-800/75 text-white font-bold py-2 px-8 rounded-full'
-        color="primary"
+      <div
+        
+        className='bg-purple-600/75 hover:bg-purple-800/75 text-white font-bold py-2 px-12 rounded-full'
+       
       >
           Pay   
-      </Button>
+      </div>
     </Link>
     </>
     );

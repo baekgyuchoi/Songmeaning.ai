@@ -31,6 +31,9 @@ model Songs {
   song_short_title     String
   release_date         String?          
   two_word_description String          @default("default/default")
+  like_count           Int             @default(0)
+  dislike_count        Int             @default(0)
+  true_like_count      Int             @default(0)
   badges               BadgesOnSongs[]
 
 

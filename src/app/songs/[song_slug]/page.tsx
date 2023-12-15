@@ -13,6 +13,7 @@ import LoadingFAQ from '@/app/components/(song-page)/(faq)/LoadingFAQ';
 import Link from 'next/link';
 import PaymentContainer from '@/app/components/(payment)/PaymentContainer';
 import FooterContainer from '@/app/components/(footer)/FooterContainer';
+import LikeAndShareContainer from '@/app/components/(song-page)/(like/share)/LikeAndShare';
 
 
 
@@ -323,7 +324,16 @@ export default async function SongPage({ params, searchParams }: {
                                 
                               </CardContent>
                             </div>
-                          
+                            <div className='w-screen sm:w-full text-sm lg:w-2/3 mb-10'>
+                              {
+                                is_meaning_valid ? (
+                                  <><LikeAndShareContainer song_slug={song_data.song_slug} /></>
+                                ) : (
+                                  <></>
+                                )
+                              } 
+                              
+                            </div>
                             <div className='w-screen md:w-full text-black mt-10 mb-10'>
                               
                               <CardContent>
@@ -356,8 +366,8 @@ export default async function SongPage({ params, searchParams }: {
                               </CardContent>
                               
                               
-                            
                             </div>
+                            
                             <div className='w-screen sm:w-full text-sm lg:w-2/3 mt-16'>
                               <CardContent>
                                 <PaymentContainer song_slug={song_data.song_slug} />
