@@ -292,7 +292,7 @@ export default async function SongPage({ params, searchParams }: {
                                           //     {paragraph}
                                           //   </p>
                                           // ))}</>
-                                          <FormattedMeaningContent formatted_meaning={formatted_meaning} />
+                                          <FormattedMeaningContent artist_name={song_data.artist_name} song_title={song_data.song_short_title} formatted_meaning={formatted_meaning} />
                                         ) : (
                                           <Suspense fallback={<div className='flex items-center container justify-center'>Loading feed...</div>}>
                                             <SongMeaningContent song_info={song_info} />
