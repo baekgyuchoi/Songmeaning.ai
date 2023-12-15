@@ -46,14 +46,6 @@ async function getArtistSongs(artist_id: number, artist_name: string, current_pa
     }
     
   }
-  
-  
-  
-  
-
-
-    
-  console.log(current_page)
 
 
     

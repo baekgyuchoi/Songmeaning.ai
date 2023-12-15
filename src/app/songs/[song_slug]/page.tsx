@@ -262,7 +262,7 @@ export default async function SongPage({ params, searchParams }: {
                                   <div className="flex justify-start items-start text-gray-600 hover:text-gray-500 mt-2"> 
                                     <Link
                                         href={`/artists/${song_data.artist_slug}/?artist=${song_data.artist_id}`}
-                                        className='w-full overflow-hidden text-gray-600' 
+                                        className='w-full overflow-hidden text-gray-500' 
                                       
                                       >   
                                     
@@ -327,7 +327,7 @@ export default async function SongPage({ params, searchParams }: {
                             <div className='w-screen sm:w-full text-sm lg:w-2/3 mb-10'>
                               {
                                 is_meaning_valid ? (
-                                  <><LikeAndShareContainer song_slug={song_data.song_slug} /></>
+                                  <><LikeAndShareContainer song_title={song_data.song_title} song_art_url={song_data.header_image_url!} song_slug={song_data.song_slug} /></>
                                 ) : (
                                   <></>
                                 )

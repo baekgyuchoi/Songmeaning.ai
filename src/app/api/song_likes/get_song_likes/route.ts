@@ -6,7 +6,7 @@ export async function GET(request: Request) {
     const url = new URL(request.url)
     const queryParam = url.searchParams
     const req_slug = (queryParam.get('q') || "0")
-    console.log(req_slug)
+
     
     try{
         const song = await prisma.songs.findUnique({
@@ -14,8 +14,6 @@ export async function GET(request: Request) {
                 song_slug: req_slug,
             },
         });
-        console.log(song)
-        console.log(song?.like_count)
         
         
 

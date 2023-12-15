@@ -8,6 +8,8 @@ import { set } from 'zod';
 
 interface LikeAndShareContainerProps {
     song_slug: string;
+    song_art_url: string;
+    song_title: string;
 }
 
 const LikeAndShareContainer: React.FC<LikeAndShareContainerProps> = (props) => {
@@ -143,7 +145,7 @@ const LikeAndShareContainer: React.FC<LikeAndShareContainerProps> = (props) => {
             </button>)
             }
            
-            <ShareButton song_slug={props.song_slug} />
+            <ShareButton song_title={props.song_title} song_art_url={props.song_art_url} song_slug={props.song_slug} />
           </div>
         </div>
       </div>

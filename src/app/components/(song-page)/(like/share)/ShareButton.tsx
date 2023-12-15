@@ -1,14 +1,15 @@
 'use client'
 import { ClipboardCopyIcon, Share, X } from 'lucide-react';
-import React, { use, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {Modal, ModalContent, ModalFooter, ModalHeader, ModalBody, useDisclosure, Button} from "@nextui-org/react";
-import ShareLink from '@/app/components/(payment)/ShareLink';
-import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, RedditIcon, RedditShareButton, TwitterIcon, TwitterShareButton } from 'next-share';
-import { set } from 'zod';
+import { FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, PinterestIcon, PinterestShareButton, RedditIcon, RedditShareButton, TwitterIcon, TwitterShareButton } from 'next-share';
+
 
 interface ShareButtonProps {
   // Define any props you need for the ShareButton component
   song_slug: string;
+  song_art_url: string;
+  song_title: string;
 }
 
 const ShareButton: React.FC<ShareButtonProps> = (props) => {
@@ -19,6 +20,7 @@ const ShareButton: React.FC<ShareButtonProps> = (props) => {
     useEffect(() => {
         setIsCopied(false)
     }, [isOpen])
+    console.log(props.song_art_url)
     return (
         // JSX code for the ShareButton component
         <>
@@ -57,6 +59,9 @@ const ShareButton: React.FC<ShareButtonProps> = (props) => {
                                     <RedditShareButton url={song_url} >
                                         <RedditIcon size={32} round/>
                                     </RedditShareButton>
+                                    <PinterestShareButton url={song_url} content={`Meaning of song: ${props.song_title}`} name={`Meaning of song: ${props.song_title}`} description={`Meaning of song: ${props.song_title}`} media={props.song_art_url} >
+                                        <PinterestIcon size={32} round />
+                                    </PinterestShareButton>
                                 </div>
                             </div>
                             <div className='flex flex-row mr-4'>
