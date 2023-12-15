@@ -47,7 +47,7 @@ Please do not mention the number of words you are providing.
 
 
 Quote Analysis:
-Conduct a quote analysis. Choose significant quotes that resonate strongly with the song's essence and analyze them meticulously, aiming for 4 quotes analyzed in total. DO NOT REPEAT QUOTES. If you have to repeat quotes, reduce the number of quotes returned
+Conduct a quote analysis. Choose significant quotes that resonate strongly with the song's essence and analyze them meticulously, aiming for 4 quotes analyzed in total. 1. MAKE SURE QUOTES ARE FROM THE LYRICS. do not make up quotes. If you have to make up quotes, just don't return a quote. 2. DO NOT REPEAT QUOTES. If you have to repeat quotes, reduce the number of quotes returned.
 
 
 Conclusion:

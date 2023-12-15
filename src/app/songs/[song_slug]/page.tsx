@@ -15,6 +15,7 @@ import PaymentContainer from '@/app/components/(payment)/PaymentContainer';
 import FooterContainer from '@/app/components/(footer)/FooterContainer';
 
 
+
 type formatted_meaning = {
   "summary_analysis": string,
   "emotional_journey": string,
@@ -369,10 +370,11 @@ export default async function SongPage({ params, searchParams }: {
                         </div>
                       </Card>
                     </div>
-                    
+                  
                 
                 
               </div>
+              
               <FooterContainer />
             </main>
 

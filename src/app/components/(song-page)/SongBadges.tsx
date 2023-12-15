@@ -126,6 +126,7 @@ async function GenerateTwoWord(songData: SongData) {
   ],
     model: "ft:gpt-3.5-turbo-1106:personal::8Ozv43OJ",
   });
+  console.log(completion.usage)
   const two_badges = completion.choices[0].message.content?.split('/')
   if (two_badges == null || two_badges.length != 2) {
 

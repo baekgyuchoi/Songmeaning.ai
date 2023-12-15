@@ -15,6 +15,7 @@ interface FormattedMeaningContentProps {
 const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) => {
   // Add your component logic here
     const formatted_meaning = props.formatted_meaning
+    const summary_analysis = formatted_meaning.summary_analysis.split('ft.').join('ft')
  
     if (formatted_meaning.summary_analysis == "" || formatted_meaning.quotes == null || formatted_meaning.emotional_journey == "" || formatted_meaning.quotes == "" || formatted_meaning.conclusion == "") {
         return(
@@ -36,10 +37,10 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
                 
                     className="list-disc ml-8 mr-2 mt-3 text-base sm:text-lg transition duration-300 " 
                 >
-                    {formatted_meaning.summary_analysis.split('. ').map((item, i) => {
+                    {summary_analysis.split('. ').map((item, i) => {
                         return (
                             <li key={i} className='mt-2'>
-                                {item.split('.')[0]}
+                                {item.split('.')[0].split('ft').join('ft.')}
                             </li>
                         )
                     })}

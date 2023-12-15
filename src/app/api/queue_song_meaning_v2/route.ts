@@ -59,7 +59,7 @@ export async function POST(req: Request) {
             }
         })
         
-        let shorted_lyrics = song_lyrics.slice(0,min(song_lyrics.length - 1, 3000))
+        let shorted_lyrics = song_lyrics
         while (Get_Token_Length(shorted_lyrics) > 1500) {
             shorted_lyrics = shorted_lyrics.slice(0,shorted_lyrics.length/2)
         }
@@ -81,7 +81,7 @@ export async function POST(req: Request) {
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
-            max_tokens: 2000,
+            max_tokens: 4000,
             stream: true,
             n: 1,
         }  
