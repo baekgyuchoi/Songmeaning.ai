@@ -13,6 +13,7 @@ const SearchInput = () => {
   const [searchQuery, setSearchQuery] = useState<string | null>(
     search ? search.get("q") : ""
   );
+  const [isFocused, setIsFocused] = useState<boolean>(false);
   const [songInfoArray, setSongInfoArray] = useState<SongInfo[] | null>(null);
   const router = useRouter();
 
@@ -21,6 +22,7 @@ const submitSearch = (searchQuery: string | null) => {
     if (typeof searchQuery !== "string") {
         return
     }
+    setSearchQuery(null)
     router.push(`/search?q=${searchQuery}`);
 }
 
@@ -52,12 +54,14 @@ useEffect(() => {
       <div className="relative w-full">
         <input
           value={searchQuery || ""}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           onChange={(event) => setSearchQuery(event.target.value)}
           onKeyDown={(event) => {if (event.key === 'Enter') {submitSearch(searchQuery)}}    }
           className="w-full px-5 py-1 sm:px-5 sm:py-3 flex-1 border-gray-300 text-black bg-gray-100 hover:bg-gray-200 focus:bg-gray-200 placeholder:text-xs md:placeholder:text-sm rounded-full justify-center placeholder:text-black-400"
           placeholder="Search a song with artist name"
         />
-        {searchQuery === null ||searchQuery?.length === 0? (
+        {searchQuery === null || searchQuery?.length === 0 || !isFocused? (
             <div className="bg-transparent"></div>
           ):(
             <div className=" absolute mt-1 w-full p-2   max-h-96 overflow-y-auto">
