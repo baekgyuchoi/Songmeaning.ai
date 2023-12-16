@@ -4,6 +4,7 @@ import './globals.css'
 import Chat from './components/(chat-components)/Chat'
 import Providers from './components/(chat-components)/Providers'
 import { NextUIProviderWrapper } from './components/NextUIProviderWrapper'
+import { Analytics } from '@vercel/analytics/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,6 +26,7 @@ export default function RootLayout({
         <NextUIProviderWrapper>
           {children}
         </NextUIProviderWrapper>
+        <Analytics />
         </body>
       </Providers>
       
