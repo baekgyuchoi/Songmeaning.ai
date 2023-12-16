@@ -15,7 +15,7 @@ interface ShareButtonProps {
 const ShareButton: React.FC<ShareButtonProps> = (props) => {
     // Implement the component logic here
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
-    const song_url = `https://www.songmeanings-ai.vercel.app/songs/${props.song_slug}`
+    const song_url = `https://songmeaning.ai/songs/${props.song_slug}`
     const [isCopied, setIsCopied] = React.useState(false);
     useEffect(() => {
         setIsCopied(false)
@@ -62,6 +62,7 @@ const ShareButton: React.FC<ShareButtonProps> = (props) => {
                                     <PinterestShareButton url={song_url} content={`Meaning of song: ${props.song_title}`} name={`Meaning of song: ${props.song_title}`} description={`Meaning of song: ${props.song_title}`} media={props.song_art_url} >
                                         <PinterestIcon size={32} round />
                                     </PinterestShareButton>
+                                    
                                 </div>
                             </div>
                             <div className='flex flex-row mr-4'>

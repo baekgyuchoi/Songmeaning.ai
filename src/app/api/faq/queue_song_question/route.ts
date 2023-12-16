@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     }
 
 
-    const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: "Within 400 words, answer the following prompt: \n" + FAQContext +prompt }]
+    const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: "Answer the following prompt: \n" + FAQContext +prompt }]
     const parsedMessages = MessageArraySchema.parse(messages)
 
     const outboundMessages: ChatGPTMessage[] = parsedMessages.map((message) => ({
