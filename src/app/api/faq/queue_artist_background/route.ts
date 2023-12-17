@@ -31,31 +31,33 @@ export async function POST(req: Request) {
     
     const artist = await GetArtist(song_data.artist_id)
     let artist_info = ""
-    for (let child of artist.children) {
-        if (child.tag == "p") {
-            
-            for (let grandchild of child.children) {
-      
-                if (typeof(grandchild) == "string") {
-                    artist_info += " " + grandchild
-                }
-                else{
-                    for (let greatgrandchild of grandchild.children) {
-                        if (typeof(greatgrandchild) == "string") {
-                            artist_info += " " + greatgrandchild
-                        }
-                        else{
-                            for (let greatgreatgrandchild of greatgrandchild.children) {
-                                if (typeof(greatgreatgrandchild) == "string") {
-                                    artist_info += " " + greatgreatgrandchild
+    if(artist.children != null){
+        for (let child of artist.children) {
+            if (child.tag == "p") {
+                
+                for (let grandchild of child.children) {
+        
+                    if (typeof(grandchild) == "string") {
+                        artist_info += " " + grandchild
+                    }
+                    else{
+                        for (let greatgrandchild of grandchild.children) {
+                            if (typeof(greatgrandchild) == "string") {
+                                artist_info += " " + greatgrandchild
+                            }
+                            else{
+                                for (let greatgreatgrandchild of greatgrandchild.children) {
+                                    if (typeof(greatgreatgrandchild) == "string") {
+                                        artist_info += " " + greatgreatgrandchild
+                                    }
                                 }
                             }
                         }
+                    
                     }
-                
                 }
+            
             }
-        
         }
     }
 
