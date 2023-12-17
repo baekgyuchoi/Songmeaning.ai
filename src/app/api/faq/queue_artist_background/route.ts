@@ -62,7 +62,7 @@ export async function POST(req: Request) {
    
 
 
-    const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: `Adding this information to what you know: \n ${artist_info} \n Can you provide a written background on the artist: ${song_data.artist_name}? Including details about what is widely known about their early life/family background, dating life, career beginnings and career progression, notable achievements, notable controversies, fun facts, details of personal life that only the most fervent fans would be aware of, significant albums or songs, and any impact or influence they've had on the music industry or culture? Please do not feel limited and go as deep into the weeds as possible.  For example, if you were discussing Enya you would want to include details of how she decorates her castle, details of her attempted kidnappings, how and why she does not tour.  For Taylor Swift you would want to discuss her notable controversies in detail such as how kanye came on stage. Please also include 3-5 important quotes from the artist about their career, philosophy or anything that speaks to them as a person. if there is insufficient information, write short paragraph using the information given.
+    const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: `Adding this information to what you know: \n ${artist_info} \n Can you provide a written background on the artist: ${song_data.artist_name}? Including details about what is widely known about their early life/family background, dating life, career beginnings and career progression, notable achievements, notable controversies, fun facts, details of personal life that only the most fervent fans would be aware of, significant albums or songs, and any impact or influence they've had on the music industry or culture? Please do not feel limited and go as deep into the weeds as possible.  For example, if you were discussing Enya you would want to include details of how she decorates her castle, details of her attempted kidnappings, how and why she does not tour.  For Taylor Swift you would want to discuss her notable controversies in detail such as how kanye came on stage. Please also include 3-5 important quotes from the artist about their career, philosophy or anything that speaks to them as a person. if there is insufficient information, write short paragraph using the information given. Keep the response under 1000 tokens.
     `  }]
     const parsedMessages = MessageArraySchema.parse(messages)
 
@@ -78,7 +78,6 @@ export async function POST(req: Request) {
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
-        max_tokens: 4000,
         stream: true,
         n: 1,
     }  

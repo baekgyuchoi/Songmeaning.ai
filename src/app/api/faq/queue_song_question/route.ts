@@ -6,12 +6,20 @@ import { ChatGPTMessage, OpenAIStream, OpenAIStreamPayload } from "@/lib/openai-
 import { nanoid } from "nanoid";
 import { SongData } from "@/lib/validators/song_data_response";
 import { songs_faq_prompts } from '@/app/helpers/constants/songs-faq-prompt';
+import { getEncoding } from "js-tiktoken";
 
 
 
 
 
 export const maxDuration = 300 
+
+function Get_Token_Length(input:string) {
+    const encoding = getEncoding("cl100k_base");
+    const tokens = encoding.encode(input);
+    return tokens.length
+    
+}
 
 export async function POST(req: Request) {
     const request = await req.json()
@@ -21,6 +29,11 @@ export async function POST(req: Request) {
     const song_lyrics = song_data.lyrics
 
     const prompt = songs_faq_prompts[faq_index][0]
+
+    let shorted_lyrics = song_lyrics!
+    while (Get_Token_Length(shorted_lyrics) > 1500) {
+        shorted_lyrics = shorted_lyrics.slice(0,shorted_lyrics.length/2)
+    }
     
     let FAQContext = ""
     if (faq_index == 0) {
@@ -34,7 +47,7 @@ export async function POST(req: Request) {
     }
 
 
-    const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: "Answer the following prompt: \n" + FAQContext +prompt }]
+    const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: "Answer the following prompt. Keep the response under 1000 tokens: \n" + FAQContext +prompt }]
     const parsedMessages = MessageArraySchema.parse(messages)
 
     const outboundMessages: ChatGPTMessage[] = parsedMessages.map((message) => ({
@@ -49,7 +62,6 @@ export async function POST(req: Request) {
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
-        max_tokens: 12000,
         stream: true,
         n: 1,
     }  

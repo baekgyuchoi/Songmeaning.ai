@@ -38,8 +38,8 @@ export async function generateMetadata({
  
 
   return {
-    title: `Meaning of ${song_db?.song_title} by ${song_db?.artist_name}`,
-    description: song_db?.song_meaning?.meaning,
+    title: `Meaning of ${song_db?.song_title || 'the song'} by ${song_db?.artist_name || 'the artist'}`,
+    description: song_db?.song_meaning?.meaning || "",
   };
 }
 

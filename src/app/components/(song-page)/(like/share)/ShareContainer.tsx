@@ -46,7 +46,7 @@ const ShareContainer: React.FC<ShareContainerProps> = (props) => {
             <div className='flex flex-row mr-4'>
                 <p className='text-sm'>{song_url}</p>
                 {isCopied? (
-                    <div className='flex items-center'>
+                    <div className='flex items-center ml-2 '>
                         <p className='text-xs text-gray-500 font_mono'>copied!</p>
                     </div>
                 ):(

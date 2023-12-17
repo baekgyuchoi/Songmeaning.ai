@@ -42,9 +42,7 @@ async function getSongLyrics(song_id: number) {
 export const maxDuration = 300 
 
 export async function POST(req: Request) {
-    function min(a: number, b: number): number {
-        return a < b ? a : b;
-    }
+   
     const song_info = await req.json() as SongInfo
     try {      
         const song_lyrics = await getSongLyrics(song_info.genius_id)
@@ -60,11 +58,12 @@ export async function POST(req: Request) {
         })
         
         let shorted_lyrics = song_lyrics
+        console.log('song_lyrics length: ' + Get_Token_Length(song_lyrics))
         while (Get_Token_Length(shorted_lyrics) > 1500) {
             shorted_lyrics = shorted_lyrics.slice(0,shorted_lyrics.length/2)
         }
    
-        const songMeaningContext = `Song: ${song_info.song_title}\nArtist: ${song_info.artist_name}\nLyrics: ${shorted_lyrics}\n\nMeaning:`
+        const songMeaningContext = `Keep the response under 1000 tokens - Song: ${song_info.song_title}\nArtist: ${song_info.artist_name}\nLyrics: ${shorted_lyrics}\n\nMeaning:`
 
         const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: songMeaningContext + songMeaningPrompt }]
         const parsedMessages = MessageArraySchema.parse(messages)
@@ -81,7 +80,6 @@ export async function POST(req: Request) {
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
-            max_tokens: 4000,
             stream: true,
             n: 1,
         }  
