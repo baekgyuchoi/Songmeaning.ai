@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Chat from './components/(chat-components)/Chat'
 import Providers from './components/(chat-components)/Providers'
 import { NextUIProviderWrapper } from './components/NextUIProviderWrapper'
 import { Analytics } from '@vercel/analytics/react'
@@ -10,7 +9,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Songmeaning.ai',
+  title: 'Songmeaning.ai: Meaningful stories behind songs - interpretted by ai',
   description: 'Meaningful stories behind songs - interpretted by ai',
 }
 

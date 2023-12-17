@@ -8,6 +8,30 @@ import prisma from "@/lib/db";
 import { Loader2 } from "lucide-react";
 import { Suspense } from "react";
 import FooterContainer from "@/app/components/(footer)/FooterContainer";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: {artist_slug: string};
+}): Promise<Metadata> {
+  const artist_slug  = params.artist_slug;
+  // read route params
+  const artist_db = await prisma.artist.findUnique({
+    where: {
+      artist_slug: artist_slug
+    },
+  
+  })
+
+  // fetch data
+ 
+
+  return {
+    title: `Song Meanings for ${artist_db?.name}`,
+    description: `Song Meanings for ${artist_db?.name}` || null,
+  };
+}
 
 async function GetArtistFromGenius(artist_id: number) {
   const response = await fetch('https://api.genius.com/artists/'+ artist_id, {

@@ -14,8 +14,34 @@ import Link from 'next/link';
 import PaymentContainer from '@/app/components/(payment)/PaymentContainer';
 import FooterContainer from '@/app/components/(footer)/FooterContainer';
 import LikeAndShareContainer from '@/app/components/(song-page)/(like/share)/LikeAndShare';
+import { Metadata } from 'next';
+import ShareContainer from '@/app/components/(song-page)/(like/share)/ShareContainer';
 
+export async function generateMetadata({
+  params,
+}: {
+  params: {song_slug: string};
+}): Promise<Metadata> {
+  const song_slug  = params.song_slug;
+  // read route params
+  const song_db = await prisma.songs.findUnique({
+    where: {
+      song_slug: song_slug
+    },
+    include: {
+      song_meaning: true,
+      
+    }
+  })
 
+  // fetch data
+ 
+
+  return {
+    title: `Meaning of ${song_db?.song_title} by ${song_db?.artist_name}`,
+    description: song_db?.song_meaning?.meaning,
+  };
+}
 
 type formatted_meaning = {
   "summary_analysis": string,
@@ -327,7 +353,10 @@ export default async function SongPage({ params, searchParams }: {
                             <div className='w-screen sm:w-full text-sm lg:w-2/3 mb-10'>
                               {
                                 is_meaning_valid ? (
-                                  <><LikeAndShareContainer song_title={song_data.song_title} song_art_url={song_data.header_image_url!} song_slug={song_data.song_slug} /></>
+                                  <>
+                                    {/* <LikeAndShareContainer song_title={song_data.song_title} song_art_url={song_data.header_image_url!} song_slug={song_data.song_slug} /> */}
+                                    <ShareContainer song_art_url={song_data.header_image_url!}  song_slug={song_data.song_slug} song_title={song_data.song_title}/>
+                                  </>
                                 ) : (
                                   <></>
                                 )
