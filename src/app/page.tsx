@@ -5,23 +5,8 @@ import HomeTypewriter from "./components/(home-components)/HomeTypewriter";
 import TrendingSongs from "./components/TrendingSongs";
 import HomeSearchInput from "./components/(home-components)/HomeSearchInput";
 import FooterContainer from "./components/(footer)/FooterContainer";
-import { Metadata } from "next";
 
-export async function generateMetadata({
-  
-}: {
-}): Promise<Metadata> {
-  
 
-  // fetch data
- 
-
-  return {
-    title: 'Songmeaning.ai: Meaningful stories behind songs - interpretted by ai',
-    description: 'Meaningful stories behind songs - interpretted by ai',
-    robots: 'index, follow',
-  }
-}
 
 
 export default async function Home() {
