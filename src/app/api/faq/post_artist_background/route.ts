@@ -11,6 +11,13 @@ export async function POST(request: Request) {
     // query if song_id exists in database or use song_slug instead
     // if song exists, return "song already exists"
     // if song does not exist, create song in database
+    if (faq_answer.answer[faq_answer.answer.length - 1] != ".") {
+
+        
+        console.log("Error - song meaning cut off")
+        return new Response("Error - song does not exist")
+    }
+
   
     const faq_in_db = await prisma.fAQs.findUnique({
         where: {
@@ -18,7 +25,7 @@ export async function POST(request: Request) {
         }
     })
     
-    if (faq_in_db != null || faq_answer.answer[faq_answer.answer.length - 1] != ".") {
+    if (faq_in_db != null ) {
 
         
         console.log("Error - cut off or faq already exists")

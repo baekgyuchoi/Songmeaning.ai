@@ -13,7 +13,14 @@ export async function POST(request: Request) {
             song_slug: song_meaning.song_slug,
             },
         })
-    if (song_in_db == null || song_meaning.meaning[song_meaning.meaning.length - 1] != ".") {
+
+    if (song_meaning.meaning[song_meaning.meaning.length - 1] != ".") {
+    
+        console.log("Error - song meaning cut off")
+        return new Response("Error - song does not exist")
+    }
+    
+    if (song_in_db == null) {
         console.log("Error - song does not exist or cut off error ")
 
         return new Response("Error - song does not exist")

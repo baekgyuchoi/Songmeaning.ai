@@ -146,7 +146,7 @@ async function QueueSong(song_slug_input: string) {
 
 export default async function SongPage({ params, searchParams }: {
     params: { song_slug : string };
-    searchParams?: { [key: string]: string | undefined}; 
+    searchParams?: { [key: string]: string | null}; 
     }) {
         // const Client = new Genius.Client("oNwFSu_AIjtrw3owTLM9p_RYc2o9EjyJTNv9Lf05GDgl7adlODR9DQwiUlz8FzDZ");
         // const search = await Client.songs.search(params.song_slug);

@@ -24,7 +24,7 @@ export async function POST(request: Request) {
             faq_slug: faq_answer.faq_slug
         }
     })
-    if (faq_in_db != null || faq_answer.answer[faq_answer.answer.length - 1] != ".") {
+    if (faq_in_db != null ) {
         console.log("Error - faq already exists")
         return new Response("Error - faq already exists")
     }
