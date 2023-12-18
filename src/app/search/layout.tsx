@@ -5,8 +5,8 @@ import '../globals.css'
 
 
 export const metadata = {
-  title: 'Songmeaning.ai: Meaningful stories behind songs - interpretted by ai',
-  description: 'Meaningful stories behind songs - interpretted by ai'
+  title: 'Songmeaning.ai: Meaningful stories behind songs - interpreted by ai',
+  description: 'Meaningful stories behind songs - interpreted by ai'
 }
 export const viewport: Viewport = {
   maximumScale: 1,

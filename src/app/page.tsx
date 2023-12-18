@@ -6,6 +6,8 @@ import TrendingSongs from "./components/TrendingSongs";
 import HomeSearchInput from "./components/(home-components)/HomeSearchInput";
 import FooterContainer from "./components/(footer)/FooterContainer";
 
+export const dynamic = 'force-dynamic'
+// 'auto' | 'force-dynamic' | 'error' | 'force-static'
 
 
 
