@@ -3,7 +3,7 @@
 import { SongInfo } from "@/lib/validators/song_info";
 import { constants } from "buffer";
 import { Song } from "genius-lyrics";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import TypewriterComponent from "typewriter-effect"
 import { set } from "zod";
@@ -12,7 +12,9 @@ import PreviewSearchItemButton from "../(search-page)/PreviewSearchItemButton";
 
 
 const HomeSearchInput = () => {
-  const search = useSearchParams();
+  const search = new URLSearchParams(
+    typeof window !== 'undefined' ? window.location.search : '',
+  );
   const [searchQuery, setSearchQuery] = useState<string | null>(
     search ? search.get("q") : ""
   );

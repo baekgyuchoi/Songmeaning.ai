@@ -1,7 +1,7 @@
 "use client";
 
 import { constants } from "buffer";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import TypewriterComponent from "typewriter-effect"
 import PreviewSearchItemButton from "./PreviewSearchItemButton";
@@ -9,7 +9,9 @@ import { SongInfo } from "@/lib/validators/song_info";
 
 
 const SearchInput = () => {
-  const search = useSearchParams();
+  const search = new URLSearchParams(
+    typeof window !== 'undefined' ? window.location.search : '',
+  );
   const [searchQuery, setSearchQuery] = useState<string | null>(
     search ? search.get("q") : ""
   );
