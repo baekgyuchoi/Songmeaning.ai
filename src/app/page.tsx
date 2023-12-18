@@ -19,6 +19,7 @@ export async function generateMetadata({
   return {
     title: 'Songmeaning.ai: Meaningful stories behind songs - interpretted by ai',
     description: 'Meaningful stories behind songs - interpretted by ai',
+    robots: 'index, follow',
   }
 }
 
