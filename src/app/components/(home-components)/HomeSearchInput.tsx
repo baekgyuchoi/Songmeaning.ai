@@ -37,7 +37,6 @@ const fetchData =  async () => {
     }
   });
   const data = await response.json()
-  console.log(data.songInfoArray)
   setSongInfoArray(data.songInfoArray)
 }
 

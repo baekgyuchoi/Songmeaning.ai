@@ -22,7 +22,7 @@ const ShareContainer: React.FC<ShareContainerProps> = (props) => {
                     Share this meaning with someone or a community you care about!
                 </p>
             </div>
-            <div className='w-2/3'>
+            <div className='w-full sm:w-2/3'>
                 <div className='flex justify-between mb-10 mx-14 mt-8'>
 
                     <FacebookShareButton url={song_url} >
@@ -43,7 +43,7 @@ const ShareContainer: React.FC<ShareContainerProps> = (props) => {
                     
                 </div>
             </div>
-            <div className='flex flex-row mr-4'>
+            <div className='flex flex-row mr-4 px-2'>
                 <p className='text-sm'>{song_url}</p>
                 {isCopied? (
                     <div className='flex items-center ml-2 '>

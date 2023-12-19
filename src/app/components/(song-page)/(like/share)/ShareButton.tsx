@@ -20,7 +20,7 @@ const ShareButton: React.FC<ShareButtonProps> = (props) => {
     useEffect(() => {
         setIsCopied(false)
     }, [isOpen])
-    console.log(props.song_art_url)
+
     return (
         // JSX code for the ShareButton component
         <>

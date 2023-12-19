@@ -16,6 +16,7 @@ export interface OpenAIStreamPayload {
     frequency_penalty: number,
     presence_penalty: number,
     stream: boolean,
+    max_tokens?: number,
     n: number,
 }
 
@@ -46,10 +47,11 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
 
                     try {
                         const json = JSON.parse(data)
-                        if (json.finish_reason != null) {
-                            console.log("finish reason:" + json.finish_reason)
-                            if (json.finish_reason != "stop") {
+                        if (json.choices[0].finish_reason != null) {
+                            console.log("finish reason:" + json.choices[0].finish_reason)
+                            if (json.choices[0].finish_reason != "stop") {
                                 console.log("cutoff error")
+                                controller.error("cutoff error")
                             }
 
                         }

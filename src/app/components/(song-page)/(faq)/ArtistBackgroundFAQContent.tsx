@@ -16,9 +16,17 @@ interface ArtistBackgroundFAQContentProps {
 
 const ArtistBackgroundFAQContent: React.FC<ArtistBackgroundFAQContentProps> = (props) => {
     const [streamContent, setStreamContent] = useState<string[]>([]);
+    const [isCutOffError, setIsCutOffError] = useState<boolean>(false);
     const song_data = props.song_data
     const router = useRouter()
     let first_render = true
+    const handleClick = () => {
+        setStreamContent([])
+        setIsCutOffError(false)
+        first_render = true
+        router.refresh()
+        fetchData(song_data)
+    }
     const fetchData = async (song_data: SongData) => {
         try {
             const response = await fetch('/api/faq/queue_artist_background', {
@@ -68,6 +76,7 @@ const ArtistBackgroundFAQContent: React.FC<ArtistBackgroundFAQContentProps> = (p
                 }
                 } catch (error) {
                     console.error('Error:', error);
+                    setIsCutOffError(true);
                 }
     };
     useEffect(() => {
@@ -90,6 +99,25 @@ const ArtistBackgroundFAQContent: React.FC<ArtistBackgroundFAQContentProps> = (p
                             </p>
                         )
                     })}
+                    {isCutOffError ? (
+                        <div className=' flex items-center justify-center mt-10'>
+                            <div className='w-full lg:w-2/3 border-red-400/50 border-2 bg-white rounded-md flex flex-col justify-center items-center'>
+                            <p className="text-center text-gray-800 mt-4 text-xs sm:text-base font-mono transition duration-300 ">
+                                There was an error generating the response
+                            </p>
+                          
+                            <button
+                                onClick={handleClick}
+                                className='underline font-bold text-black text-center text-xs sm:text-base font-mono mb-4'
+                            >
+                                Regenerate
+                            </button>
+                            </div>
+                        </div>
+                    ):(
+                        <>
+                        </>
+                    )}
                 </>
             ):(
                 <div className='flex items-center justify-center'>
