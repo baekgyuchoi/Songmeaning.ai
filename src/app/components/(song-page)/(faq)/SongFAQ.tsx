@@ -19,7 +19,7 @@ const SongFAQ: React.FC<SongFAQProps> = async (props) => {
         <div className='flex flex-col items-center justify-center'>
             <div className='w-screen sm:w-full border-2 border-gray-400 rounded-md p-1 overflow:hidden font-mono text-lg flex justify-center mb-4'>
             {/* Your component code here */}
-            FAQ
+            Explore FAQs
             </div>
             <div className='w-screen sm:w-full  pt-2 pb-2 text-xs sm:text-sm md:text-lg'>
                 <div className='pt-3 pb-3 sm:pt-2 sm:pb-2 md:pl-2 md:pr-2 '>
