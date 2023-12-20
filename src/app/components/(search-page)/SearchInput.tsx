@@ -1,9 +1,8 @@
 "use client";
 
-import { constants } from "buffer";
+
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import TypewriterComponent from "typewriter-effect"
 import PreviewSearchItemButton from "./PreviewSearchItemButton";
 import { SongInfo } from "@/lib/validators/song_info";
 
