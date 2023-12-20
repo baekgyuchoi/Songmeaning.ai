@@ -46,7 +46,12 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
                 
                     className="list-disc ml-8 mr-2 mt-3 text-base sm:text-lg transition duration-300 " 
                 >
-                    {summary_analysis.split('. ').map((item, i) => {
+                    {summary_analysis.split('.').map((item, i) => {
+                        if (item == "" || item == " ") {
+                            return (
+                                <></>
+                            )
+                        }
                         return (
                             <li key={i} className='mt-2'>
                                 {item.split('.')[0].split('{$artist_name}').join(props.artist_name).split('{$song_title}').join(props.song_title)}
