@@ -7,12 +7,150 @@ import { ChatGPTMessage, OpenAIStream, OpenAIStreamPayload } from "@/lib/openai-
 import { nanoid } from "nanoid";
 import { getEncoding } from "js-tiktoken";
 
+type ReferentAnnotation = {
+    fragment: string
+    annotation: string
+}
+
 
 function Get_Token_Length(input:string) {
     const encoding = getEncoding("cl100k_base");
     const tokens = encoding.encode(input);
     return tokens.length
     
+}
+
+// const geniusAPIArtistURL = 'https://api.genius.com/artists/'
+
+//     const artist_info = await fetch(geniusAPIArtistURL + artist_id,{
+//         headers: {
+//             Authorization: `Bearer ${process.env.GENIUS_API_KEY_1}`
+//         }
+//     })
+//     const artist_info_json = await artist_info.json()
+
+//     return artist_info_json.response.artist.description.dom
+
+async function getAnnotations(song_id: number) {
+
+    const findTokenLength = (arr : any[]) => {
+        let str = ""
+        for (let item of arr) {
+            str += "fragment: "
+            str += item.fragment
+            str += " annotation: "
+            str += item.annotation
+        }
+        return Get_Token_Length(str)
+    }
+
+    const convertToPlainText = (input: string) => {
+        let annotation_info = ""
+        const json_input = JSON.parse(input)
+        if(json_input.children != null) {
+            for (let child of json_input.children) {
+                if (child.children != null) {
+                    
+                    for (let grandchild of child.children) {
+            
+                        if (typeof(grandchild) == "string") {
+                            annotation_info += " " + grandchild
+                        }
+                        else{
+                            if (grandchild.children != null) {
+                                for (let greatgrandchild of grandchild.children) {
+                                    if (typeof(greatgrandchild) == "string") {
+                                        annotation_info += " " + greatgrandchild
+                                    }
+                                    else{
+                                        if (greatgrandchild.children != null) {
+                                            for (let greatgreatgrandchild of greatgrandchild.children) {
+                                                if (typeof(greatgreatgrandchild) == "string") {
+                                                    annotation_info += " " + greatgreatgrandchild
+                                                }
+                                            }
+                                        }   
+                                    }
+                                }
+                            }
+                        
+                        }
+                    }
+                
+                }
+            }
+        }
+        return annotation_info
+    }
+    
+
+    const geniusAPIReferentsURL = 'https://api.genius.com/referents?song_id='
+    const geniusAPISongsURL = 'https://api.genius.com/songs/'
+    const song = await fetch(geniusAPISongsURL + song_id,{
+        headers: {
+            Authorization: `Bearer ${process.env.GENIUS_API_KEY_1}`
+        }
+    })
+
+    const referents = await fetch(geniusAPIReferentsURL + song_id,{
+        headers: {
+            Authorization: `Bearer ${process.env.GENIUS_API_KEY_1}`
+        }
+    })
+    const referents_json = await referents.json()
+    const song_json = await song.json()
+    const referents_arr = referents_json.response.referents
+    let lyric_annotations: ReferentAnnotation[] = []
+    let song_annotations: ReferentAnnotation[] = []
+
+    const song_res: ReferentAnnotation = {
+        fragment: "",
+        annotation: convertToPlainText(JSON.stringify(song_json.response.song.description_annotation.annotations[0].body.dom))
+    }
+    song_annotations.push(song_res)
+    for (let referent of referents_arr) {
+        if (referent.classification == "verified") {
+            let annotation_info = ""
+
+            if(referent.annotations.length > 0){
+                annotation_info = convertToPlainText(JSON.stringify(referent.annotations[0].body.dom))
+            }
+            
+            const res: ReferentAnnotation = {
+                fragment: referent.fragment,
+                annotation: annotation_info
+            }
+    
+            lyric_annotations.push(res)
+        }
+    }
+
+    
+    for (let referent of referents_arr) {
+        if (referent.classification == "accepted") {
+            if (findTokenLength(song_annotations) + findTokenLength(lyric_annotations) > 500) {
+                break
+            }
+            let annotation_info = ""
+
+            if(referent.annotations.length > 0){
+                annotation_info = convertToPlainText(JSON.stringify(referent.annotations[0].body.dom))
+            }
+            
+            const res: ReferentAnnotation = {
+                fragment: referent.fragment,
+                annotation: annotation_info
+            }
+
+            lyric_annotations.push(res)
+        }
+    }
+  
+    console.log(song_annotations)
+    console.log(lyric_annotations)
+
+    
+    return
 }
 
 async function getSongLyrics(song_id: number) {
@@ -46,7 +184,8 @@ export async function POST(req: Request) {
     const song_info = await req.json() as SongInfo
     try {      
         const song_lyrics = await getSongLyrics(song_info.genius_id)
-
+        const genius_annotation = await getAnnotations(song_info.genius_id)
+        console.log(genius_annotation)
         await prisma.songs.update({
             where: {
                 song_slug: song_info.song_slug,

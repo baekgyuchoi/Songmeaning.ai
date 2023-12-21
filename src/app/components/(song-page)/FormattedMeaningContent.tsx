@@ -18,14 +18,19 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
   // Add your component logic here
     const formatted_meaning = props.formatted_meaning
     let summary_analysis = formatted_meaning.summary_analysis
+    
+
+
     if (props.artist_name.includes('.')) {
         summary_analysis = summary_analysis.split(props.artist_name).join('{$artist_name}')
+
     }
     if (props.song_title.includes('.')) {
         summary_analysis = summary_analysis.split(props.song_title).join('{$song_title}')
     }
 
- 
+    const summary_analysis_arr = summary_analysis.split(/(?<!\w\.\w.)(?<!ft)\.(?=\s[A-Z])/g)
+
     if (formatted_meaning.summary_analysis == "" || formatted_meaning.quotes == null || formatted_meaning.emotional_journey == "" || formatted_meaning.quotes == "" || formatted_meaning.conclusion == "") {
         return(
             <>
@@ -46,15 +51,13 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
                 
                     className="list-disc ml-8 mr-2 mt-3 text-base sm:text-lg transition duration-300 " 
                 >
-                    {summary_analysis.split('.').map((item, i) => {
+                    {summary_analysis_arr!.map((item, i) => {
                         if (item == "" || item == " ") {
-                            return (
-                                <></>
-                            )
+                            return 
                         }
                         return (
                             <li key={i} className='mt-2'>
-                                {item.split('.')[0].split('{$artist_name}').join(props.artist_name).split('{$song_title}').join(props.song_title)}
+                                {item.split('.').join('').split('{$artist_name}').join(props.artist_name).split('{$song_title}').join(props.song_title)}
                             </li>
                         )
                     })}
