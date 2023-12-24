@@ -18,7 +18,7 @@ const PaymentLink: React.FC = () => {
         className='bg-purple-600/75 hover:bg-purple-800/75 text-white font-bold py-2 px-12 rounded-full'
        
       >
-          Pay   
+          Pay it Forward
       </div>
     </Link>
     </>

@@ -21,7 +21,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
         first_render = true
         router.refresh()
         fetchData(song_info)
-        console.log('blicked')
+
     }
     const [streamContent, setStreamContent] = useState<string[]>([]);
     const [isCutOffError, setIsCutOffError] = useState<boolean>(false);
@@ -29,7 +29,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
     let first_render = true
     const fetchData = async (song_info: SongInfo) => {
         try {
-            console.log('fetchdata use effect')
+
             const response = await fetch('/api/queue_song_meaning_v2', {
                 method: 'POST',
                 headers: {
@@ -37,7 +37,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
                 },
                 body: JSON.stringify(song_info),
             });
-            console.log(response)
+
 
             if (response.body) {
                 const reader = response.body.getReader();
@@ -81,7 +81,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
                 }
     };
     useEffect(() => {
-        console.log('use effect called')
+
         if (first_render) {
             first_render = false;
             fetchData(song_info);

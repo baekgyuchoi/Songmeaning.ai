@@ -41,9 +41,7 @@ const PreviewSearchItemButton: React.FC<Props> = (props) => {
                                 <p className="pl-4 text-gray-500 text-xs max-w-md truncate">{songInfo.artist_name}</p>
                             </div>
                         </div>
-                        <div className='flex items-center justify-end w-full hidden md:flex'>
-                            <p className="text-gray-500 text-xs truncate">{songInfo.release_date}</p>
-                        </div>
+                        
                     </div>
                 </Card>
             </Link>

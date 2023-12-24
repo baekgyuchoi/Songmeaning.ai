@@ -27,42 +27,50 @@ export const maxDuration = 300
 export async function POST(req: Request) {
     const song_data = await req.json() as SongData
    
-
-    
-    const artist = await GetArtist(song_data.artist_id)
-    let artist_info = ""
-    if(artist.children != null){
-        for (let child of artist.children) {
-            if (child.tag == "p") {
-                
-                for (let grandchild of child.children) {
-        
-                    if (typeof(grandchild) == "string") {
-                        artist_info += " " + grandchild
-                    }
-                    else{
-                        for (let greatgrandchild of grandchild.children) {
-                            if (typeof(greatgrandchild) == "string") {
-                                artist_info += " " + greatgrandchild
-                            }
-                            else{
-                                for (let greatgreatgrandchild of greatgrandchild.children) {
-                                    if (typeof(greatgreatgrandchild) == "string") {
-                                        artist_info += " " + greatgreatgrandchild
+    const convertToPlainText = (input: string) => {
+        let annotation_info = ""
+        const json_input = JSON.parse(input)
+        if(json_input.children != null) {
+            for (let child of json_input.children) {
+                if (child.children != null) {
+                    
+                    for (let grandchild of child.children) {
+            
+                        if (typeof(grandchild) == "string") {
+                            annotation_info += " " + grandchild
+                        }
+                        else{
+                            if (grandchild.children != null) {
+                                for (let greatgrandchild of grandchild.children) {
+                                    if (typeof(greatgrandchild) == "string") {
+                                        annotation_info += " " + greatgrandchild
+                                    }
+                                    else{
+                                        if (greatgrandchild.children != null) {
+                                            for (let greatgreatgrandchild of greatgrandchild.children) {
+                                                if (typeof(greatgreatgrandchild) == "string") {
+                                                    annotation_info += " " + greatgreatgrandchild
+                                                }
+                                            }
+                                        }   
                                     }
                                 }
                             }
+                        
                         }
-                    
                     }
+                
                 }
-            
             }
         }
+        return annotation_info
     }
-
+    
+    const artist = await GetArtist(song_data.artist_id)
+    let artist_info = convertToPlainText(JSON.stringify(artist))
+    
    
-
+    console.log(artist_info)
 
     const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: `Adding this information to what you know: \n ${artist_info} \n Can you provide a written background on the artist: ${song_data.artist_name}? Including details about what is widely known about their early life/family background, dating life, career beginnings and career progression, notable achievements, notable controversies, fun facts, details of personal life that only the most fervent fans would be aware of, significant albums or songs, and any impact or influence they've had on the music industry or culture? Please do not feel limited and go as deep into the weeds as possible.  For example, if you were discussing Enya you would want to include details of how she decorates her castle, details of her attempted kidnappings, how and why she does not tour.  For Taylor Swift you would want to discuss her notable controversies in detail such as how kanye came on stage. Please also include 3-5 important quotes from the artist about their career, philosophy or anything that speaks to them as a person. if there is insufficient information, write short paragraph using the information given. Keep the response under 1000 tokens.
     `  }]

@@ -21,6 +21,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="description" content="Meaningful stories behind songs - interpreted by ai" />
+        <meta name="title" content="Songmeaning.ai" />
+      </head>
       
       <Providers>
         <body className={inter.className}>

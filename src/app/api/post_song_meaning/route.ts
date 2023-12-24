@@ -25,17 +25,17 @@ export async function POST(request: Request) {
 
         return new Response("Error - song does not exist")
     }
-    await prisma.songMeaning.create({
-        data: {
-            meaning: song_meaning.meaning,
-            createdAt: new Date(),
-            song: {
-                connect: {
-                    song_slug: song_meaning.song_slug
-                }
-            }
-        }
-    })
+    // await prisma.songMeaning.create({
+    //     data: {
+    //         meaning: song_meaning.meaning,
+    //         createdAt: new Date(),
+    //         song: {
+    //             connect: {
+    //                 song_slug: song_meaning.song_slug
+    //             }
+    //         }
+    //     }
+    // })
    
     return new Response("Success!")
  

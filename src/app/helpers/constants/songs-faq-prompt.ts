@@ -1,5 +1,5 @@
 export const songs_faq_prompts = [
-    [`Given the above information: Provide 2 songs that are similar to the song and deeply analyze the similarities in meanings. Break down the analysis into two sections, 1 section for each of the similar songs. You must include quotes from (song name) and quotes from each of the respective songs being compared to strengthen your argument in each of the 2 sections. These quotes should smoothly fit within your analysis as supporting evidence of the similarity in meaning. Do not mention you are including a quote, or awkwardly add the quotes at the end of the analysis. Please remember that this exercise requires a thorough analysis.
+    [`Given the above information: Provide 2 songs that are similar to the topic and meaning of the lyrics of this song from the same genre and deeply analyze the similarities in meanings.
     `,"Songs with Similar Lyrics"],
     [`Given the song, artist, lyric, and meanings, what occasion, setting, atmosphere would suit this song? Give an in-depth reasoning for each decision.  
     `,"Best Atmosphere/Setting for This Song"],
