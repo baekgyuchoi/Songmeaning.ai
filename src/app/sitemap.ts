@@ -1,7 +1,7 @@
-import { MetadataRoute } from "next";
+
 import prisma from "@/lib/db";
 
-const URL = "https://songmeaning.ai";
+const URL = "https://www.songmeaning.ai";
  
 export default async function sitemap() {
     const songs = await prisma.songMeaning.findMany({})
