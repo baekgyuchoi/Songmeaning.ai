@@ -50,8 +50,7 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
                         if (json.choices[0].finish_reason != null) {
                             console.log("finish reason:" + json.choices[0].finish_reason)
                             if (json.choices[0].finish_reason != "stop") {
-                                console.log("cutoff error")
-                                controller.error("cutoff error")
+                                controller.error("cutoff error: " + json.choices[0].finish_reason)
                             }
 
                         }
