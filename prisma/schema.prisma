@@ -25,6 +25,7 @@ model Songs {
   genius_url           String          
   genius_id            Int             @unique
   lyrics               String?         @db.Text
+  annotations          String?         @db.Text
   song_meaning         SongMeaning?
   song_image_url       String?          @db.Text
   header_image_url     String?          @db.Text

@@ -7,6 +7,11 @@ import { ChatGPTMessage, OpenAIStream, OpenAIStreamPayload } from "@/lib/openai-
 import { nanoid } from "nanoid";
 import { getEncoding } from "js-tiktoken";
 
+type ReferentAnnotation = {
+    fragment: string
+    annotation: string
+}
+
 
 function Get_Token_Length(input:string) {
     const encoding = getEncoding("cl100k_base");
@@ -15,10 +20,12 @@ function Get_Token_Length(input:string) {
     
 }
 
+
 type ReferentAnnotation = {
     fragment: string
     annotation: string
 }
+
 
 async function getAnnotations(song_id: number) {
 
@@ -147,6 +154,8 @@ async function getAnnotations(song_id: number) {
     }
 
     return res_str
+
+
 }
 
 async function getSongLyrics(song_id: number) {

@@ -18,11 +18,12 @@ interface FormattedMeaningContentProps {
 const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) => {
   // Add your component logic here
     const formatted_meaning = props.formatted_meaning
-    console.log(formatted_meaning)
+
 
     let summary_analysis = formatted_meaning.summary_analysis
     
     if (formatted_meaning.summary_analysis == "" || formatted_meaning.quotes == null || formatted_meaning.emotional_journey == "" || formatted_meaning.quotes == "" ) {
+
         return(
             <>
                 <p
@@ -56,13 +57,13 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
                 >
                     {summary_analysis_arr!.map((item, i) => {
                         if (item == "" || item == " ") {
-                            return (
-                                <></>
-                            )
+                            return 
                         }
                         return (
                             <li key={i} className='mt-2'>
+
                                {item.split('.').join('').split('{$artist_name}').join(props.artist_name).split('{$song_title}').join(props.song_title)}
+
                             </li>
                         )
                     })}
