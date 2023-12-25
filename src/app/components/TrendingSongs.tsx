@@ -3,6 +3,7 @@
 
 import React, { HTMLAttributes } from 'react';
 import prisma from '@/lib/db';
+import { trending_song_data } from '../helpers/constants/trending-songs';
 import { SongInfo, SongInfoArraySchema } from '@/lib/validators/song_info';
 import Link from 'next/link';
 
@@ -15,36 +16,13 @@ interface TrendingSongsProps extends HTMLAttributes<HTMLDivElement>
 
 
 
-async function GetTrendingSongs() {
-    const trending_songs = await prisma.songs.findMany({
-      orderBy: {
-        viewCount: "desc",
-      },
-      take: 15,
-    });
-    return trending_songs
-  }
+
 
 
 const TrendingSongs: React.FC<TrendingSongsProps> = async (className) => {
     // Define your component logic here
-    const trending_songs = await GetTrendingSongs()
-    const songInfoArray: SongInfo[] = trending_songs.map((song) => {
-      const songInfo: SongInfo = {
-        song_title: song.song_title,
-        song_short_title: song.song_short_title,
-        genius_url: song.genius_url,
-        song_slug: song.song_slug,
-        genius_id: song.genius_id,
-        artist_id: song.artist_id,
-        artist_name: song.artist_name,
-        artist_slug: song.artist_slug,
-        header_image_url: song.header_image_url || "",
-        song_art_url: song.song_image_url || "",
-        release_date: song.release_date || "",
-      };
-      return songInfo;
-    });
+    const songInfoArray = trending_song_data
+    
     
     return (
         // Return your JSX here

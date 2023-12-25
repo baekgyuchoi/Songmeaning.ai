@@ -3,37 +3,14 @@ import prisma from '@/lib/db';
 import React from 'react';
 import TrendingChartItem from './TrendingChartItem';
 import { SongInfo } from '@/lib/validators/song_info';
+import { trending_song_data, trending_song_ids } from '@/app/helpers/constants/trending-songs';
 
 
-async function GetTrendingSongs() {
-  const trending_songs = await prisma.songs.findMany({
-    orderBy: {
-      viewCount: "desc",
-    },
-    take: 15,
-  });
 
-  return trending_songs
-}
 
 const TrendingChart: React.FC = async () => {
-  const trending_songs = await GetTrendingSongs()
-  const songInfoArray: SongInfo[] = trending_songs.map((song) => {
-    const songInfo: SongInfo = {
-      song_title: song.song_title,
-      song_short_title: song.song_short_title,
-      genius_url: song.genius_url,
-      song_slug: song.song_slug,
-      genius_id: song.genius_id,
-      artist_id: song.artist_id,
-      artist_name: song.artist_name,
-      artist_slug: song.artist_slug,
-      header_image_url: song.header_image_url || "",
-      song_art_url: song.song_image_url || "",
-      release_date: song.release_date || "",
-    };
-    return songInfo;
-  });
+  const songInfoArray = trending_song_data
+  
 
   return (
     <main>
