@@ -45,6 +45,7 @@ export async function generateMetadata({
 
 type formatted_meaning = {
   "summary_analysis": string,
+  "background": string,
   "emotional_journey": string,
   "quotes": string,
   "conclusion": string,
@@ -154,7 +155,6 @@ export default async function SongPage({ params, searchParams }: {
         
         let is_meaning_valid = false
         const searchQuery = searchParams?.song;
-
         const song_id = parseInt(searchQuery!)
 
     
@@ -230,6 +230,7 @@ export default async function SongPage({ params, searchParams }: {
           let formatted_meaning : formatted_meaning = {} as formatted_meaning
       
           let text: string[] = []
+          let has_conclusion = false
           
           if (song_meaning_split != null) {
             for(let paragraph of song_meaning_split){
@@ -238,19 +239,21 @@ export default async function SongPage({ params, searchParams }: {
               }
 
         
-              if (paragraph == "Summary Analysis:") { 
-                
-                
+              if (paragraph.includes("Summary Analysis:")) {
 
               }
-              else if (paragraph.includes("Emotional Journey:")) {
+              else if (paragraph.includes("Background:")) {
                 formatted_meaning.summary_analysis = text.join("\n")
                 text = []
-                
-
               }
-              else if (paragraph.includes("Conclusion:")) {
-                formatted_meaning.quotes = text.join("\n")
+              else if (paragraph.includes("Emotional Journey:")) {
+              
+                if (formatted_meaning.summary_analysis == null || formatted_meaning.summary_analysis == "") {
+                  formatted_meaning.summary_analysis = text.join("\n")
+                }
+                else{
+                  formatted_meaning.background = text.join("\n")
+                }
                 text = []
 
               }
@@ -260,11 +263,21 @@ export default async function SongPage({ params, searchParams }: {
                 
 
               }
+              else if (paragraph.includes("Conclusion:")) {
+                formatted_meaning.quotes = text.join("\n")
+                text = []
+                has_conclusion = true
+              }
               else{
                 text.push(paragraph)
               }
             }
-            formatted_meaning.conclusion = text.join("\n")
+            if (has_conclusion == false) {
+              formatted_meaning.quotes = text.join("\n")
+            }
+            else{
+              formatted_meaning.conclusion = text.join("\n")
+            }
             
           }
 

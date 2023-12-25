@@ -3,6 +3,7 @@ import React from 'react';
 
 type formatted_meaning = {
     "summary_analysis": string,
+    "background": string,
     "emotional_journey": string,
     "quotes": string,
     "conclusion": string,
@@ -17,16 +18,11 @@ interface FormattedMeaningContentProps {
 const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) => {
   // Add your component logic here
     const formatted_meaning = props.formatted_meaning
-    let summary_analysis = formatted_meaning.summary_analysis
-    if (props.artist_name.includes('.')) {
-        summary_analysis = summary_analysis.split(props.artist_name).join('{$artist_name}')
-    }
-    if (props.song_title.includes('.')) {
-        summary_analysis = summary_analysis.split(props.song_title).join('{$song_title}')
-    }
+    console.log(formatted_meaning)
 
- 
-    if (formatted_meaning.summary_analysis == "" || formatted_meaning.quotes == null || formatted_meaning.emotional_journey == "" || formatted_meaning.quotes == "" || formatted_meaning.conclusion == "") {
+    let summary_analysis = formatted_meaning.summary_analysis
+    
+    if (formatted_meaning.summary_analysis == "" || formatted_meaning.quotes == null || formatted_meaning.emotional_journey == "" || formatted_meaning.quotes == "" ) {
         return(
             <>
                 <p
@@ -37,16 +33,28 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
             </>
         )
     }
+
+    if (props.artist_name.includes('.')) {
+        summary_analysis = summary_analysis.split(props.artist_name).join('{$artist_name}')
+
+    }
+    if (props.song_title.includes('.')) {
+        summary_analysis = summary_analysis.split(props.song_title).join('{$song_title}')
+    }
+
+    const summary_analysis_arr = summary_analysis.split(/(?<!\w\.\w.)(?<!\b[Ff]t)\.(?=\s[A-Z])/g)
+
+    
     return (
         // Add your JSX code here
         <>
             <div className='text-gray-800'>
-                <div className='w-full flex justify-start border-b font-mono font-bold '><h1 className='ml-2'>Summary Analysis</h1></div>
-                <ul
+                {/* <div className='w-full flex justify-start border-b font-mono font-bold '><h1 className='ml-2'>Summary Analysis</h1></div> */}
+                {/* <ul
                 
                     className="list-disc ml-8 mr-2 mt-3 text-base sm:text-lg transition duration-300 " 
                 >
-                    {summary_analysis.split('.').map((item, i) => {
+                    {summary_analysis_arr!.map((item, i) => {
                         if (item == "" || item == " ") {
                             return (
                                 <></>
@@ -54,13 +62,45 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
                         }
                         return (
                             <li key={i} className='mt-2'>
-                                {item.split('.')[0].split('{$artist_name}').join(props.artist_name).split('{$song_title}').join(props.song_title)}
+                               {item.split('.').join('').split('{$artist_name}').join(props.artist_name).split('{$song_title}').join(props.song_title)}
                             </li>
                         )
                     })}
-                </ul>
+
+                </ul> */}
+                <p
                 
+                    className="ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300" 
+                >
+                    {formatted_meaning.summary_analysis}
+                </p>
+                
+          
             </div>
+            {(formatted_meaning.background == "" || formatted_meaning.background == null) ? (<> </>):(
+                <div className='text-gray-800 mt-8'>
+                    <div className='w-full flex justify-start border-b font-mono font-bold '><h1 className='ml-2'>Background</h1></div>
+                    
+                    <ul className='list-disc ml-8 mr-2 mt-3 text-base sm:text-lg transition duration-300 '>
+                        {formatted_meaning.background.split('- ').map((item, i) => {
+                            if (item == "" || item == " ") {
+                                return (
+                                    <></>
+                                )
+                            }
+                            return (
+                                <li key={i} className='mt-2'>
+                                   {item}
+                                </li>
+                            )
+                        })}
+                    </ul>
+              
+                    
+                </div>
+            )}
+            
+
             <div className='text-gray-800 mt-8'>
                 <div className='w-full flex justify-start border-b font-mono font-bold '><h1 className='ml-2'>Emotional Journey</h1></div>
                 <p
@@ -98,16 +138,19 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
                 </div>
                 
             </div>
-            <div className='text-gray-800 mt-8'>
-                <div className='w-full flex justify-start border-b font-mono font-bold'><h1 className='ml-2'>Conclusion</h1></div>
-                <p
-                
-                    className="ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300" 
-                >
-                    {formatted_meaning.conclusion}
-                </p>
-                
-            </div>
+            {formatted_meaning.conclusion == "" || formatted_meaning.conclusion == null ? (<> </>):(
+                <div className='text-gray-800 mt-8'>
+                    <div className='w-full flex justify-start border-b font-mono font-bold'><h1 className='ml-2'>Conclusion</h1></div>
+                    <p
+                    
+                        className="ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300" 
+                    >
+                        {formatted_meaning.conclusion}
+                    </p>
+                    
+                </div>
+            )}
+            
         </>
     );
 };
