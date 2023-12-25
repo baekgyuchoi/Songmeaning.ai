@@ -20,16 +20,7 @@ function Get_Token_Length(input:string) {
     
 }
 
-// const geniusAPIArtistURL = 'https://api.genius.com/artists/'
 
-//     const artist_info = await fetch(geniusAPIArtistURL + artist_id,{
-//         headers: {
-//             Authorization: `Bearer ${process.env.GENIUS_API_KEY_1}`
-//         }
-//     })
-//     const artist_info_json = await artist_info.json()
-
-//     return artist_info_json.response.artist.description.dom
 
 async function getAnnotations(song_id: number) {
 
@@ -146,11 +137,20 @@ async function getAnnotations(song_id: number) {
         }
     }
   
-    console.log(song_annotations)
-    console.log(lyric_annotations)
 
-    
-    return
+
+    let res_str = "Overall Song Annotation: " + "\n\n"
+    for (let annotation of song_annotations) {
+        res_str += annotation.annotation + "\n"
+    }
+    res_str += "\n\nLyric Annotations:\n\n"
+    for (let annotation of lyric_annotations) {
+        res_str += "fragment: " + annotation.fragment + "\nAnnotation: " + annotation.annotation + "\n\n"
+    }
+
+    return res_str
+
+
 }
 
 async function getSongLyrics(song_id: number) {
@@ -186,6 +186,7 @@ export async function POST(req: Request) {
         const song_lyrics = await getSongLyrics(song_info.genius_id)
         const genius_annotation = await getAnnotations(song_info.genius_id)
         console.log(genius_annotation)
+
         await prisma.songs.update({
             where: {
                 song_slug: song_info.song_slug,
@@ -197,12 +198,11 @@ export async function POST(req: Request) {
         })
         
         let shorted_lyrics = song_lyrics
-        console.log('song_lyrics length: ' + Get_Token_Length(song_lyrics))
         while (Get_Token_Length(shorted_lyrics) > 1500) {
             shorted_lyrics = shorted_lyrics.slice(0,shorted_lyrics.length/2)
         }
    
-        const songMeaningContext = `Keep the response under 1000 tokens - Song: ${song_info.song_title}\nArtist: ${song_info.artist_name}\nLyrics: ${shorted_lyrics}\n\nMeaning:`
+        const songMeaningContext = `Song: ${song_info.song_title}\nArtist: ${song_info.artist_name}\nLyrics: ${shorted_lyrics}\nAnnotations: ${genius_annotation} \n\nMeaning:`
 
         const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: songMeaningContext + songMeaningPrompt }]
         const parsedMessages = MessageArraySchema.parse(messages)
@@ -218,7 +218,7 @@ export async function POST(req: Request) {
             temperature: 0.8,
             top_p: 1,
             frequency_penalty: 0,
-            presence_penalty: 0,
+            presence_penalty: 0.5,
             stream: true,
             n: 1,
         }  
