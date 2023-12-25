@@ -21,11 +21,6 @@ function Get_Token_Length(input:string) {
 }
 
 
-type ReferentAnnotation = {
-    fragment: string
-    annotation: string
-}
-
 
 async function getAnnotations(song_id: number) {
 
