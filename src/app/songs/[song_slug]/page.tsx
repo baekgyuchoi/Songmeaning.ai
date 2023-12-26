@@ -239,7 +239,7 @@ export default async function SongPage({ params, searchParams }: {
               }
 
         
-              if (paragraph.includes("Summary Analysis:")) {
+              if (paragraph == ("Summary Analysis:")) {
 
               }
               else if (paragraph.includes("Background:")) {
