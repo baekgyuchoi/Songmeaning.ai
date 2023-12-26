@@ -43,8 +43,6 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
         summary_analysis = summary_analysis.split(props.song_title).join('{$song_title}')
     }
 
-    const summary_analysis_arr = summary_analysis.split(/(?<!\w\.\w.)(?<!\b[Ff]t)\.(?=\s[A-Z])/g)
-
     
     return (
         // Add your JSX code here

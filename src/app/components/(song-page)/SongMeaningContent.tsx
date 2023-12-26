@@ -61,6 +61,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
                     song_slug: song_info.song_slug,
                     meaning: result
                 }
+                if (meaning_payload.meaning.length > 1000){
                 try{
                     await fetch('/api/post_song_meaning', {
                         method: 'POST',
@@ -73,6 +74,9 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
                     router.refresh()
                     }catch(error){
                     }
+                } else {
+                    setIsCutOffError(true);
+                }
                 }
                 } catch (error) {
                     console.error('Error:', error);

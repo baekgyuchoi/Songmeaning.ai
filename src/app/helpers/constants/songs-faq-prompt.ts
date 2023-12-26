@@ -1,5 +1,15 @@
 export const songs_faq_prompts = [
-    [`Given the above information: Provide 2 songs that are similar to the topic and meaning of the lyrics of this song from the same genre and deeply analyze the similarities in meanings.
+    [`Give me two songs within the same genre that has similar lyrics as this song. The lyrics can be similar in mood, tone, or the message that it delivers.
+
+    Write a brief paragraph for why each song was chosen
+    
+    DO NOT write out the lyrics of each song.
+    
+    Response format:
+    
+    Two songs that are similar to this songs are: X and Y
+    
+    X paragraph
     `,"Songs with Similar Lyrics"],
     [`Given the song, artist, lyric, and meanings, what occasion, setting, atmosphere would suit this song? Give an in-depth reasoning for each decision.  
     `,"Best Atmosphere/Setting for This Song"],
