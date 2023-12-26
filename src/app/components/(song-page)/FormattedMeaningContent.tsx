@@ -43,7 +43,6 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
         summary_analysis = summary_analysis.split(props.song_title).join('{$song_title}')
     }
 
-    
     return (
         // Add your JSX code here
         <>
@@ -83,9 +82,7 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
                     <ul className='list-disc ml-8 mr-2 mt-3 text-base sm:text-lg transition duration-300 '>
                         {formatted_meaning.background.split('- ').map((item, i) => {
                             if (item == "" || item == " ") {
-                                return (
-                                    <></>
-                                )
+                                return 
                             }
                             return (
                                 <li key={i} className='mt-2'>
@@ -102,12 +99,17 @@ const FormattedMeaningContent: React.FC<FormattedMeaningContentProps> = (props) 
 
             <div className='text-gray-800 mt-8'>
                 <div className='w-full flex justify-start border-b font-mono font-bold '><h1 className='ml-2'>Emotional Journey</h1></div>
-                <p
-                
-                    className="ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300 " 
-                >
-                    {formatted_meaning.emotional_journey}
-                </p>
+                    {formatted_meaning.emotional_journey.split('\n').map((item, i) => {
+                        if (item == "" || item == " ") {
+                            return 
+                        }
+                        return (
+                            <p key={i} className='ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300'>
+                               {item}
+                            </p>
+                        )
+                    })}
+                    
                 
             </div>
             <div className='text-gray-800 mt-8'>
