@@ -315,7 +315,7 @@ export async function POST(req: Request) {
             const v1meaning = JSON.stringify(formatted_meaning)
       
 
-            if (formatted_meaning.background == null){
+            if (formatted_meaning.summary_analysis == null || formatted_meaning.background == null){
                 console.log("failed, regenerate")
                 const json_response = {"valid": false}
                 return new Response(JSON.stringify(json_response))
