@@ -68,7 +68,7 @@ useEffect(() => {
           {searchQuery === null || searchQuery?.length === 0 || !isFocused? (
               <></>
             ):(
-              <div className=" absolute mt-1 w-full p-2   max-h-96 overflow-y-auto">
+              <div className=" absolute mt-1 w-full p-2 max-h-96 overflow-y-auto z-20">
                 <ul>
                   {songInfoArray?.map((songInfo,index) => (
                     

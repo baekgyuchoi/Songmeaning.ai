@@ -40,6 +40,8 @@ export const SongDataSchema = z.object({
         id: z.number(),
         slug: z.string(),
         meaning: z.string(),
+        meaning_v2: z.string().optional(),
+        meaning_v1: z.string().optional(),
         createdAt:z.date()
     }), z.null()]),
     
