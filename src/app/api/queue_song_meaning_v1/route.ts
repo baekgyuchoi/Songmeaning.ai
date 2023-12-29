@@ -191,7 +191,7 @@ async function getSongLyrics(song_id: number) {
 export const maxDuration = 300 
 
 export async function POST(req: Request) {
-    console.log("HERRO, V1QueueMeaning Started")
+    console.log("V1QueueMeaning Started")
     const song_info = await req.json() as SongInfo
     const song_data = await prisma.songs.findUnique({
         where: {
@@ -227,8 +227,6 @@ export async function POST(req: Request) {
             })
         }
         
-
-       console.log("woah -1")
         
         let shorted_lyrics = song_lyrics
         while (Get_Token_Length(shorted_lyrics) > 1500) {

@@ -3,12 +3,10 @@ import prisma from '@/lib/db';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SongInfo } from '@/lib/validators/song_info';
 import { Suspense } from 'react';
-import SongMeaningContent from '@/app/components/(song-page)/SongMeaningContent';
 import TrendingChart from '@/app/components/(song-tables)/TrendingChart';
 import MoreFromArtist from '@/app/components/(song-tables)/MoreFromArtist';
 import { SongData } from '@/lib/validators/song_data_response';
 import SongFAQ from '@/app/components/(song-page)/(faq)/SongFAQ';
-import FormattedMeaningContent from '@/app/components/(song-page)/FormattedMeaningContent';
 import LoadingFAQ from '@/app/components/(song-page)/(faq)/LoadingFAQ';
 import Link from 'next/link';
 import PaymentContainer from '@/app/components/(payment)/PaymentContainer';
@@ -18,7 +16,6 @@ import ShareContainer from '@/app/components/(song-page)/(like/share)/ShareConta
 import ShareModal from '@/app/components/(song-page)/(like/share)/ShareModal';
 import SongMeaningContentv2 from '@/app/components/(song-page)/SongMeaningContentv2';
 import LoadingQueue from '@/app/components/(song-page)/LoadingQueue';
-import { songBackgroundPrompt } from '@/app/helpers/constants/queue-songmeaning-prompt';
 import { SongMeaning } from '@/lib/validators/song_meaning';
 
 
