@@ -1,17 +1,18 @@
 import * as Genius from "genius-lyrics";
 import { SongInfo } from "@/lib/validators/song_info";
 import prisma from "@/lib/db";
-import { songMeaningPrompt } from "@/app/helpers/constants/queue-songmeaning-prompt";
-import { Message, MessageArraySchema } from "@/lib/validators/message";
-import { ChatGPTMessage, OpenAIStream, OpenAIStreamPayload } from "@/lib/openai-stream";
-import { nanoid } from "nanoid";
+import { songMeaningPrompt, songBackgroundPrompt, songQuotesPrompt } from "@/app/helpers/constants/queue-songmeaning-prompt";
 import { getEncoding } from "js-tiktoken";
+import OpenAI from "openai";
 
-type ReferentAnnotation = {
-    fragment: string
-    annotation: string
-}
 
+type formatted_meaning = {
+    "summary_analysis": string,
+    "background": string,
+    "emotional_journey": string,
+    "quotes": string,
+    "conclusion": string
+  }
 
 function Get_Token_Length(input:string) {
     const encoding = getEncoding("cl100k_base");
@@ -75,7 +76,7 @@ async function getAnnotations(song_id: number) {
     }
     
 
-    const geniusAPIReferentsURL = 'https://api.genius.com/referents?song_id='
+
     const geniusAPISongsURL = 'https://api.genius.com/songs/'
     const song = await fetch(geniusAPISongsURL + song_id,{
         headers: {
@@ -83,161 +84,137 @@ async function getAnnotations(song_id: number) {
         }
     })
 
-    const referents = await fetch(geniusAPIReferentsURL + song_id,{
-        headers: {
-            Authorization: `Bearer ${process.env.GENIUS_API_KEY_1}`
+    const song_json = await song.json()
+    const annotation = convertToPlainText(JSON.stringify(song_json.response.song.description_annotation.annotations[0].body.dom))
+    await prisma.songs.update({
+        where: {
+            genius_id: song_id,
+        },
+        data: {
+            annotations: annotation,
         }
     })
-    const referents_json = await referents.json()
-    const song_json = await song.json()
-    const referents_arr = referents_json.response.referents
-    let lyric_annotations: ReferentAnnotation[] = []
-    let song_annotations: ReferentAnnotation[] = []
-
-    const song_res: ReferentAnnotation = {
-        fragment: "",
-        annotation: convertToPlainText(JSON.stringify(song_json.response.song.description_annotation.annotations[0].body.dom))
-    }
-    song_annotations.push(song_res)
-    for (let referent of referents_arr) {
-        if (referent.classification == "verified") {
-            let annotation_info = ""
-
-            if(referent.annotations.length > 0){
-                annotation_info = convertToPlainText(JSON.stringify(referent.annotations[0].body.dom))
-            }
-            
-            const res: ReferentAnnotation = {
-                fragment: referent.fragment,
-                annotation: annotation_info
-            }
     
-            lyric_annotations.push(res)
-        }
-    }
-
     
-    for (let referent of referents_arr) {
-        if (referent.classification == "accepted") {
-            if (findTokenLength(song_annotations) + findTokenLength(lyric_annotations) > 500) {
-                break
-            }
-            let annotation_info = ""
-
-            if(referent.annotations.length > 0){
-                annotation_info = convertToPlainText(JSON.stringify(referent.annotations[0].body.dom))
-            }
-            
-            const res: ReferentAnnotation = {
-                fragment: referent.fragment,
-                annotation: annotation_info
-            }
-
-            lyric_annotations.push(res)
-        }
-    }
-  
-
-
-    let res_str = "Overall Song Annotation: " + "\n\n"
-    for (let annotation of song_annotations) {
-        res_str += annotation.annotation + "\n"
-    }
-    res_str += "\n\nLyric Annotations:\n\n"
-    for (let annotation of lyric_annotations) {
-        res_str += "fragment: " + annotation.fragment + "\nAnnotation: " + annotation.annotation + "\n\n"
-    }
-
-    return res_str
-
-
+    return annotation
 }
 
 async function getSongLyrics(song_id: number) {
     const Client = new Genius.Client(process.env.GENIUS_API_KEY_1);
     const SongsClient = Client.songs;
     const searchSong = await SongsClient.get(song_id)
-    const lyrics = await searchSong.lyrics();
+    let lyrics = await searchSong.lyrics();
+    await prisma.songs.update({
+        where: {
+            genius_id: song_id,
+        },
+        data: {
+            lyrics: lyrics,
+
+        }
+    })
+  
     return lyrics
 }
 
 
-// async function getSongMeaning(song_title: string, artist: string, lyrics: string) {
+async function getSongMeaning(song_title: string, artist: string, lyrics: string, annotations: string) {
     
-//     const songMeaningContext = `Song: ${song_title}\nArtist: ${artist}\nLyrics: ${lyrics}\n\nMeaning:`
+    const songMeaningContext = `Song: ${song_title}\nArtist: ${artist}\nLyrics: ${lyrics}\n Annotations: ${annotations}\n\nMeaning:`
 
-//     const openai = new OpenAI({
-//         apiKey: process.env.OPENAI_API_KEY
-//     });
+    const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY
+    });
 
-//     const gptResponse = await openai.chat.completions.create({
-//         messages: [{ role: 'user', content: songMeaningContext + songMeaningPrompt }],
-//         model: 'gpt-3.5-turbo',
-//     })
+    const gptResponse = await openai.chat.completions.create({
+        messages: [{role: 'system', content: songMeaningPrompt},{ role: 'user', content: songMeaningContext}],
+        model: 'gpt-4-1106-preview',
+    })
 
-//     return gptResponse.choices[0].message
-// }
+    return gptResponse.choices[0].message.content
+}
+
+async function getSongQuotes(song_title: string, artist: string, lyrics: string, annotations: string) {
+    
+    const songMeaningContext = `Song: ${song_title}\nArtist: ${artist}\nLyrics: ${lyrics}\nAnnotations: ${annotations} \n\nMeaning:`
+
+    const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY
+    });
+
+    const gptResponse = await openai.chat.completions.create({
+        messages: [{ role: 'user', content: songMeaningContext + songQuotesPrompt }],
+        model: 'gpt-4-1106-preview',
+    })
+
+    return gptResponse.choices[0].message.content
+}
+
+
 export const maxDuration = 300 
 
 export async function POST(req: Request) {
    
     const song_info = await req.json() as SongInfo
+    const song_data = await prisma.songs.findUnique({
+        where: {
+            song_slug: song_info.song_slug
+        },
+        include: {
+            song_meaning: true
+        }
+    })
     try {      
         const song_lyrics = await getSongLyrics(song_info.genius_id)
         const genius_annotation = await getAnnotations(song_info.genius_id)
-        console.log(genius_annotation)
 
-        await prisma.songs.update({
-            where: {
-                song_slug: song_info.song_slug,
-            },
-            data: {
-                lyrics: song_lyrics,
-
-            }
-        })
+        
         
         let shorted_lyrics = song_lyrics
         while (Get_Token_Length(shorted_lyrics) > 1500) {
             shorted_lyrics = shorted_lyrics.slice(0,shorted_lyrics.length/2)
         }
-   
-        const songMeaningContext = `Song: ${song_info.song_title}\nArtist: ${song_info.artist_name}\nLyrics: ${shorted_lyrics}\nAnnotations: ${genius_annotation} \n\nMeaning:`
 
-        const messages: Message[] = [{ id: nanoid(), isUserInput: true, text: songMeaningContext + songMeaningPrompt }]
-        const parsedMessages = MessageArraySchema.parse(messages)
+        const meaning = await getSongMeaning(song_info.song_title, song_info.artist_name, shorted_lyrics, genius_annotation)
+        const res_v2 = {
+            meaning: meaning,
+        }
+        
 
-        const outboundMessages: ChatGPTMessage[] = parsedMessages.map((message) => ({
-            role: message.isUserInput ? 'user' : 'system',
-            content: message.text,
-        }))
-
-        const payload: OpenAIStreamPayload = {
-            model: 'ft:gpt-3.5-turbo-1106:personal::8TTC6hNk',
-            messages: outboundMessages,
-            temperature: 0.8,
-            top_p: 1,
-            frequency_penalty: 0,
-            presence_penalty: 0.5,
-            stream: true,
-            n: 1,
-        }  
-       
-
-        const stream = await OpenAIStream(payload)
-       
-        return new Response(stream)
-    } catch (error) {
-        console.error('An error occurred:', error)
-        console.log("songlyrics are null")
-            await prisma.songs.update({
-                where: {
-                    song_slug: song_info.song_slug,
-                },
-                data: {
-                    isValid: false,
-                }
-            })
-        return new Response('Error occurred: This song does not have lyrics', { status: 500 })
+        //Check if meanings are legit:
+        if (meaning!.length > 400) {
+            //format meaning
+            //save each section separately
+            if(song_data!.song_meaning == null){
+                await prisma.songMeaning.create({
+                    data: {
+                        meaning: "Meaning Stored",
+                        meaning_v2: JSON.stringify(res_v2),
+                        createdAt: new Date(),
+                        song: {
+                            connect: {
+                                song_slug: song_info.song_slug
+                            }
+                        }
+                    }
+                })
+            }
+            else{
+                await prisma.songMeaning.update({
+                    where: {
+                        slug: song_info.song_slug
+                    },
+                    data: {
+                        meaning_v1: JSON.stringify(res_v2),
+                    }
+                })
+            }
+            
+        }
+        return new Response("Success")
+    }
+    catch (err) {
+        console.log(err)
+        return new Response("Error - songmeaningv2")
     }
 }

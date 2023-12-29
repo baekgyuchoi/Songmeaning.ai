@@ -72,6 +72,8 @@ model SongMeaning {
   slug      String   @unique
   song      Songs    @relation(fields: [slug], references: [song_slug])
   meaning   String   @db.Text
+  meaning_v1 String?   @db.Text
+  meaning_v2 String?   @db.Text
   createdAt DateTime @default(now())
 }
 

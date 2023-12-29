@@ -1,7 +1,7 @@
 'use client'
 import { SongInfo } from '@/lib/validators/song_info';
 import React, { Suspense, useEffect, useState } from 'react';
-import LoadingQueue from '../(search-page)/LoadingQueue';
+import LoadingQueue from './LoadingQueue';
 import { useRouter } from 'next/navigation';
 
 
@@ -30,7 +30,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
     const fetchData = async (song_info: SongInfo) => {
         try {
 
-            const response = await fetch('/api/queue_song_meaning_v2', {
+            const response = await fetch('/api/queue_song_meaning', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,15 +61,15 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
                     song_slug: song_info.song_slug,
                     meaning: result
                 }
-                if (meaning_payload.meaning.length > 1000){
+                if (meaning_payload.meaning.length > 400){
                 try{
-                    await fetch('/api/post_song_meaning', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(meaning_payload),
-                    });
+                    // await fetch('/api/post_song_meaning', {
+                    //     method: 'POST',
+                    //     headers: {
+                    //         'Content-Type': 'application/json',
+                    //     },
+                    //     body: JSON.stringify(meaning_payload),
+                    // });
              
                     router.refresh()
                     }catch(error){

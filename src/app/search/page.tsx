@@ -65,7 +65,7 @@ export default async function SearchPage({
           
       
             <Suspense fallback={<div>Loading...</div>}>
-              <div className="w-full md:w-2/3 mt-4 grid grid-cols-1 gap-x-8 md:mt-6 md:grid-cols-1 md:gap-y-2 block">
+              <div className="w-full lg:w-2/3 mt-4 grid grid-cols-1 gap-x-8 md:mt-6 md:grid-cols-1 md:gap-y-2 block">
                 <ul className="">
                   {data.map((result, index) => (
                     <li 

@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import * as Genius from 'genius-lyrics'
 import { useState } from "react";
-import LoadingQueue from './LoadingQueue';
+import LoadingQueue from '../(song-page)/LoadingQueue';
 // make 
 
 
