@@ -84,7 +84,7 @@ const LoadingQueue: React.FC<Props> = (props) => {
             <div className="text-black mt-10 text-center">
                 <TypewriterComponent
                 options={{
-                    strings: [`You are first to explore this song!`, `Analyzing ${song_title} lyrics...` ],
+                    strings: [`You are first to explore this song!`, `We take pride in delivering you the highest quality song meaning in the world, which takes around 30 seconds.`,`Analyzing ${song_title} lyrics...`, ` Thanks for waiting 🙏🏻` ],
                     autoStart: true,
                     loop: true,
                     delay: 50,
