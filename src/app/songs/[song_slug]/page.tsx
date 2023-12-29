@@ -360,7 +360,6 @@ export default async function SongPage({ params, searchParams }: {
                                         <p>Released:  {song_data.release_date}</p>
                                       )}
                                        
-                                        <p>Tags:</p>
                                         {(is_meaning_json) ? (
                                           <>
                                             <p className='mb-2'>Background:</p>
