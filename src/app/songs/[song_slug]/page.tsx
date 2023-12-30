@@ -276,13 +276,13 @@ export default async function SongPage({ params, searchParams }: {
                       <Card className="w-full mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl">
                         <CardHeader className='relative border-1 border-b-4 border-purple-800/25 bg-gray-50 rounded-lg flex flex-col items-center sm:flex-row mb-4 px-4 sm:py-10 sm:px-10'>
                             
-                              <div className='absolute inset-0 bg-cover bg-center rounded-lg rounded-t-2xl' style={{ backgroundImage: `url(${song_data.song_image_url})`, opacity: 0.25 }}>
+                              <div className='absolute inset-0 bg-cover bg-center rounded-lg rounded-t-2xl' style={{ backgroundImage: `url(${song_data.header_image_url})`, opacity: 0.25 }}>
 
                               </div>
                         
                               <div className='w-56 sm:w-72 h-56 rounded-lg bg-purple-500/25 relative z-10'>
                                 <img 
-                                  src={song_data.header_image_url}
+                                  src={song_data.song_image_url}
                                   alt='song art'
                                   className="object-cover w-56 h-56 p-2  "
                                 >
