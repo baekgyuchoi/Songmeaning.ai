@@ -83,7 +83,7 @@ const LoadingQueue: React.FC<Props> = (props) => {
                     {"You are the first to explore this song\'s meaning, so we have not analyzed this song yet."}
                 </p>
                 <p className="text-base leading-relaxed mb-1">
-                    {"In roughly 30 seconds, we will present you with by far the world\'s highest quality song meaning."}
+                    {"In roughly 50 seconds, we will present you with by far the world\'s highest quality song meaning."}
                 </p>
                 <p className="text-base leading-relaxed">
                     {"Your patience unveils unparalleled depth. Thank you for being the first."}

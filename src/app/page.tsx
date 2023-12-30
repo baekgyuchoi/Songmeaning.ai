@@ -43,7 +43,7 @@ export default async function Home() {
               <h3 className="text-lg font-medium text-gray-700">December 30, 2023</h3>
               
               <ul className="mt-2 text-gray-600 list-disc list-inside px-5 mb-4">
-                <li className="mb-1">Huge breakthrough in increasing proprietary data and training the AI resulting in FAR better song meaning; however, loading time is increased to ~30 seconds</li> 
+                <li className="mb-1">Huge breakthrough in increasing proprietary data and training the AI resulting in FAR better song meaning; however, loading time is increased to ~50 seconds</li> 
                 <li className="mb-1">Song page UI redesign: added song images, release date, and background to title section</li>
               </ul>
             </div>
