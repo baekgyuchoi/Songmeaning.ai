@@ -1,13 +1,16 @@
 'use client'
+import { SongData } from '@/lib/validators/song_data_response';
 import { ClipboardCopyIcon } from 'lucide-react';
-import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, RedditShareButton, RedditIcon, PinterestShareButton, PinterestIcon, FacebookIcon, TwitterIcon, LinkedinIcon } from 'next-share';
+import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, RedditShareButton, RedditIcon, PinterestShareButton, PinterestIcon, FacebookIcon, TwitterIcon, LinkedinIcon, WhatsappShareButton, WhatsappIcon } from 'next-share';
 import React from 'react';
+import InstagramModal from './InstagramModal';
 
 interface ShareModalContainerProps {
     // Define any props you need for the ShareContainer component
     song_slug: string;
     song_art_url: string;
     song_title: string;
+    song_data: SongData
 }
 
 
@@ -28,18 +31,19 @@ const ShareModalContainer: React.FC<ShareModalContainerProps> = (props) => {
                     <FacebookShareButton url={song_url} >
                         <FacebookIcon size={32} round className=''/>
                     </FacebookShareButton>
+                    <WhatsappShareButton url={song_url}>
+                        <WhatsappIcon size={32} round />
+                    </WhatsappShareButton>
                     <TwitterShareButton url={song_url} >
                         <TwitterIcon size={32} round className=''/>
                     </TwitterShareButton>
-                    <LinkedinShareButton url={song_url} >
-                        <LinkedinIcon size={32} round className=''/>
+                    <LinkedinShareButton url={song_url}>
+                        <LinkedinIcon size={32} round/>
                     </LinkedinShareButton>
                     <RedditShareButton url={song_url} >
                         <RedditIcon size={32} round/>
                     </RedditShareButton>
-                    <PinterestShareButton url={song_url} content={`Meaning of song: ${props.song_title}`} name={`Meaning of song: ${props.song_title}`} description={`Meaning of song: ${props.song_title}`} media={props.song_art_url} >
-                        <PinterestIcon size={32} round />
-                    </PinterestShareButton>
+                    
                     
                 </div>
             </div>

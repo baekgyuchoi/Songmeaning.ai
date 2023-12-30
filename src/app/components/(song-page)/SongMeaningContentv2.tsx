@@ -3,10 +3,10 @@ import { SongMeaning } from '@/lib/validators/song_meaning';
 
 
 type song_meaning = {
-    summary_analysis: string,
-    meaning: string,
-    background: string,
-    quotes: string,
+    summary: string,
+    emotional_journey: String[],
+    background: String[],
+    quotes: any[],
   }
 
 
@@ -14,30 +14,15 @@ type song_meaning = {
 
 interface SongMeaningContentProps {
     // Define your component props here
-    song_meaning: SongMeaning
+    song_meaning: song_meaning
   }
 
 
 
 const SongMeaningContent: React.FC<SongMeaningContentProps> = async (props) => {
-    let song_meaning_content = {} as song_meaning
     const meaning = props.song_meaning
 
-    console.log(meaning)
-
-    const json_v1meaning = JSON.parse(meaning.meaning!)
-
-
-    if (meaning?.meaning != null){
-        song_meaning_content.summary_analysis = json_v1meaning.summary_analysis
-        song_meaning_content.meaning = json_v1meaning.meaning
-        if (song_meaning_content.meaning == null || song_meaning_content.meaning == "") {
-            song_meaning_content.meaning = json_v1meaning.emotional_journey
-        }
-        if (song_meaning_content.quotes == null || song_meaning_content.quotes == "") {
-            song_meaning_content.quotes = json_v1meaning.quotes
-        }
-    }
+    
     
 
     
@@ -46,20 +31,16 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = async (props) => {
     return (
         
         <div>
-          
                 <>
-               
-               
-                
                 <div className='text-gray-800 '>
                     <p className='ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300'>
-                        {song_meaning_content.summary_analysis}
+                        {meaning.summary}
                     </p>
                     
                 </div>
                 <div className='text-gray-800 mt-8'>
                     <div className='w-full flex justify-start border-b font-mono font-bold '><h1 className='ml-2'>Song Meaning</h1></div>
-                        {song_meaning_content.meaning.split('\n').map((item, i) => {
+                        {meaning.emotional_journey.map((item, i) => {
                             if (item == "" || item == " ") {
                                 return 
                             }
@@ -78,7 +59,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = async (props) => {
                     
                         className="ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300 " 
                     >
-                        {song_meaning_content.quotes.split('\n').map((item, i) => {
+                        {meaning.quotes.map((item, i) => {
                         
                             
                             // if (i%2 == 0 )  {
@@ -92,8 +73,10 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = async (props) => {
                             //     )
                             // }
                             return (
-                                
-                                <p className='mt-2' key={i}>{item}</p>
+                                <>
+                                    <p className='mt-8 ml-2 italic ' key={i}>"{item.quote}"</p>
+                                    <p className='mt-2' key={i}>{item.explanation}</p>
+                                </>
                             )
                         })}
                     </div>

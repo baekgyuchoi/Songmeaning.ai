@@ -16,7 +16,7 @@ import ShareContainer from '@/app/components/(song-page)/(like/share)/ShareConta
 import ShareModal from '@/app/components/(song-page)/(like/share)/ShareModal';
 import SongMeaningContentv2 from '@/app/components/(song-page)/SongMeaningContentv2';
 import LoadingQueue from '@/app/components/(song-page)/LoadingQueue';
-import { SongMeaning } from '@/lib/validators/song_meaning';
+
 
 
 
@@ -45,27 +45,19 @@ export async function generateMetadata({
     description: song_db?.song_meaning?.meaning || "",
   };
 }
-function isValidJSON(jsonString: string): boolean {
-  try {
-      JSON.parse(jsonString);
-      return true;
-  } catch (e) {
-      return false;
-  }
+
+
+type Quote = {
+  quote: string,
+  explanation: string
 }
 
-type formatted_meaning = {
-  "summary_analysis": string,
-  "background": string,
-  "emotional_journey": string,
-  "quotes": string,
-  "conclusion": string,
-}
 
-type song_meaning = {
-  meaning: string,
-  background: string,
-  quotes: string,
+type SongMeaning = {
+  summary: string,
+  emotional_journey: String[],
+  background: String[],
+  quotes: Quote[],
 }
 
 
@@ -172,7 +164,6 @@ export default async function SongPage({ params, searchParams }: {
         // const lyrics = await search[0].lyrics();
         
         let is_meaning_valid = false
-        let is_meaning_json = false
         const searchQuery = searchParams?.song;
         const song_id = parseInt(searchQuery!)
 
@@ -238,73 +229,37 @@ export default async function SongPage({ params, searchParams }: {
         }
             
           const meaning = song_data?.song_meaning?.meaning 
-          const song_meaning = song_data.song_meaning as SongMeaning
-          let json_meaning = {} as song_meaning
-          if (meaning != null) {
-              is_meaning_valid = true
-              if (isValidJSON(meaning)) {
-                  is_meaning_json = true
-                  json_meaning = JSON.parse(meaning!) as song_meaning
+          console.log(meaning)
+         
+          let song_meaning_json: SongMeaning = {
+            summary: "",
+            background:[],
+            emotional_journey: [],
+            quotes: []
+
+          } 
+            try{
+              const parsed_json = JSON.parse(meaning!) as SongMeaning
+              console.log(parsed_json)
+              console.log(parsed_json)
+              song_meaning_json =  {
+                summary: parsed_json.summary,
+                background: parsed_json.background,
+                quotes: parsed_json.quotes,
+                emotional_journey: parsed_json.emotional_journey
               }
-          }
+
+              console.log(song_meaning_json)
+              is_meaning_valid = true
+            } catch{
+              is_meaning_valid = false
+            }
+          
+   
           
          
-          const song_meaning_split = meaning?.split("\n")
-          
-          let formatted_meaning : formatted_meaning = {} as formatted_meaning
-          
-      
-          let text: string[] = []
-          let has_conclusion = false
-          
-          if (song_meaning_split != null) {
-            for(let paragraph of song_meaning_split){
-              if (paragraph == "") {
-                continue
-              }
-
-        
-              if (paragraph == ("Summary Analysis:")) {
-
-              }
-              else if (paragraph.includes("Background:")) {
-                formatted_meaning.summary_analysis = text.join("\n")
-                text = []
-              }
-              else if (paragraph.includes("Emotional Journey:")) {
-              
-                if (formatted_meaning.summary_analysis == null || formatted_meaning.summary_analysis == "") {
-                  formatted_meaning.summary_analysis = text.join("\n")
-                }
-                else{
-                  formatted_meaning.background = text.join("\n")
-                }
-                text = []
-
-              }
-              else if (paragraph.includes("Quote Analysis:")) {
-                formatted_meaning.emotional_journey = text.join("\n")
-                text = []
-                
-
-              }
-              else if (paragraph.includes("Conclusion:")) {
-                formatted_meaning.quotes = text.join("\n")
-                text = []
-                has_conclusion = true
-              }
-              else{
-                text.push(paragraph)
-              }
-            }
-            if (has_conclusion == false) {
-              formatted_meaning.quotes = text.join("\n")
-            }
-            else{
-              formatted_meaning.conclusion = text.join("\n")
-            }
-            
-          }
+         
+         
 
 
 
@@ -349,7 +304,7 @@ export default async function SongPage({ params, searchParams }: {
                                       </Link>
                                     </div>
                                   </div>
-                                  <div className='flex flex-col sm:flex-row justify-center sm:justify-between'>
+                                  <div className='flex flex-col justify-center '>
                                     <div className='text-base sm:ml-1 flex flex-col font-mono items-start'>
                                       {song_data.release_date == "" || song_data.release_date == null ? (
                                         <p>Released: N/A </p>
@@ -357,55 +312,31 @@ export default async function SongPage({ params, searchParams }: {
                                         <p>Released:  {song_data.release_date}</p>
                                       )}
                                        
-                                        {(is_meaning_json) ? (
+                                        {(is_meaning_valid) ? (
                                           <>
                                             <p className='mb-2'>Background:</p>
                                             <ul className='list-disc ml-8 text-left'>
-                                              {json_meaning.background.split('- ').map((item, i) => {
+                                              {song_meaning_json.background.map((item, i) => {
                                                 if (item == "" || item == " ") {
                                                   return (
                                                       <></>
                                                   )
                                                 }
                                                 return(
-                                                  <li key={i} >{item}</li>
+                                                  <li key={i} className='mb-2'>{item}</li>
                                                 )
                                               })}
                                               
                                             </ul>
                                           </>
                                         ) : (
-                                          <>
-                                          {(formatted_meaning.background == "" || formatted_meaning.background == null) ? (
-                                          <>
-                                          </>
-                                          ):(
-                                          
-                                            <>
-                                            <p className='mb-2'>Background:</p>
-                                            <ul className='list-disc ml-8 text-left'>
-                                              {formatted_meaning.background.split('- ').map((item, i) => {
-                                                if (item == "" || item == " ") {
-                                                  return (
-                                                      <></>
-                                                  )
-                                                }
-                                                return(
-                                                  <li key={i} >{item}</li>
-                                                )
-                                              })}
-                                              
-                                            </ul>
-                                          </>
+                                          <></>
                                           )}
-                                          </>
-                                          
-                                        )}
                                        
                                     </div>
                                     <div className='mt-4 underline'>
                                       <div className='animate-pulse'>
-                                        <ShareModal song_art_url={song_data.header_image_url!}  song_slug={song_data.song_slug} song_title={song_data.song_title}/>
+                                        <ShareModal song_data={song_data} song_art_url={song_data.header_image_url!}  song_slug={song_data.song_slug} song_title={song_data.song_title}/>
                                       </div>
                                     </div>
                                   </div>
@@ -423,7 +354,7 @@ export default async function SongPage({ params, searchParams }: {
                                     song_data?.isValid ? (
                                       <div className='w-screen p-4 sm:p-0 sm:w-full'>
                                         {is_meaning_valid ? (
-                                          <SongMeaningContentv2 song_meaning={song_meaning} />
+                                          <SongMeaningContentv2 song_meaning={song_meaning_json} />
                                         ):(
                                           <LoadingQueue songInfo={song_info} />
                                         )}
@@ -458,7 +389,7 @@ export default async function SongPage({ params, searchParams }: {
                                 is_meaning_valid ? (
                                   <>
                                     {/* <LikeAndShareContainer song_title={song_data.song_title} song_art_url={song_data.header_image_url!} song_slug={song_data.song_slug} /> */}
-                                    <ShareContainer song_art_url={song_data.header_image_url!}  song_slug={song_data.song_slug} song_title={song_data.song_title}/>
+                                    <ShareContainer song_data={song_data} song_art_url={song_data.header_image_url!}  song_slug={song_data.song_slug} song_title={song_data.song_title}/>
                                   </>
                                 ) : (
                                   <></>
