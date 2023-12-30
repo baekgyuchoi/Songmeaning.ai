@@ -74,7 +74,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = async (props) => {
                             // }
                             return (
                                 <>
-                                    <p className='mt-8 ml-2 italic ' key={i}>"{item.quote}"</p>
+                                    <p className='mt-8 ml-2 italic ' key={i}>{"\""+item.quote + "\""}</p>
                                     <p className='mt-2' key={i}>{item.explanation}</p>
                                 </>
                             )
