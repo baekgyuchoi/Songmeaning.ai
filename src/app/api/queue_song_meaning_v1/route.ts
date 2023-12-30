@@ -257,6 +257,10 @@ export async function POST(req: Request) {
             if (JSON_test.summary == null || JSON_test.summary == "" || JSON_test.background == null || JSON_test.background == "" || JSON_test.emotional_journey == null || JSON_test.emotional_journey == "" || JSON_test.emotional_journey == "" || JSON_test.quotes == null || JSON_test.quotes == ""){
                 isFlagged = true
             }
+           
+            if (typeof(JSON_test.emotional_journey) == "string"){
+                isFlagged = true
+            }
         }
         catch{ 
             const json_response = {"valid": false}

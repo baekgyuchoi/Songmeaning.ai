@@ -257,8 +257,10 @@ export default async function SongPage({ params, searchParams }: {
           
    
           
-         
-         
+            let background_content = song_meaning_json.background
+            if (typeof(background_content) == "string") {
+              background_content = [background_content]
+            }
          
 
 
@@ -316,7 +318,7 @@ export default async function SongPage({ params, searchParams }: {
                                           <>
                                             <p className='mb-2'>Background:</p>
                                             <ul className='list-disc ml-8 text-left'>
-                                              {song_meaning_json.background.map((item, i) => {
+                                              {background_content.map((item, i) => {
                                                 if (item == "" || item == " ") {
                                                   return (
                                                       <></>

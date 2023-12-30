@@ -3,6 +3,8 @@ import { SongInfo } from "@/lib/validators/song_info"
 import TypewriterComponent from "typewriter-effect"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { Progress } from "@nextui-org/react"
+import LoadingProgressBar from "./LoadingProgressBar"
 
 
 interface Props {
@@ -21,17 +23,7 @@ async function GetV1Meaning(songInfo: SongInfo) {
     return data
 }
   
-async function GetV2Meaning(songInfo: SongInfo) {
-    const response = await fetch('/api/queue_song_meaning_v2', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(songInfo),
-    });
-    const data = await response.json();
-    return data
-}
+
 
 
 
@@ -76,21 +68,29 @@ const LoadingQueue: React.FC<Props> = (props) => {
 
         <div className="flex flex-col items-center justify-center">
 
+            <LoadingProgressBar />
+          
 
-            <p className="text-2xl font-bold text-purple-800  animate-pulse">
-            Loading...
-            </p>
-
-            <div className="text-black mt-10 text-center">
-                <TypewriterComponent
-                options={{
-                    strings: [`You are first to explore this song!`, `We take pride in delivering you the highest quality song meaning in the world, which takes around 30 seconds.`,`Analyzing ${song_title} lyrics...`, ` Thanks for waiting 🙏🏻` ],
-                    autoStart: true,
-                    loop: true,
-                    delay: 50,
-                    deleteSpeed: 25,
-                }} />
+            {/* <div className="text-center mt-10 px-4 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg shadow-lg transform transition duration-500 hover:scale-105">
+                <h3 className="text-xl font-semibold mb-2">Congratulations!</h3>
+                <p className="text-sm md:text-base">
+                    You're the first to explore this song's meaning, so we have not analyzed this song yet. In roughly 30 seconds, we will present you with by far the world's highest quality song meaning. Your patience unveils unparalleled depth. Thank you for being the first.
+                </p>
+            </div> */}
+            <div className="text-center mt-10 px-4 py-8 bg-gradient-to-r from-blue-200 to-purple-200 text-black rounded-lg shadow-lg transform transition-all ">
+                <h2 className="text-xl font-semibold mb-2">Congratulations!</h2>
+                <p className="text-base leading-relaxed mb-1">
+                    {"You are the first to explore this song\'s meaning, so we have not analyzed this song yet."}
+                </p>
+                <p className="text-base leading-relaxed mb-1">
+                    {"In roughly 30 seconds, we will present you with by far the world\'s highest quality song meaning."}
+                </p>
+                <p className="text-base leading-relaxed">
+                    {"Your patience unveils unparalleled depth. Thank you for being the first."}
+                </p>
             </div>
+
+
 
         </div>
         {didLoadingFail ? (

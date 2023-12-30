@@ -21,8 +21,16 @@ interface SongMeaningContentProps {
 
 const SongMeaningContent: React.FC<SongMeaningContentProps> = async (props) => {
     const meaning = props.song_meaning
+    let emotional_journey_content = meaning.emotional_journey
+    let background_content = meaning.background
 
-    
+    if (typeof(emotional_journey_content) == "string"){
+        emotional_journey_content = [emotional_journey_content]
+    }
+
+    if (typeof(background_content) == "string"){
+        background_content = [background_content]
+    }
     
 
     
@@ -31,7 +39,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = async (props) => {
     return (
         
         <div>
-                <>
+            {/* <>
                 <div className='text-gray-800 '>
                     <p className='ml-2 mr-2 mt-3 text-base sm:text-lg transition duration-300'>
                         {meaning.summary}
@@ -84,7 +92,39 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = async (props) => {
                 </div>
                 
                 
-            </>
+            </> */}
+            <>
+    <div className='text-gray-800'>
+        <p className='mx-2 mt-3 text-base sm:text-lg leading-relaxed'>
+            {meaning.summary}
+        </p>
+    </div>
+    <div className='text-gray-800 mt-10'>
+        <div className='w-full flex justify-start border-b border-gray-300 py-2'>
+            <h1 className='text-xl font-semibold ml-2'>Song Meaning</h1>
+        </div>
+        {emotional_journey_content.map((item, i) => (
+            item.trim() && (
+                <p key={i} className='mx-2 mt-4 text-base sm:text-lg leading-relaxed'>
+                    {item}
+                </p>
+            )
+        ))}
+    </div>
+    <div className='text-gray-800 mt-10'>
+        <div className='w-full flex justify-start border-b border-gray-300 py-2'>
+            {(meaning.quotes == null) ? (<></>):(<h1 className='text-xl font-semibold ml-2'>Quotes</h1>)}
+        </div>
+        <div className="mx-2 mt-4">
+            {meaning.quotes.map((item, i) => (
+                <div key={i} className='mt-6'>
+                    <p className='italic text-lg'>{`"${item.quote}"`}</p>
+                    <p className='mt-2 text-base sm:text-lg leading-relaxed'>{item.explanation}</p>
+                </div>
+            ))}
+        </div>
+    </div>
+</>
 
             
             
