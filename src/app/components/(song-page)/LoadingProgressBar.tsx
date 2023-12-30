@@ -7,7 +7,7 @@ export default function LoadingProgressBar() {
   React.useEffect(() => {
     const interval = setInterval(() => {
       setValue((v) => (v >= 99 ? 99 : v + 1));
-    }, 500);
+    }, 650);
 
     return () => clearInterval(interval);
   }, []);
