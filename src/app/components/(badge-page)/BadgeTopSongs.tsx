@@ -39,6 +39,7 @@ async function QueueSong(badge_name: string) {
           include: {
               badges: true,
               song_meaning: true,
+              song_meaning_preview: true
           }
       }) as SongData
       songs.push(song)

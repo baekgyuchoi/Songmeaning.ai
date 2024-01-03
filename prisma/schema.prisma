@@ -27,6 +27,7 @@ model Songs {
   lyrics               String?         @db.Text
   annotations          String?         @db.Text
   song_meaning         SongMeaning?
+  song_meaning_preview SongMeaningPreview?
   song_image_url       String?          @db.Text
   header_image_url     String?          @db.Text
   song_short_title     String
@@ -68,6 +69,15 @@ model Artist {
 }
 
 model SongMeaning {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique
+  song      Songs    @relation(fields: [slug], references: [song_slug])
+  meaning   String   @db.Text
+  flagged   Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model SongMeaningPreview {
   id        Int      @id @default(autoincrement())
   slug      String   @unique
   song      Songs    @relation(fields: [slug], references: [song_slug])

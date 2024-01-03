@@ -4,7 +4,7 @@ import TypewriterComponent from "typewriter-effect"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Progress } from "@nextui-org/react"
-import LoadingProgressBar from "./LoadingProgressBar"
+import { Loader2 } from "lucide-react"
 
 
 interface Props {
@@ -46,7 +46,6 @@ const LoadingQueue: React.FC<Props> = (props) => {
         }
         try {
             const response = await GetV1Meaning(songInfo)
-            console.log(response)
             if (!response.valid){
                 setDidLoadingFail(true)
             }
@@ -68,29 +67,18 @@ const LoadingQueue: React.FC<Props> = (props) => {
 
         <div className="flex flex-col items-center justify-center">
 
-            <LoadingProgressBar />
-          
+         <Loader2 className="animate-spin animate-pulse text-purple-800" size={45} />
 
-            {/* <div className="text-center mt-10 px-4 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg shadow-lg transform transition duration-500 hover:scale-105">
-                <h3 className="text-xl font-semibold mb-2">Congratulations!</h3>
-                <p className="text-sm md:text-base">
-                    You're the first to explore this song's meaning, so we have not analyzed this song yet. In roughly 30 seconds, we will present you with by far the world's highest quality song meaning. Your patience unveils unparalleled depth. Thank you for being the first.
-                </p>
-            </div> */}
-            <div className="text-center mt-10 px-4 py-8 bg-gradient-to-r from-blue-200 to-purple-200 text-black rounded-lg shadow-lg transform transition-all ">
-                <h2 className="text-xl font-semibold mb-2">Congratulations!</h2>
-                <p className="text-base leading-relaxed mb-1">
-                    {"You are the first to explore this song\'s meaning, so we have not analyzed this song yet."}
-                </p>
-                <p className="text-base leading-relaxed mb-1">
-                    {"In roughly 50 seconds, we will present you with by far the world\'s highest quality song meaning."}
-                </p>
-                <p className="text-base leading-relaxed">
-                    {"Your patience unveils unparalleled depth. Thank you for being the first."}
-                </p>
-            </div>
-
-
+         <div className="text-black mt-10">
+                <TypewriterComponent
+                options={{
+                    strings: [`You are first to explore this song!`, `Analyzing ${song_title} lyrics...` ],
+                    autoStart: true,
+                    loop: true,
+                    delay: 50,
+                    deleteSpeed: 25,
+                }} />
+        </div>
 
         </div>
         {didLoadingFail ? (
