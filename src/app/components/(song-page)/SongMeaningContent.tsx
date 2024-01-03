@@ -30,7 +30,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
     const fetchData = async (song_info: SongInfo) => {
         try {
 
-            const response = await fetch('/api/queue_song_meaning', {
+            const response = await fetch('/api/queue_song_preview', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -63,13 +63,13 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
                 }
                 if (meaning_payload.meaning.length > 400){
                 try{
-                    // await fetch('/api/post_song_meaning', {
-                    //     method: 'POST',
-                    //     headers: {
-                    //         'Content-Type': 'application/json',
-                    //     },
-                    //     body: JSON.stringify(meaning_payload),
-                    // });
+                    await fetch('/api/post_song_preview', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(meaning_payload),
+                    });
              
                     router.refresh()
                     }catch(error){
@@ -128,7 +128,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
             ):(
                 <div className='flex items-center justify-center'>
                     <div className='mt-24'>
-                    <LoadingQueue songInfo={song_info}/>
+                        <LoadingQueue songInfo={song_info}/>
                     </div>
                 </div>
             )}

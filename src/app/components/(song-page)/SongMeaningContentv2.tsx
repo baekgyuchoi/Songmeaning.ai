@@ -19,7 +19,7 @@ interface SongMeaningContentProps {
 
 
 
-const SongMeaningContent: React.FC<SongMeaningContentProps> = async (props) => {
+const SongMeaningContentv2: React.FC<SongMeaningContentProps> = async (props) => {
     const meaning = props.song_meaning
     let emotional_journey_content = meaning.emotional_journey
     let background_content = meaning.background
@@ -134,5 +134,5 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = async (props) => {
     );
 };
 
-export default SongMeaningContent;
+export default SongMeaningContentv2;
 

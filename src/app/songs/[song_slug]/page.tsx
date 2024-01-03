@@ -16,6 +16,8 @@ import ShareContainer from '@/app/components/(song-page)/(like/share)/ShareConta
 import ShareModal from '@/app/components/(song-page)/(like/share)/ShareModal';
 import SongMeaningContentv2 from '@/app/components/(song-page)/SongMeaningContentv2';
 import LoadingQueue from '@/app/components/(song-page)/LoadingQueue';
+import SongMeaningContent from '@/app/components/(song-page)/SongMeaningContent';
+import SongMeaningTab from '@/app/components/(song-page)/SongMeaningTab';
 
 
 
@@ -36,13 +38,21 @@ export async function generateMetadata({
       
     }
   })
+  let song_description = ""
+  try{
+    song_description = JSON.parse(song_db?.song_meaning?.meaning!).summary
+  }
+  catch{
+    const song_title = song_slug.split("_").join(" ")
+    song_description = "Meaning of " + song_title 
+  }
 
   // fetch data
  
 
   return {
     title: `Meaning of ${song_db?.song_short_title || 'the song'} by ${song_db?.artist_name || 'the artist'}`,
-    description: song_db?.song_meaning?.meaning || "",
+    description: song_description || "",
   };
 }
 
@@ -58,6 +68,12 @@ type SongMeaning = {
   emotional_journey: String[],
   background: String[],
   quotes: Quote[],
+}
+
+type SongPreview = {
+  summary: string,
+  emotional_journey: string,
+  quotes: string
 }
 
 
@@ -135,6 +151,7 @@ async function QueueSong(song_slug_input: string) {
         },
         include: {
             song_meaning: true,
+            song_meaning_preview: true,
             badges: true
         }
     });
@@ -164,6 +181,7 @@ export default async function SongPage({ params, searchParams }: {
         // const lyrics = await search[0].lyrics();
         
         let is_meaning_valid = false
+        let is_preview_valid = false
         const searchQuery = searchParams?.song;
         const song_id = parseInt(searchQuery!)
 
@@ -189,7 +207,8 @@ export default async function SongPage({ params, searchParams }: {
             lyrics: null,
             two_word_description: '',
             badges: [],
-            song_meaning: null
+            song_meaning: null,
+            song_meaning_preview:null
           }
          
 
@@ -229,7 +248,10 @@ export default async function SongPage({ params, searchParams }: {
         }
             
           const meaning = song_data?.song_meaning?.meaning 
-          console.log(meaning)
+          const meaning_preview = song_data?.song_meaning_preview?.meaning
+
+          let is_meaning_flagged = song_data?.song_meaning?.flagged
+          let is_preview_flagged = song_data?.song_meaning_preview?.flagged
          
           let song_meaning_json: SongMeaning = {
             summary: "",
@@ -238,30 +260,63 @@ export default async function SongPage({ params, searchParams }: {
             quotes: []
 
           } 
-            try{
-              const parsed_json = JSON.parse(meaning!) as SongMeaning
-              console.log(parsed_json)
-              console.log(parsed_json)
-              song_meaning_json =  {
-                summary: parsed_json.summary,
-                background: parsed_json.background,
-                quotes: parsed_json.quotes,
-                emotional_journey: parsed_json.emotional_journey
-              }
-
-              console.log(song_meaning_json)
-              is_meaning_valid = true
-            } catch{
-              is_meaning_valid = false
+          try{
+            const parsed_json = JSON.parse(meaning!) as SongMeaning
+            song_meaning_json =  {
+              summary: parsed_json.summary,
+              background: parsed_json.background,
+              quotes: parsed_json.quotes,
+              emotional_journey: parsed_json.emotional_journey
             }
+            is_meaning_valid = true
+          } catch{
+            is_meaning_valid = false
+            is_meaning_flagged = true
+          }
           
    
           
-            let background_content = song_meaning_json.background
-            if (typeof(background_content) == "string") {
-              background_content = [background_content]
-            }
+          let background_content = song_meaning_json.background
+          if (typeof(background_content) == "string") {
+            background_content = [background_content]
+          }
          
+          let song_meaning_preview_json: SongPreview = {
+            summary: "",
+            emotional_journey: "",
+            quotes: ""
+          } 
+          try{
+            const parsed_json = JSON.parse(meaning_preview!)  as SongPreview
+            song_meaning_preview_json = {
+              summary: parsed_json.summary,
+              quotes: parsed_json.quotes,
+              emotional_journey: parsed_json.emotional_journey
+            }
+            is_preview_valid = true
+          }
+          catch{
+            is_preview_valid = false
+            is_preview_flagged = true
+          }
+          
+
+
+          // if (!is_meaning_valid && meaning_preview != null){
+          //   try{
+          //     const parsed_json = JSON.parse(meaning_preview) as SongMeaning
+          //     song_meaning_json = {
+          //       summary: parsed_json.summary,
+          //       background: parsed_json.background,
+          //       quotes: parsed_json.quotes,
+          //       emotional_journey: parsed_json.emotional_journey
+          //     }
+          //     is_meaning_valid = true
+          //   }
+          //   catch{
+          //     console.error("song meaning preview wrong format")
+          //   }
+          // }
 
 
 
@@ -274,9 +329,9 @@ export default async function SongPage({ params, searchParams }: {
 
                     <div className='md:mx-auto max-w-6xl px-0 md:px-6 lg:px-8  flex w-full flex-1 flex-col pl-0 pr-0 '>
                       <Card className="w-full mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl">
-                        <CardHeader className='relative border-1 border-b-4 border-purple-800/25 bg-gray-50 rounded-lg flex flex-col items-center sm:flex-row mb-4 px-4 sm:py-10 sm:px-10'>
+                        <CardHeader className='relative border-1 border-b-4 border-purple-800/25 bg-gray-50 rounded-t-3xl sm:rounded-b-3xl flex flex-col items-center sm:flex-row mb-4 px-4 sm:py-10 sm:px-10'>
                             
-                              <div className='absolute inset-0 bg-cover bg-center rounded-lg rounded-t-2xl' style={{ backgroundImage: `url(${song_data.header_image_url})`, opacity: 0.25 }}>
+                              <div className='absolute inset-0 bg-cover bg-center rounded-lg rounded-t-3xl sm:rounded-b-3xl' style={{ backgroundImage: `url(${song_data.header_image_url})`, opacity: 0.25 }}>
 
                               </div>
                         
@@ -354,12 +409,21 @@ export default async function SongPage({ params, searchParams }: {
                               <CardContent className="p-1 md:p-3 flex flex-col items-center  mb-5" style={{ minHeight: '600px', minWidth: '200px' }}>
                                   {
                                     song_data?.isValid ? (
-                                      <div className='w-screen p-4 sm:p-0 sm:w-full'>
-                                        {is_meaning_valid ? (
-                                          <SongMeaningContentv2 song_meaning={song_meaning_json} />
+                                      <div className='w-screen p-4 sm:p-0 sm:w-full '>
+                                        {/* {is_meaning_valid || is_preview_valid ? (
+                                          <>
+                                            <SongMeaningTab song_meaning={song_meaning_json} song_meaning_preview={song_meaning_preview_json}/>
+                             
+                                          </>
+
                                         ):(
-                                          <LoadingQueue songInfo={song_info} />
-                                        )}
+                                          <>
+                                            <LoadingQueue songInfo={song_info} />
+                                            <SongMeaningContent song_info={song_info} />
+                                          </>
+                                        )} */}
+                                        <SongMeaningTab is_meaning_flagged={is_meaning_flagged || false} is_preview_flagged={is_preview_flagged || false} song_meaning={song_meaning_json} song_meaning_preview={song_meaning_preview_json} song_info={song_info}/>
+                             
                                         
                                       </div> 
                                     ) : (
