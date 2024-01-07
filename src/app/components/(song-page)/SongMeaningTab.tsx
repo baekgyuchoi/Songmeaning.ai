@@ -140,11 +140,11 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
                               {
                                 isProInfo ? (
                                   <p className='text-center font-mono text-sm'>
-                                    Get an instant overview of your favorite song! Our Quick Meaning feature offers a speedy, basic interpretation that highlights the key themes and messages of the song. Ideal for a fast, surface-level understanding, this feature is perfect for those curious about a song's general context. It's quick, easy, and gives you a basic grasp of the song's meaning in seconds!
+                                    {"Get an instant overview of your favorite song! Our Quick Meaning feature offers a speedy, basic interpretation that highlights the key themes and messages of the song. Ideal for a fast, surface-level understanding, this feature is perfect for those curious about a song's general context. It's quick, easy, and gives you a basic grasp of the song's meaning in seconds!"}
                                   </p>
                                 ):(
                                   <p className='text-center font-mono text-sm'>
-                                    Dive deep into the essence of your favorite songs with our Pro Meaning analysis! This premium feature meticulously dissects every lyric, melody, and beat to provide you with the world's highest quality song interpretation. Tailored for the patient and passionate music enthusiast, it takes about a minute to load but reveals unparalleled depth and insight. Experience the song like never before, understanding its every nuance and subtlety with Pro Meaning.
+                                    {"Dive deep into the essence of your favorite songs with our Pro Meaning analysis! This premium feature meticulously dissects every lyric, melody, and beat to provide you with the world's highest quality song interpretation. Tailored for the patient and passionate music enthusiast, it takes about a minute to load but reveals unparalleled depth and insight. Experience the song like never before, understanding its every nuance and subtlety with Pro Meaning."}
                                   </p>
                                 )
                               }
