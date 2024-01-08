@@ -118,12 +118,12 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
   return (
     <Tabs defaultValue={defaultKey} >
       <TabsList className="grid w-full grid-cols-2 mb-8">
-        <div className="font-bold relative">
-          <TabsTrigger value="basic" className="w-full" disabled={tabs_disabled}>
+        <div className="relative">
+          <TabsTrigger value="basic" className="w-full font-bold" disabled={tabs_disabled}>
             Quick Meaning
           </TabsTrigger>
           <button onClick={(e) =>{buttonClick(e,0)}} className="absolute top-0 right-0 z-20">
-            <Info size={16} className="text-gray-500" />
+            <Info size={18} className="text-gray-700 animate-pulse" />
           </button>
           <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             
@@ -140,11 +140,11 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
                               {
                                 isProInfo ? (
                                   <p className='text-center font-mono text-sm'>
-                                    {"Get an instant overview of your favorite song! Our Quick Meaning feature offers a speedy, basic interpretation that highlights the key themes and messages of the song. Ideal for a fast, surface-level understanding, this feature is perfect for those curious about a song's general context. It's quick, easy, and gives you a basic grasp of the song's meaning in seconds!"}
+                                    {"Our quick meaning still provides the best meaning available online; however, it does not go nearly as deep as our pro meaning. Perfect for music listeners who just want a quick analysis."}
                                   </p>
                                 ):(
                                   <p className='text-center font-mono text-sm'>
-                                    {"Dive deep into the essence of your favorite songs with our Pro Meaning analysis! This premium feature meticulously dissects every lyric, melody, and beat to provide you with the world's highest quality song interpretation. Tailored for the patient and passionate music enthusiast, it takes about a minute to load but reveals unparalleled depth and insight. Experience the song like never before, understanding its every nuance and subtlety with Pro Meaning."}
+                                    {"Dissects every lyric, melody, and beat to provide you with the world's highest quality song interpretation. Tailored for the music aficionado, it takes about a minute to load, but reveals unparalleled depth and insight."}
                                   </p>
                                 )
                               }
@@ -166,15 +166,15 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
             </Modal>
           </div>
           <div className="font-bold relative">
-          <TabsTrigger value="pro" className={`w-full`} disabled={tabs_disabled}>
+            <TabsTrigger value="pro" className={`w-full font-bold`} disabled={tabs_disabled}>
 
-            {is_meaning_valid? (<></>) : (<Loader2 size={16} className="mr-2 text-gray-500 animate-spin" />)}
-            Pro Meaning
+              {is_meaning_valid? (<></>) : (<Loader2 size={16} className="mr-2 text-gray-500 animate-spin" />)}
+              Pro Meaning
 
-          </TabsTrigger>
-          <button onClick={(e) =>{buttonClick(e,1)}} className="absolute top-0 right-0 z-20">
-            <Info size={16} className="text-gray-500" />
-          </button>
+            </TabsTrigger>
+            <button onClick={(e) =>{buttonClick(e,1)}} className="absolute top-0 right-0 z-20">
+              <Info size={18} className="text-gray-700 animate-pulse" />
+            </button>
          
           </div>
         
