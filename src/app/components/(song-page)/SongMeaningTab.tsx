@@ -4,12 +4,8 @@ import React, { useEffect } from "react";
 import { Info, Loader2 } from "lucide-react";
 import SongMeaningContent from "./SongMeaningContent";
 import { SongInfo } from "@/lib/validators/song_info";
-import SongPreviewContentv2 from "./SongPreviewContentv2";
-import { useRouter } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Progress, Spinner, Tooltip, useDisclosure } from "@nextui-org/react";
-import { set } from "zod";
-
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/react";
 
 type song_meaning = {
   summary: string,
@@ -116,18 +112,18 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
 
     
   return (
-    <Tabs defaultValue={defaultKey} >
-      <TabsList className="grid w-full grid-cols-2 mb-8">
+    <Tabs defaultValue={defaultKey}  >
+      <TabsList className="grid w-full grid-cols-2 mb-8 ">
         <div className="relative">
-          <TabsTrigger value="basic" className="w-full font-bold" disabled={tabs_disabled}>
+          <TabsTrigger value="basic" className="w-full font-bold " disabled={tabs_disabled}>
             Quick Meaning
           </TabsTrigger>
           <button onClick={(e) =>{buttonClick(e,0)}} className="absolute top-0 right-0 z-20">
-            <Info size={18} className="text-gray-700 animate-pulse" />
+            <Info size={18} className="text-purple-700 animate-pulse" />
           </button>
           <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             
-                <ModalContent className='bg-white border rounded-md'>
+              <ModalContent className='bg-white border rounded-md'>
                 {(onClose) => (
                     <>
                         <ModalHeader>
@@ -161,10 +157,10 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
                         </ModalFooter>
                     </>
                 )}
-                </ModalContent>
+              </ModalContent>
             
             </Modal>
-          </div>
+        </div>
           <div className="font-bold relative">
             <TabsTrigger value="pro" className={`w-full font-bold`} disabled={tabs_disabled}>
 
@@ -173,7 +169,7 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
 
             </TabsTrigger>
             <button onClick={(e) =>{buttonClick(e,1)}} className="absolute top-0 right-0 z-20">
-              <Info size={18} className="text-gray-700 animate-pulse" />
+              <Info size={18} className="text-purple-700 animate-pulse" />
             </button>
          
           </div>
