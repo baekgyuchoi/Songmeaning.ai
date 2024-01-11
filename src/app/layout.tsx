@@ -9,7 +9,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Songmeaning.ai: Meaningful stories behind songs - interpreted by ai',
+  title: 'Songmeaning.ai',
   description: 'Meaningful stories behind songs - interpreted by ai'
 }
 
@@ -21,10 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <meta name="description" content="Meaningful stories behind songs - interpreted by ai" />
-        <meta name="title" content="Songmeaning.ai" />
-      </head>
+      
       
       <Providers>
         <body className={inter.className}>

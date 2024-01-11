@@ -24,12 +24,22 @@ export async function generateMetadata({
   
   })
 
+  const songs_by_artist = await prisma.songs.findMany({
+    where: {
+      artist_slug: artist_slug
+    },
+    take: 10,
+    orderBy: {
+      viewCount: 'desc'
+    }
+  })
+
   // fetch data
  
 
   return {
     title: `Song Meanings for ${artist_db?.name}`,
-    description: `Song Meanings for ${artist_db?.name}` || null,
+    description: `Meanings for songs: ${songs_by_artist.map((song) => song.song_short_title).join(', ')}`,
   };
 }
 

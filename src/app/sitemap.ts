@@ -12,6 +12,7 @@ export default async function sitemap() {
     
     }))
 
+
     const artist_pages = artists.map(({ artist_slug }) => ({
         url: `${URL}/artist/${artist_slug}`,
         lastModified: new Date().toISOString(),
