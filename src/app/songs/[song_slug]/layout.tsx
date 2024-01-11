@@ -1,10 +1,7 @@
 import NavBar from "@/app/components/NavBar"
 import { Viewport } from 'next'
 
-export const metadata = {
-    title: `...`,
-    description: `...`
-  }
+
 
 export const viewport: Viewport = {
   maximumScale: 1,
