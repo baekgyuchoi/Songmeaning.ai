@@ -9,8 +9,8 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Songmeaning.ai',
-  description: 'Meaningful stories behind songs - interpreted by ai'
+  title: "Songmeaning.ai",
+  description: "The world’s best song meanings"
 }
 
 
@@ -25,11 +25,11 @@ export default function RootLayout({
       
       <Providers>
         <body className={inter.className}>
-        <NextUIProviderWrapper>
-          {children}
-        </NextUIProviderWrapper>
-        <Analytics />
-        <SpeedInsights />
+          <NextUIProviderWrapper>
+            {children}
+          </NextUIProviderWrapper>
+          <Analytics />
+          <SpeedInsights />
         </body>
       </Providers>
       

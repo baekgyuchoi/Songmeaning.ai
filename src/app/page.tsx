@@ -24,7 +24,7 @@ export default async function Home() {
             <div className="mt-8 mb-12">
               <HomeButton />
             </div>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center h-24">
               <HomeTypewriter />
             </div>
           </div>
