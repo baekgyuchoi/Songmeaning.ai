@@ -40,7 +40,12 @@ export default async function Home() {
             <div className="text-2xl font-mono text-center text-gray-500 mb-8"> <Badge className="text-2xl bg-purple-800">Beta</Badge> Updates</div>
             
             <div className="mt-4 p-4 sm:p-8 bg-white border border-gray-200 rounded-lg shadow-md">
-              <h3 className="text-lg font-medium text-gray-700">January 10, 2023</h3>
+              <h3 className="text-lg font-medium text-gray-700">January 22, 2024</h3>
+              
+              <ul className="mt-2 text-gray-600 list-disc list-inside px-5 mb-4">
+                <li className="mb-1">Our site has been <span className="font-bold">illegally attacked</span>. We intend to firmly solve this soon, but for now we unfortunately cannot generate new song meanings. Please check back in a week.  </li> 
+              </ul>
+              <h3 className="text-lg font-medium text-gray-700">January 10, 2024</h3>
               
               <ul className="mt-2 text-gray-600 list-disc list-inside px-5 mb-4">
                 <li className="mb-1">We learned you prefer faster loading speed, so quick song meaning now loads instantly - world’s great song meaning loads in background, and, once loaded, replaces quick song meaning  </li> 
