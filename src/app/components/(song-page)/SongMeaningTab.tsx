@@ -211,8 +211,15 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
 
             </div>
             ):(
-              <div className="font-normal">
-                <SongMeaningContent song_info={props.song_info} />
+              <div className="font-normal flex items-center justify-center">
+                {/* <SongMeaningContent song_info={props.song_info} /> */}
+                <div className="mt-4 p-4 sm:p-8 bg-white border border-gray-200 rounded-lg shadow-md">
+                  <h3 className="text-lg font-medium text-gray-700">January 22, 2024</h3>
+                  
+                  <ul className="mt-2 text-gray-600 list-disc list-inside px-5 mb-4">
+                    <li className="mb-1">Our site has been <span className="font-bold">illegally attacked</span>. We intend to firmly solve this soon, but for now we unfortunately cannot generate new song meanings. Please check back in a week.  </li> 
+                  </ul>
+                </div>
               </div>
             )}
             
