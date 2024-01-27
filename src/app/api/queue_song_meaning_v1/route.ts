@@ -216,6 +216,9 @@ export async function POST(req: Request) {
         }
     })
     try {
+        if (song_data!.song_meaning != null){
+            return new Response(JSON.stringify({"valid": true}))
+        }
         let song_lyrics = song_data?.lyrics  
         let genius_annotation = song_data?.lyrics
         if (song_lyrics == null || song_lyrics == ""){

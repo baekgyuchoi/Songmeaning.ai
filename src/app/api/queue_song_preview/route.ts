@@ -182,19 +182,35 @@ export const maxDuration = 300
 export async function POST(req: Request) {
    
     const song_info = await req.json() as SongInfo
-    try {      
-        const song_lyrics = await getSongLyrics(song_info.genius_id)
-        const genius_annotation = await getAnnotations(song_info.genius_id)
-
-        await prisma.songs.update({
+    try {
+        const song_db = await prisma.songs.findUnique({
             where: {
                 song_slug: song_info.song_slug,
             },
-            data: {
-                lyrics: song_lyrics,
-
+            include: {
+                song_meaning_preview: true,
             }
-        })
+        }) 
+        
+        if (song_db!.song_meaning_preview != null){
+            return new Response(song_db!.song_meaning_preview.meaning, { status: 200 })
+        }
+        let song_lyrics = song_db?.lyrics!
+        if (song_db?.lyrics == null) {
+            song_lyrics = await getSongLyrics(song_info.genius_id)
+            await prisma.songs.update({
+                where: {
+                    song_slug: song_info.song_slug,
+                },
+                data: {
+                    lyrics: song_lyrics,
+    
+                }
+            })
+        }
+        const genius_annotation = await getAnnotations(song_info.genius_id)
+
+        
         
         let shorted_lyrics = song_lyrics
         while (Get_Token_Length(shorted_lyrics) > 1500) {
