@@ -34,14 +34,14 @@ export async function generateMetadata({
       song_slug: song_slug
     },
     include: {
-      song_meaning: true,
-      
+      song_meaning_preview: true,
+   
     }
   })
 
   let song_description = ""
   try{
-    song_description = JSON.parse(song_db?.song_meaning?.meaning!).summary
+    song_description = song_db?.song_meaning_preview?.meaning || ""
   }
   catch{
     const song_title = song_slug.split("_").join(" ")
