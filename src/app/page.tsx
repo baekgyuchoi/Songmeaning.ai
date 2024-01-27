@@ -35,11 +35,11 @@ export default async function Home() {
             
             <TrendingSongs className="w-full" />
           </div>
-          <div className="w-full max-w-2xl sm:px-4 mb-20 font-mono">
+          {/* <div className="w-full max-w-2xl sm:px-4 mb-20 font-mono">
             
             <div className="text-2xl font-mono text-center text-gray-500 mb-8"> <Badge className="text-2xl bg-purple-800">Beta</Badge> Updates</div>
             
-            {/* <div className="mt-4 p-4 sm:p-8 bg-white border border-gray-200 rounded-lg shadow-md">
+            <div className="mt-4 p-4 sm:p-8 bg-white border border-gray-200 rounded-lg shadow-md">
               <h3 className="text-lg font-medium text-gray-700">January 27, 2024</h3>
               
               <ul className="mt-2 text-gray-600 list-disc list-inside px-5 mb-4">
@@ -61,9 +61,9 @@ export default async function Home() {
                 <li className="mb-1">Huge breakthrough in increasing proprietary data and training the AI resulting in FAR better song meaning; however, loading time is increased to ~50 seconds</li> 
                 <li className="mb-1">Song page UI redesign: added song images, release date, and background to title section</li>
               </ul>
-            </div> */}
+            </div>
 
-          </div>
+          </div> */}
           
         </div>
         
