@@ -457,8 +457,7 @@ export default async function SongPage({ params, searchParams }: {
                                           </CardHeader>
                                     
                                           <CardContent className="p-6 text-gray-700">
-                                            <p className="text-gray-700">Song does not have lyrics or</p>
-                                            <p>  Data corruption </p>
+                                           
                                           </CardContent>
                                     
                                           
