@@ -38,7 +38,7 @@ export async function generateMetadata({
       
     }
   })
-  console.log(song_db)
+
   let song_description = ""
   try{
     song_description = JSON.parse(song_db?.song_meaning?.meaning!).summary
@@ -126,7 +126,7 @@ async function SongInGenius(song_id: number) {
       song_art_url: data.response.song.song_art_image_url,
       release_date: data.response.song.release_date_for_display || "",
     }
-    console.log(song_info)
+
     return song_info
 }
 
