@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect } from "react";
-
+import ReCAPTCHA from "react-google-recaptcha";
 import { Info, Loader2 } from "lucide-react";
 import SongMeaningContent from "./SongMeaningContent";
 import { SongInfo } from "@/lib/validators/song_info";
@@ -164,7 +164,7 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
           <div className="font-bold relative">
             <TabsTrigger value="pro" className={`w-full font-bold`} disabled={tabs_disabled}>
 
-              {is_meaning_valid? (<></>) : (<Loader2 size={16} className="mr-2 text-gray-500 animate-spin" />)}
+              {/* {is_meaning_valid? (<></>) : (<Loader2 size={16} className="mr-2 text-gray-500 animate-spin" />)} */}
               Pro Meaning
 
             </TabsTrigger>
@@ -211,16 +211,20 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
 
             </div>
             ):(
-              <div className="font-normal flex items-center justify-center">
-                {/* <SongMeaningContent song_info={props.song_info} /> */}
-                <div className="mt-4 p-4 sm:p-8 bg-white border border-gray-200 rounded-lg shadow-md">
-                  <h3 className="text-lg font-medium text-gray-700">January 22, 2024</h3>
+              <>
+                {/* <div
+                  className="flex flex-col items-center justify-center mt-14"
+                >
+                  <ReCAPTCHA
+                      sitekey="6LeVJF0pAAAAAGwwFzOl6AaqF5GZGFXEDGwv5lVs"
+                  />
+                </div> */}
+                <div className="font-normal flex items-center justify-center">
                   
-                  <ul className="mt-2 text-gray-600 list-disc list-inside px-5 mb-4">
-                    <li className="mb-1">Our site has been <span className="font-bold">illegally attacked</span>. We intend to firmly solve this soon, but for now we unfortunately cannot generate new song meanings. Please check back in a week.  </li> 
-                  </ul>
+                  <SongMeaningContent song_info={props.song_info} />
+                  
                 </div>
-              </div>
+              </>
             )}
             
        
@@ -262,12 +266,12 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
             </div>
           ):(
             <>
-              <div className="flex items-center justify-center mt-14">
+              {/* <div className="flex items-center justify-center mt-14">
                 <Loader2 size={54} className="text-purple-800 animate-spin" />
-              </div>
+              </div> */}
               <div className="h-80 flex flex-col  items-center justify-center text-black font-normal">
                 
-                <div className="text-center mt-10 px-4 py-8 bg-gradient-to-r from-blue-200 to-purple-200 text-black rounded-lg shadow-lg transform transition-all ">
+                {/* <div className="text-center mt-10 px-4 py-8 bg-gradient-to-r from-blue-200 to-purple-200 text-black rounded-lg shadow-lg transform transition-all ">
                   <h2 className="text-xl font-semibold mb-2">Congratulations!</h2>
                   <p className="text-base leading-relaxed mb-1">
                       {"You are the first to explore this song\'s meaning, so we have not analyzed this song yet."}
@@ -277,6 +281,12 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
                   </p>
                   <p className="text-base leading-relaxed">
                       {"Your patience unveils unparalleled depth. Thank you for being the first."}
+                  </p>
+                </div> */}
+                <div className="text-center mt-10 px-4 py-8 bg-gradient-to-r from-blue-200 to-purple-200 text-black rounded-lg shadow-lg transform transition-all ">
+                  <h2 className="text-xl font-semibold mb-2">Pro Meanings are Disabled</h2>
+                  <p className="text-base leading-relaxed mb-1 px-5">
+                      {"Due to attacks on our site, we have temporarily disabled pro meanings. We intend to firmly solve this soon."}
                   </p>
                 </div>
               </div>

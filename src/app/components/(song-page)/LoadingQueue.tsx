@@ -33,7 +33,7 @@ const LoadingQueue: React.FC<Props> = (props) => {
         setDidLoadingFail(false)
         first_render = true
         router.refresh()
-        fetchData(props.songInfo)
+        // fetchData(props.songInfo)
 
     }
     const router = useRouter()
@@ -57,7 +57,7 @@ const LoadingQueue: React.FC<Props> = (props) => {
         }
     }
     useEffect(() => {
-        fetchData(props.songInfo)
+        // fetchData(props.songInfo)
         first_render=false
     }, [])
 

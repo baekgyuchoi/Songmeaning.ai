@@ -38,6 +38,7 @@ export async function generateMetadata({
       
     }
   })
+  console.log(song_db)
   let song_description = ""
   try{
     song_description = JSON.parse(song_db?.song_meaning?.meaning!).summary
@@ -49,12 +50,31 @@ export async function generateMetadata({
 
   // fetch data
  
-
+  if (song_db == null) {
+    return {
+      title: `Meaning of ${song_slug.split("-").join(" ")}`,
+      description: "Meaning of this song - parsed by AI",
+     
+    }
+  }
   return {
-    title: `Meaning of ${song_db?.song_short_title || 'the song'} by ${song_db?.artist_name || 'the artist'}`,
-    description: song_description || "",
+    title: `Meaning of ${song_db!.song_short_title} by ${song_db!.artist_name}`,
+    description: song_description,
+    openGraph: {
+      title: `Meaning of ${song_db!.song_short_title} by ${song_db!.artist_name}`,
+      description: song_description,
+      images: [
+        {
+          url: song_db?.header_image_url || "",
+          width: 800,
+          height: 600,
+          alt: song_db?.song_short_title || 'the song',
+        },
+      ],
+    },
+    }
   };
-}
+
 
 
 type Quote = {
@@ -106,7 +126,7 @@ async function SongInGenius(song_id: number) {
       song_art_url: data.response.song.song_art_image_url,
       release_date: data.response.song.release_date_for_display || "",
     }
-
+    console.log(song_info)
     return song_info
 }
 
@@ -336,6 +356,7 @@ export default async function SongPage({ params, searchParams }: {
                               </div>
                         
                               <div className='w-56 sm:w-72 h-56 rounded-lg bg-purple-500/25 relative z-10'>
+
                                 <img 
                                   src={song_data.song_image_url}
                                   alt='song art'
