@@ -60,18 +60,6 @@ export async function generateMetadata({
   return {
     title: `Meaning of ${song_db!.song_short_title} by ${song_db!.artist_name}`,
     description: song_description,
-    openGraph: {
-      title: `Meaning of ${song_db!.song_short_title} by ${song_db!.artist_name}`,
-      description: song_description,
-      images: [
-        {
-          url: song_db?.header_image_url || "",
-          width: 800,
-          height: 600,
-          alt: song_db?.song_short_title || 'the song',
-        },
-      ],
-    },
     }
   };
 
