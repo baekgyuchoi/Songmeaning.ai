@@ -7,7 +7,6 @@ export async function generateSitemaps() {
   // Fetch the total number of products and calculate the number of sitemaps needed
 
   const sitemaps = [];
-  let cursor_pointer = 0;
   for (let i = 0; i <= 50 ; i++) {
     sitemaps.push({
       id: i
