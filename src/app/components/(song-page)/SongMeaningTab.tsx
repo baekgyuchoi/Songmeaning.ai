@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
-import { Info, Loader2 } from "lucide-react";
+
+import { Info } from "lucide-react";
 import SongMeaningContent from "./SongMeaningContent";
 import { SongInfo } from "@/lib/validators/song_info";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -34,8 +34,7 @@ interface SongMeaningContentProps {
 
 
 function isMeaningValid(song_meaning: song_meaning) {
-
-  if (song_meaning.summary == "" && song_meaning.background.length == 0 && song_meaning.emotional_journey.length == 0 && song_meaning.quotes.length == 0){
+  if (song_meaning.background == undefined || song_meaning.summary == "" && song_meaning.background.length == 0 && song_meaning.emotional_journey.length == 0 && song_meaning.quotes.length == 0){
 
     return false
   }
@@ -66,7 +65,7 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
   // if there is no meaning but preview, then load in meaning
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [isProInfo, setIsProInfo] = React.useState(false);
-
+  
  
 
   let defaultKey = "basic"

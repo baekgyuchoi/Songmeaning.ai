@@ -39,7 +39,7 @@ model Songs {
   badges               BadgesOnSongs[]
 
 
-  @@index([artist_slug])
+  @@index([id, song_slug, genius_id])
 }
 
 model Badges {
