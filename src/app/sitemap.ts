@@ -7,7 +7,7 @@ export async function generateSitemaps() {
   // Fetch the total number of products and calculate the number of sitemaps needed
 
   const sitemaps = [];
-  for (let i = 0; i <= 50 ; i++) {
+  for (let i = 0; i <= 100 ; i++) {
     sitemaps.push({
       id: i
     });
@@ -35,7 +35,7 @@ export default async function sitemap(
       take: 25000,
       where: {
         id: {
-          gte: 50000 * (id - 1),
+          gte: 25000 * (id - 1),
         },
       },
       orderBy: {
@@ -43,17 +43,7 @@ export default async function sitemap(
       },
     })
 
-    const songs_2 = await prisma.songs.findMany({
-      take: 25000,
-      where: {
-        id: {
-          gte: 50000 * (id-1) + 25000,
-        },
-      },
-      orderBy: {
-        id: "asc",
-      },
-    })
+    
 
     const song_pages = songs.map(({ song_slug, }) => ({
         url: `${URL}/songs/${song_slug}`,
@@ -61,11 +51,7 @@ export default async function sitemap(
     
     }))
 
-    const song_pages_2 = songs_2.map(({ song_slug, }) => ({
-        url: `${URL}/songs/${song_slug}`,
-        lastModified: new Date().toISOString(),
-    
-    }))
+  
  
-  return [...song_pages, ...song_pages_2];
+  return [...song_pages ];
 }
