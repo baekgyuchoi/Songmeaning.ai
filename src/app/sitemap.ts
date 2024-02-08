@@ -41,13 +41,16 @@ export default async function sitemap(
       orderBy: {
         id: "asc",
       },
+      include: {
+        song_meaning_preview: true,
+      },
     })
 
     
 
-    const song_pages = songs.map(({ song_slug, }) => ({
+    const song_pages = songs.map(({ song_slug, song_meaning_preview }) => ({
         url: `${URL}/songs/${song_slug}`,
-        lastModified: new Date().toISOString(),
+        lastModified: song_meaning_preview?.createdAt || new Date().toISOString(),
     
     }))
 
