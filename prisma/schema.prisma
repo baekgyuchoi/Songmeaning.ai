@@ -39,7 +39,12 @@ model Songs {
   badges               BadgesOnSongs[]
 
 
-  @@index([id, song_slug, genius_id])
+  @@index([id])
+  @@index([artist_slug])
+  @@index([song_slug])
+  @@index([genius_id])
+  @@index([viewCount])
+
 }
 
 model Badges {
@@ -66,6 +71,7 @@ model Artist {
   genius_id   Int    @id
   artist_slug String @unique
   name        String
+  @@index([artist_slug])
 }
 
 model SongMeaning {
@@ -75,6 +81,7 @@ model SongMeaning {
   meaning   String   @db.Text
   flagged   Boolean  @default(false)
   createdAt DateTime @default(now())
+  @@index([slug])
 }
 
 model SongMeaningPreview {

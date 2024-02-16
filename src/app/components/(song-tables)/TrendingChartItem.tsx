@@ -9,7 +9,7 @@ interface TrendingChartItemProps {
 }
 
 const TrendingChartItem: React.FC<TrendingChartItemProps> = ({ songInfo }) => {
-    
+
     return (
         <Link href={`/songs/${songInfo.song_slug}`}>
             

@@ -12,8 +12,7 @@ interface SongMeaningContentProps {
 const SongMeaningContentv2: React.FC<SongMeaningContentProps> = async (props) => {
     const meaning = props.song_preview
 
-    console.log("HEY")
-    console.log(meaning.quotes.split("\n"))
+   
 
     return (
         

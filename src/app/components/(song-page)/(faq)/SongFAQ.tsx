@@ -5,8 +5,7 @@ import { SongData } from '@/lib/validators/song_data_response';
 import FAQArtistBackground from './FAQArtistBackground';
 
 interface SongFAQProps {
-    songData: SongData;
-    songMeaning: string;
+    songData: SongData; 
 }
 
 

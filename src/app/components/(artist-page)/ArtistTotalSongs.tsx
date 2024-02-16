@@ -20,36 +20,40 @@ async function getArtistSongs(artist_id: number, artist_name: string, current_pa
       },
       
   });
-  if (!response.ok) {
-      throw new Error('failed to fetch data');
-  }
+ 
   const data = await response.json();
-  
-  for (let song of data.response.songs) {
+  let is_last_page = true
+
+  if (data.meta.status == 200) {
+    for (let song of data.response.songs) {
     
 
-    if ((song.primary_artist.name.includes(artist_name)) ) {
-      const songInfo: SongInfo = {
-        song_title: song.full_title,
-        song_short_title: song.title,
-        genius_url: song.url,
-        song_slug: song.path.split('/').pop()?.split('-lyrics')[0].split('-annotated')[0],
-        genius_id: parseInt(song.id),
-        artist_name: song.primary_artist.name,
-        artist_id: parseInt(song.primary_artist.id),
-        artist_slug: song.primary_artist.url.split('/').pop(),
-        header_image_url: song.header_image_url || "",
-        song_art_url: song.song_art_image_url || "",
-        release_date: song.release_date_for_display || "",
-      };
-      songInfoArray.push(songInfo)
+      if ((song.primary_artist.name.includes(artist_name)) ) {
+        const songInfo: SongInfo = {
+          song_title: song.full_title,
+          song_short_title: song.title,
+          genius_url: song.url,
+          song_slug: song.path.split('/').pop()?.split('-lyrics')[0].split('-annotated')[0],
+          genius_id: parseInt(song.id),
+          artist_name: song.primary_artist.name,
+          artist_id: parseInt(song.primary_artist.id),
+          artist_slug: song.primary_artist.url.split('/').pop(),
+          header_image_url: song.header_image_url || "",
+          song_art_url: song.song_art_image_url || "",
+          release_date: song.release_date_for_display || "",
+        };
+        songInfoArray.push(songInfo)
+      }
+      
     }
-    
+    is_last_page = data.response.next_page == null
   }
+  
+  
 
 
     
-    return {songInfoArray: songInfoArray, is_last_page: data.response.next_page == null};
+    return {songInfoArray: songInfoArray, is_last_page: is_last_page};
 }
 
 
