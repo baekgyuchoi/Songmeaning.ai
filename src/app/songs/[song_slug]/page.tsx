@@ -290,7 +290,6 @@ export default async function SongPage({ params, searchParams }: {
           if (background_content == null || background_content.length == 0) {
             is_meaning_valid = false
           }
-          console.log(is_meaning_valid)
          
           let song_meaning_preview_json: SongPreview = {
             summary: "",
@@ -479,7 +478,7 @@ export default async function SongPage({ params, searchParams }: {
                               <CardContent>
                                 <Suspense fallback={<LoadingFAQ />}>
                                   {
-                                    is_meaning_valid ? (
+                                    is_preview_valid ? (
                                       <><SongFAQ songData={song_data} /></>
                                     ) : (
                                       <></>
