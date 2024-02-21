@@ -280,13 +280,17 @@ export default async function SongPage({ params, searchParams }: {
             is_meaning_valid = false
             is_meaning_flagged = true
           }
-          
+
    
           
           let background_content = song_meaning_json.background
           if (typeof(background_content) == "string") {
             background_content = [background_content]
           }
+          else {
+            is_meaning_valid = false
+          }
+          console.log(is_meaning_valid)
          
           let song_meaning_preview_json: SongPreview = {
             summary: "",
