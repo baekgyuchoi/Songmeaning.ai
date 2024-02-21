@@ -3,17 +3,17 @@ import prisma from '@/lib/db';
 import React from 'react';
 import TrendingChartItem from './TrendingChartItem';
 import { SongInfo } from '@/lib/validators/song_info';
-import { trending_song_ids } from '@/app/helpers/constants/trending-songs';
+import { trending_song_slugs } from '@/app/helpers/constants/trending-songs';
 
 
 
 
 const TrendingChart: React.FC = async () => {
   const songInfoArray: SongInfo[] = []
-    for (let id of trending_song_ids) {
+    for (let slug of trending_song_slugs) {
       const song = await prisma.songs.findUnique({
         where: {
-          genius_id: id,
+          song_slug: slug,
         },
       });
       if (song) {

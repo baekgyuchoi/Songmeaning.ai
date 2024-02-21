@@ -1,22 +1,9 @@
 
 import prisma from '@/lib/db';
 
-export const trending_song_ids = [9706893, 9393794, 4712978, 9778562, 9028858, 9359811, 9798681, 7397786, 9291535, 8689815, 9626005, 9436386, 9363022, 9460251, 9103956]
+export const trending_song_slugs = ["Benson-boone-beautiful-things", "Tate-mcrae-greedy", "Jack-harlow-lovin-on-me", "Teddy-swims-lose-control", "Taylor-swift-cruel-summer", "Noah-kahan-stick-season", "Xavi-mex-la-diabla", "Miley-cyrus-flowers", "21-savage-redrum", "Ariana-grande-yes-and", "The-weeknd-jennie-and-lily-rose-depp-one-of-the-girls", "Creepy-nuts-bling-bang-bang-born", "Feid-and-atl-jacob-luna", "Dua-lipa-houdini", "Zach-bryan-i-remember-everything"]
 
-async function GetTrendingSongs() {
-    let trending_songs = []
-    for (let id of trending_song_ids) {
-      const song = await prisma.songs.findUnique({
-        where: {
-          genius_id: id,
-        },
-      });
-      if (song) {
-        trending_songs.push(song)
-      }
-    }
-    return trending_songs
-  }
+
 
 export const trending_song_data = [
     {

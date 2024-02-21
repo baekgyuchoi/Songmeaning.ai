@@ -287,7 +287,7 @@ export default async function SongPage({ params, searchParams }: {
           if (typeof(background_content) == "string") {
             background_content = [background_content]
           }
-          else {
+          if (background_content == null || background_content.length == 0) {
             is_meaning_valid = false
           }
           console.log(is_meaning_valid)

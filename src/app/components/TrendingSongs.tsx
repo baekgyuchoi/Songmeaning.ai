@@ -3,7 +3,7 @@
 
 import React, { HTMLAttributes } from 'react';
 import prisma from '@/lib/db';
-import { trending_song_ids } from '../helpers/constants/trending-songs';
+import { trending_song_slugs } from '../helpers/constants/trending-songs';
 import { SongInfo, SongInfoArraySchema } from '@/lib/validators/song_info';
 import Link from 'next/link';
 
@@ -22,10 +22,10 @@ interface TrendingSongsProps extends HTMLAttributes<HTMLDivElement>
 const TrendingSongs: React.FC<TrendingSongsProps> = async (className) => {
     // Define your component logic here
     const songInfoArray: SongInfo[] = []
-    for (let id of trending_song_ids) {
+    for (let slug of trending_song_slugs) {
       const song = await prisma.songs.findUnique({
         where: {
-          genius_id: id,
+          song_slug: slug,
         },
       });
       if (song) {

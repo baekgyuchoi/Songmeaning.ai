@@ -23,7 +23,7 @@ model Songs {
   artist_id            Int
   artist_slug          String
   genius_url           String          
-  genius_id            Int             
+  genius_id            Int             @unique
   lyrics               String?         @db.Text
   annotations          String?         @db.Text
   song_meaning         SongMeaning?
