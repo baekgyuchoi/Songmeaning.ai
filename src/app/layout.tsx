@@ -1,7 +1,6 @@
 
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Providers from './components/(chat-components)/Providers'
 import { NextUIProviderWrapper } from './components/NextUIProviderWrapper'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -21,17 +20,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4086941427078478"
+          crossOrigin="anonymous">
+
+        </script>
+      </head>
       
-      
-      <Providers>
-        <body className={inter.className}>
-          <NextUIProviderWrapper>
-            {children}
-          </NextUIProviderWrapper>
-          <Analytics />
-          <SpeedInsights />
-        </body>
-      </Providers>
+      <body className={inter.className}>
+        <NextUIProviderWrapper>
+          {children}
+        </NextUIProviderWrapper>
+        <Analytics />
+        <SpeedInsights />
+      </body>
+
       
     </html>
   )

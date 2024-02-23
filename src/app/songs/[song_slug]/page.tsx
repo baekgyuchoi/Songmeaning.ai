@@ -359,7 +359,7 @@ export default async function SongPage({ params, searchParams }: {
                               
                                 
                                   <div className='flex flex-col items-center sm:items-start justify-start h-fill '>
-                                    <p className='font-bold'>{song_name}</p> 
+                                    <h1 className='font-bold'>{song_name}</h1> 
                                     <div className="flex justify-center sm: items-start text-xl sm:ml-1 text-gray-600 hover:text-gray-500 mt-2 mb-4"> 
                                       <Link
                                           href={`/artists/${song_data.artist_slug}/?artist=${song_data.artist_id}`}
@@ -490,7 +490,7 @@ export default async function SongPage({ params, searchParams }: {
                             </div>
                             
                             
-                            <div className='  flex text-black flex-col lg:flex-row items-start '>
+                            <div className='  flex text-black flex-col lg:flex-row lg:items-start items-center  '>
 
                               <CardContent className="">                               
                                 <Suspense fallback={<p>Loading feed...</p>}>

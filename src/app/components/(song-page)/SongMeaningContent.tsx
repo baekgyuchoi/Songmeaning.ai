@@ -3,6 +3,7 @@ import { SongInfo } from '@/lib/validators/song_info';
 import React, { Suspense, useEffect, useState } from 'react';
 import LoadingQueue from './LoadingQueue';
 import { useRouter } from 'next/navigation';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 
 
@@ -94,9 +95,9 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
     }, []);
     return (
         
-        <div>
+        <div className=''>
             {streamContent.length > 0 ? (
-                <>
+                <ScrollArea className='h-[600px]  '>
                     {streamContent.map((paragraph, i) => {
                         return (
                             <p key={i} 
@@ -124,7 +125,7 @@ const SongMeaningContent: React.FC<SongMeaningContentProps> = (props) => {
                         <>
                         </>
                     )}
-                </>
+                </ScrollArea>
             ):(
                 <div className='flex items-center justify-center'>
                     <div className='mt-24'>

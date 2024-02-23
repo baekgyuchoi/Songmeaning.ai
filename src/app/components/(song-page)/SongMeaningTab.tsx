@@ -186,7 +186,7 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
                 </div>
                 <div className='text-gray-800 mt-10'>
                     <div className='w-full flex justify-start border-b border-gray-300 py-2'>
-                        <h1 className='text-xl font-semibold ml-2'>Song Meaning</h1>
+                        <h2 className='text-xl font-semibold ml-2'>Song Meaning</h2>
                     </div>
                     <p className='mx-2 mt-3 text-base sm:text-lg leading-relaxed'>
                         {meaning_preview.emotional_journey}
@@ -194,7 +194,7 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
                 </div>
                 <div className='text-gray-800 mt-10'>
                     <div className='w-full flex justify-start border-b border-gray-300 py-2'>
-                        {(meaning_preview.quotes == null) ? (<></>):(<h1 className='text-xl font-semibold ml-2'>Quotes</h1>)}
+                        {(meaning_preview.quotes == null) ? (<></>):(<h2 className='text-xl font-semibold ml-2'>Quotes</h2>)}
                     </div>
                     <div className="mx-2 mt-4">
                       {meaning_preview.quotes.split("\n").map((item,index)=>{
@@ -218,7 +218,7 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
                       sitekey="6LeVJF0pAAAAAGwwFzOl6AaqF5GZGFXEDGwv5lVs"
                   />
                 </div> */}
-                <div className="font-normal flex items-center justify-center">
+                <div className="font-normal flex items-center justify-center ">
                   
                   <SongMeaningContent song_info={props.song_info} />
                   
@@ -239,7 +239,7 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
               </div>
               <div className='text-gray-800 mt-10'>
                   <div className='w-full flex justify-start border-b border-gray-300 py-2'>
-                      <h1 className='text-xl font-semibold ml-2'>Song Meaning</h1>
+                      <h2 className='text-xl font-semibold ml-2'>Song Meaning</h2>
                   </div>
                   {emotional_journey_content.map((item, i) => (
                       item.trim() && (
@@ -251,7 +251,7 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
               </div>
               <div className='text-gray-800 mt-10'>
                   <div className='w-full flex justify-start border-b border-gray-300 py-2'>
-                      {(meaning.quotes == null) ? (<></>):(<h1 className='text-xl font-semibold ml-2'>Quotes</h1>)}
+                      {(meaning.quotes == null) ? (<></>):(<h2 className='text-xl font-semibold ml-2'>Quotes</h2>)}
                   </div>
                   <div className="mx-2 mt-4">
                       {meaning.quotes.map((item, i) => (
