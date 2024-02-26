@@ -1,4 +1,3 @@
-import { headers } from 'next/headers';
 import prisma from '@/lib/db';
 
 const root_URL = "https://www.songmeaning.ai";
