@@ -19,6 +19,7 @@ export async function generateSitemaps() {
 export default async function sitemap(
   { id }: { id: number }
 ): Promise<MetadataRoute.Sitemap> {
+  console.log(id)
     if (id === 0) {
       const artists = await prisma.artist.findMany({})
       const artist_pages = artists.map(({ artist_slug }) => ({
