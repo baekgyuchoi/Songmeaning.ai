@@ -1,12 +1,13 @@
 
 import prisma from "@/lib/db";
+import { MetadataRoute } from "next/types";
 
 const URL = "https://www.songmeaning.ai";
 
 export async function generateSitemaps() {
   // Fetch the total number of products and calculate the number of sitemaps needed
 
-  const sitemaps = [];
+  let sitemaps = [];
   for (let i = 0; i <= 30 ; i++) {
     sitemaps.push({
       id: i
@@ -17,7 +18,7 @@ export async function generateSitemaps() {
  
 export default async function sitemap(
   { id }: { id: number }
-) {
+): Promise<MetadataRoute.Sitemap> {
     if (id === 0) {
       const artists = await prisma.artist.findMany({})
       const artist_pages = artists.map(({ artist_slug }) => ({
