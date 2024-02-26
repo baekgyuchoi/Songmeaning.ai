@@ -15,6 +15,7 @@ import { Metadata } from 'next';
 import ShareContainer from '@/app/components/(song-page)/(like/share)/ShareContainer';
 import ShareModal from '@/app/components/(song-page)/(like/share)/ShareModal';
 import SongMeaningTab from '@/app/components/(song-page)/SongMeaningTab';
+import Head from 'next/head';
 
 
 
@@ -49,14 +50,22 @@ export async function generateMetadata({
  
   if (song_db == null) {
     return {
+      metadataBase: new URL("https://www.songmeaning.ai/songs/" + song_slug),
       title: `Meaning of ${song_slug.split("-").join(" ")}`,
       description: "Meaning of this song - parsed by AI",
+      alternates: {
+        canonical: '/'
+      }
      
     }
   }
   return {
+    metadataBase: new URL("https://www.songmeaning.ai/songs/" + song_slug),
     title: `Meaning of ${song_db!.song_short_title} by ${song_db!.artist_name}`,
     description: song_description,
+    alternates: {
+      canonical: '/'
+    }
     }
   };
 
@@ -333,6 +342,7 @@ export default async function SongPage({ params, searchParams }: {
 
           return (
               <main className="">
+                
                   <div className='flex flex-col items-center md:px-4 py-8'>
 
                   

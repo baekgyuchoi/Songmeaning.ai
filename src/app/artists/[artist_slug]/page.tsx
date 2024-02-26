@@ -1,9 +1,8 @@
 
 import ArtistTopSongCarousel from "@/app/components/(artist-page)/ArtistTopSongCarousel";
 import ArtistTotalSongs from "@/app/components/(artist-page)/ArtistTotalSongs";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Artist } from "@/lib/validators/artist";
-import { SongInfo } from "@/lib/validators/song_info";
 import prisma from "@/lib/db";
 import { Loader2 } from "lucide-react";
 import { Suspense } from "react";
@@ -38,8 +37,12 @@ export async function generateMetadata({
  
 
   return {
+    metadataBase: new URL('https://songmeaning.ai/artists/'+artist_slug),
     title: `Song Meanings for ${artist_db?.name}`,
     description: `Meanings for songs: ${songs_by_artist.map((song) => song.song_short_title).join(', ')}`,
+    alternates:{
+      canonical: '/'
+    }
   };
 }
 
