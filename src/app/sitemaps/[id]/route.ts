@@ -6,9 +6,9 @@ async function fetchProducts(pageNumber: number) {
     const id = pageNumber;
     if (id === 0) {
         const artists = await prisma.artist.findMany({})
-        const artist_pages = artists.map(({ artist_slug }) => ({
+        const artist_pages = artists.map(({ artist_slug, edited_date }) => ({
           url: `${root_URL}/artists/${artist_slug}`,
-          lastModified: new Date().toISOString(),
+          lastModified: edited_date.toISOString(),
         }))
       
         return [ ...artist_pages];
@@ -33,7 +33,7 @@ async function fetchProducts(pageNumber: number) {
   
       const song_pages = songs.map(({ song_slug, song_meaning_preview }) => ({
           url: `${root_URL}/songs/${song_slug}`,
-          lastModified: song_meaning_preview?.createdAt || new Date().toISOString(),
+          lastModified: song_meaning_preview?.createdAt.toISOString || new Date().toISOString(),
       
       }))
   

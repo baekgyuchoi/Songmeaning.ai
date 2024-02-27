@@ -5,6 +5,7 @@ export const ArtistSchema = z.object({
     artist_slug: z.string(),
     name: z.string(),
     genius_id: z.number(),
+    edited_date: z.date()
 })
 
 //array of messages validator

@@ -15,7 +15,6 @@ import { Metadata } from 'next';
 import ShareContainer from '@/app/components/(song-page)/(like/share)/ShareContainer';
 import ShareModal from '@/app/components/(song-page)/(like/share)/ShareModal';
 import SongMeaningTab from '@/app/components/(song-page)/SongMeaningTab';
-import Head from 'next/head';
 
 
 
@@ -55,7 +54,8 @@ export async function generateMetadata({
       description: "Meaning of this song - parsed by AI",
       alternates: {
         canonical: '/'
-      }
+      },
+
      
     }
   }

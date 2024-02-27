@@ -91,6 +91,7 @@ async function PostArtist(artist: Artist) {
           artist_slug: artist.artist_slug,
           name: artist.name,
           genius_id: artist.genius_id,
+          edited_date: new Date()
       }
   })
   return "Success"
@@ -161,12 +162,14 @@ export default async function ArtistPage({
             genius_id: artist_from_genius.response.artist.id,
             name: artist_from_genius.response.artist.name,
             artist_slug: artist_from_genius.response.artist.url.split('/').pop(),
+            edited_date: new Date()
           }
           await PostArtist(new_artist)
           artist = {
             genius_id: artist_from_genius.response.artist.id,
             name: artist_from_genius.response.artist.name,
             artist_slug: artist_from_genius.response.artist.url.split('/').pop(),
+            edited_date: new Date()
           }
 
 
