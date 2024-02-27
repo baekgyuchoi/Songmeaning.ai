@@ -33,7 +33,7 @@ async function fetchProducts(pageNumber: number) {
   
       const song_pages = songs.map(({ song_slug, song_meaning_preview }) => ({
           url: `${root_URL}/songs/${song_slug}`,
-          lastModified: song_meaning_preview?.createdAt.toISOString || new Date().toISOString(),
+          lastModified: song_meaning_preview?.createdAt.toISOString() || new Date().toISOString(),
       
       }))
   
