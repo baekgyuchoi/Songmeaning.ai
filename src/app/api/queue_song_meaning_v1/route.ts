@@ -202,7 +202,7 @@ async function getSongLyrics(song_id: number) {
 }
 
 
-export const maxDuration = 300 
+export const maxDuration = 20 
 
 export async function POST(req: Request) {
     console.log("V1QueueMeaning Started")

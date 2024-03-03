@@ -92,6 +92,7 @@ model SongMeaningPreview {
   meaning   String   @db.Text
   flagged   Boolean  @default(false)
   createdAt DateTime @default(now())
+  @@index([slug])
 }
 
 
