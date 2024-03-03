@@ -219,8 +219,21 @@ const SongMeaningTab: React.FC<SongMeaningContentProps> = (props) => {
                   />
                 </div> */}
                 <div className="font-normal flex items-center justify-center ">
+
+                <div className="flex flex-col items-center justify-center">
+
+              
+
+                <div className="text-center mt-10 px-4 py-8 bg-gradient-to-r from-blue-200 to-purple-200 text-black rounded-lg shadow-lg transform transition-all ">
+                  <h2 className="text-xl font-semibold mb-2">New Meaning Generation Has Been Disabled</h2>
+                  <p className="text-base leading-relaxed mb-1 px-5">
+                      {"Due to attacks on our site, we have temporarily disabled new meanings. We intend to firmly solve this soon."}
+                  </p>
+                </div>
+
+                </div>
                   
-                  <SongMeaningContent song_info={props.song_info} />
+                  {/* <SongMeaningContent song_info={props.song_info} /> */}
                   
                 </div>
               </>
