@@ -7,7 +7,7 @@ import OpenAI from "openai";
 import JobLoadingContentBlock from "./JobLoadingContentBlock";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export const maxDuration = 60
+
 
 type ReferentAnnotation = {
     fragment: string
@@ -406,7 +406,7 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
                 </div>
             )
         }
-        console.log("HAHAHAHAHAH JOB EXISTS")
+    
         return(
             <JobLoadingContentBlock song_slug = {song_info.song_slug}/>
         )

@@ -20,6 +20,8 @@ import StructuredContentBlock from '@/app/components/(song-page)/(content-blocks
 import ContentBlock from '@/app/components/(song-page)/(content-blocks)/ContentBlock';
 
 
+export const maxDuration = 80
+
 
 export async function generateMetadata({
   params,
