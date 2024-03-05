@@ -104,6 +104,7 @@ model SongMeaningStructured {
   background Background?
   meaning    Meaning?
   quotes     Quote[]
+  jobs       Jobs?
 
   @@index([slug])
 }
@@ -167,6 +168,9 @@ model FAQs {
 model FaqStructure {
   id       Int      @id @default(autoincrement())
   slug  String   @unique
+  song_similar_lyrics SongsSimilarLyrics?
+  song_atmopshere SongAtmopshere?
+  song_meaning_life String @db.Text
   question  String   @db.Text
   prompt    String   @db.Text
   answer    String   @db.Text
@@ -174,4 +178,43 @@ model FaqStructure {
   song      Songs    @relation(fields: [slug], references: [song_slug])
 
   @@index([slug])
+}
+
+model SongsSimilarLyrics {
+  id        Int         @id @default(autoincrement())
+  song_slug String      @unique
+  song1     String      @db.Text
+  explanation1 String   @db.Text
+  song2     String      @db.Text
+  explanation2 String   @db.Text
+  createdAt DateTime    @default(now())
+  FaqStructure  FaqStructure @relation(fields: [song_slug], references: [slug])
+
+  @@index([song_slug])
+}
+
+model SongAtmopshere {
+  id        Int         @id @default(autoincrement())
+  song_slug String      @unique
+  occasion1     String      @db.Text
+  explanation1 String   @db.Text
+  occasion2     String      @db.Text
+  explanation2 String   @db.Text
+  occasion3     String      @db.Text
+  explanation3 String   @db.Text
+  createdAt DateTime    @default(now())
+  FaqStructure  FaqStructure @relation(fields: [song_slug], references: [slug])
+
+  @@index([song_slug])
+}
+
+model Jobs{
+  id        Int       @id @default(autoincrement())
+  created_at DateTime @default(now())
+  song_slug String    @unique
+  songMeaning SongMeaningStructured @relation(fields: [song_slug], references: [slug])
+  isJobDone Boolean @default(false)
+  flagged   Boolean  @default(false)
+
+  @@index([song_slug])
 }

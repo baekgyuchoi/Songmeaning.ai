@@ -111,7 +111,7 @@ async function SongInGenius(song_id: number) {
 
 async function PostSongToDB(song_info: SongInfo) {
 
-  console.log(song_info)
+
   const song_in_db = await prisma.songs.findUnique({
       where: {
           song_slug: song_info.song_slug,

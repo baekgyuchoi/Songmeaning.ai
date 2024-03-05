@@ -4,6 +4,8 @@ import * as Genius from "genius-lyrics";
 import { getEncoding } from "js-tiktoken";
 import prisma from "@/lib/db";
 import OpenAI from "openai";
+import JobLoadingContentBlock from "./JobLoadingContentBlock";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 
 type ReferentAnnotation = {
@@ -368,6 +370,46 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
         </div>
         )
     }
+
+    const job = await prisma.jobs.findUnique({
+        where: {
+            song_slug: song_info.song_slug
+        }
+    })
+
+    if (job == null) {
+        await prisma.jobs.create({
+            data: {
+                song_slug: song_info.song_slug,
+            }
+        })
+    }
+    else{
+        if (job.flagged) {
+            return(
+                <div className='container flex items-center justify-center mt-10'>
+                    <Card className="mb-0.5 flex-1  bg-white px-4 pt-4 pb-4 sm:mb-8 sm:flex-initial rounded-md md:px-10 md:pt-9 md:pb-10 ">
+
+                        <CardHeader className="bg-beige-200 rounded-t-lg px-6 py-4">
+                        <CardTitle className="text-xl font-bold text-gray-800">This song is invalid</CardTitle>
+                        
+                        </CardHeader>
+                
+                        <CardContent className="p-6 text-gray-700">
+                        
+                        </CardContent>
+                
+                        
+                        
+                    </Card>
+                </div>
+            )
+        }
+        console.log("HAHAHAHAHAH JOB EXISTS")
+        return(
+            <JobLoadingContentBlock song_slug = {song_info.song_slug}/>
+        )
+    }
     
     let song_lyrics = song_db?.lyrics!
     if (song_db?.lyrics == null) {
@@ -396,6 +438,14 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
         const song_meaning_structured = JSON.parse(song_meaning!) as SongMeaningStructured 
         try{
             await PostSongMeaningToDB(song_meaning_structured, song_info.song_slug)
+            await prisma.jobs.update({
+                where: {
+                    song_slug: song_info.song_slug
+                },
+                data: {
+                    isJobDone: true
+                }
+            })
         }
         catch(
             err
