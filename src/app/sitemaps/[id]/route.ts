@@ -14,7 +14,7 @@ async function fetchProducts(pageNumber: number) {
         return [ ...artist_pages];
       }
   
-      const songs = await prisma.songs.findMany({
+      const songs = await prisma.songMeaningStructured.findMany({
         take: 10000,
         where: {
           id: {
@@ -24,16 +24,13 @@ async function fetchProducts(pageNumber: number) {
         orderBy: {
           id: "asc",
         },
-        include: {
-          song_meaning_preview: true,
-        },
       })
       
       
   
-      const song_pages = songs.map(({ song_slug, song_meaning_preview }) => ({
-          url: `${root_URL}/songs/${song_slug}`,
-          lastModified: song_meaning_preview?.createdAt.toISOString() || new Date().toISOString(),
+      const song_pages = songs.map(({ slug, createdAt }) => ({
+          url: `${root_URL}/songs/${slug}`,
+          lastModified: createdAt.toISOString() || new Date().toISOString(),
       
       }))
   

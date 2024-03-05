@@ -105,6 +105,7 @@ model SongMeaningStructured {
   meaning    Meaning?
   quotes     Quote[]
   jobs       Jobs?
+  createdAt  DateTime    @default(now())
 
   @@index([slug])
 }
