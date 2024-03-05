@@ -7,6 +7,7 @@ import OpenAI from "openai";
 import JobLoadingContentBlock from "./JobLoadingContentBlock";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+export const maxDuration = 60
 
 type ReferentAnnotation = {
     fragment: string
