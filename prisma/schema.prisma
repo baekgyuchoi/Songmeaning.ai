@@ -1,5 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider     = "mysql"
@@ -7,53 +8,48 @@ datasource db {
   relationMode = "prisma"
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
-
-
 model Songs {
-  id                   Int             @id @default(autoincrement())
-  isValid              Boolean         @default(true)
-  viewCount            Int             @default(0)
-  song_title           String          @db.Text
-  song_slug            String          @unique
-  artist_name          String
-  artist_id            Int
-  artist_slug          String
-  genius_url           String          
-  genius_id            Int             
-  lyrics               String?         @db.Text
-  annotations          String?         @db.Text
-  song_meaning         SongMeaning?
-  song_meaning_preview SongMeaningPreview?
-  song_image_url       String?          @db.Text
-  header_image_url     String?          @db.Text
-  song_short_title     String
-  release_date         String?          
-  two_word_description String          @default("default/default")
-  like_count           Int             @default(0)
-  dislike_count        Int             @default(0)
-  true_like_count      Int             @default(0)
-  badges               BadgesOnSongs[]
-
+  id                      Int                    @id @default(autoincrement())
+  isValid                 Boolean                @default(true)
+  song_title              String                 @db.Text
+  song_slug               String                 @unique
+  artist_name             String
+  artist_slug             String
+  genius_url              String
+  genius_id               Int
+  lyrics                  String?                @db.Text
+  viewCount               Int                    @default(0)
+  header_image_url        String?                @db.Text
+  release_date            String?
+  song_image_url          String?                @db.Text
+  song_short_title        String
+  two_word_description    String                 @default("default/default")
+  artist_id               Int
+  like_count              Int                    @default(0)
+  dislike_count           Int                    @default(0)
+  true_like_count         Int                    @default(0)
+  annotations             String?                @db.Text
+  song_meaning            SongMeaning?
+  song_meaning_preview    SongMeaningPreview?
+  song_meaning_structured SongMeaningStructured?
+  badges                  BadgesOnSongs[]
+  FaqStructure            FaqStructure?
+  
 
   @@index([id])
   @@index([artist_slug])
   @@index([song_slug])
   @@index([genius_id])
   @@index([viewCount])
-
 }
 
 model Badges {
   id          Int             @id @default(autoincrement())
   badge_name  String          @unique
-  songs       BadgesOnSongs[]
   created_at  DateTime        @default(now())
   first_song  String
   songs_count Int             @default(0)
+  songs       BadgesOnSongs[]
 }
 
 model BadgesOnSongs {
@@ -68,43 +64,114 @@ model BadgesOnSongs {
 }
 
 model Artist {
-  genius_id   Int    @id
-  artist_slug String @unique
-  name        String
-  edited_date DateTime @default(now())
+  artist_slug       String            @unique
+  genius_id         Int               @id
+  name              String
+  edited_date       DateTime          @default(now())
+  artist_background ArtistBackground?
+
   @@index([artist_slug])
+}
+
+model ArtistBackground {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique
+  content   String   @db.Text
+  flagged   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  artist    Artist   @relation(fields: [slug], references: [artist_slug])
+
+  @@index([slug])
 }
 
 model SongMeaning {
   id        Int      @id @default(autoincrement())
   slug      String   @unique
-  song      Songs    @relation(fields: [slug], references: [song_slug])
   meaning   String   @db.Text
-  flagged   Boolean  @default(false)
   createdAt DateTime @default(now())
+  flagged   Boolean  @default(false)
+  song      Songs    @relation(fields: [slug], references: [song_slug])
+
   @@index([slug])
+}
+
+model SongMeaningStructured {
+  id         Int         @id @default(autoincrement())
+  intro      String      @db.Text
+  flagged    Boolean     @default(false)
+  slug       String      @unique
+  song       Songs       @relation(fields: [slug], references: [song_slug])
+  background Background?
+  meaning    Meaning?
+  quotes     Quote[]
+
+  @@index([slug])
+}
+
+model Background {
+  id              Int                   @id @default(autoincrement())
+  songMeaningSlug String                @unique
+  firstPoint      String                @db.Text
+  secondPoint     String                @db.Text  
+  songMeaning     SongMeaningStructured @relation(fields: [songMeaningSlug], references: [slug])
+
+  @@map("backgrounds")
+}
+
+model Meaning {
+  id              Int                   @id @default(autoincrement())
+  songMeaningSlug String                @unique
+  paragraph1      String                @db.Text
+  paragraph2      String                @db.Text
+  paragraph3      String                @db.Text
+  paragraph4      String                @db.Text
+  songMeaning     SongMeaningStructured @relation(fields: [songMeaningSlug], references: [slug])
+
+  @@map("meanings")
+}
+
+model Quote {
+  id              Int                   @id @default(autoincrement())
+  songMeaningSlug String
+  quote           String                @db.Text
+  explanation     String                @db.Text
+  songMeaning     SongMeaningStructured @relation(fields: [songMeaningSlug], references: [slug])
+
+  @@index([songMeaningSlug])
+  @@map("quotes")
 }
 
 model SongMeaningPreview {
   id        Int      @id @default(autoincrement())
   slug      String   @unique
-  song      Songs    @relation(fields: [slug], references: [song_slug])
   meaning   String   @db.Text
   flagged   Boolean  @default(false)
   createdAt DateTime @default(now())
+  song      Songs    @relation(fields: [slug], references: [song_slug])
+
   @@index([slug])
 }
-
 
 model FAQs {
   id        Int      @id @default(autoincrement())
   faq_slug  String   @unique
-  song_slug String  
+  song_slug String
   question  String   @db.Text
   prompt    String   @db.Text
   answer    String   @db.Text
-
   createdAt DateTime @default(now())
 
   @@index([song_slug, faq_slug])
+}
+
+model FaqStructure {
+  id       Int      @id @default(autoincrement())
+  slug  String   @unique
+  question  String   @db.Text
+  prompt    String   @db.Text
+  answer    String   @db.Text
+  createdAt DateTime @default(now())
+  song      Songs    @relation(fields: [slug], references: [song_slug])
+
+  @@index([slug])
 }

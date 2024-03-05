@@ -4,7 +4,7 @@ import './globals.css'
 import { NextUIProviderWrapper } from './components/NextUIProviderWrapper'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -37,6 +37,7 @@ export default function RootLayout({
         <SpeedInsights />
       </body>
       <GoogleAnalytics gaId='G-8V6D26JPJR'/>
+      <GoogleTagManager gtmId='GTM-NW2ZQVKJ'/>
 
       
     </html>
