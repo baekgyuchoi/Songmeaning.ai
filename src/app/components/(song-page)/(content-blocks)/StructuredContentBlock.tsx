@@ -240,9 +240,15 @@ async function getAnnotations(song_id: number) {
 async function getSongLyrics(song_id: number) {
     const Client = new Genius.Client(process.env.GENIUS_API_KEY_1);
     const SongsClient = Client.songs;
-    const searchSong = await SongsClient.get(song_id)
-    const lyrics = await searchSong.lyrics();
-    return lyrics
+    try{
+        const searchSong = await SongsClient.get(song_id)
+        const lyrics = await searchSong.lyrics();
+        return lyrics
+    }
+    catch(err) {
+        console.log(err)
+        return "error"
+    }
 }
 
 async function GetStructuredContent(song_title: string, artist_name: string, lyrics: string, annotations: string) {
@@ -372,6 +378,51 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
         )
     }
 
+    
+    
+    let song_lyrics = song_db?.lyrics!
+    if (song_db?.lyrics == null) {
+        song_lyrics = await getSongLyrics(song_info.genius_id)
+
+        if (song_lyrics == "error") {
+            await prisma.songs.update({
+                where: {
+                    song_slug: song_info.song_slug,
+                },
+                data: {
+                    isValid: false
+                }
+            })
+            return(
+                <Card className="mb-0.5 flex-1  bg-white px-4 pt-4 pb-4 sm:mb-8 sm:flex-initial rounded-md md:px-10 md:pt-9 md:pb-10 ">
+                        
+                    <CardHeader className="bg-beige-200 rounded-t-lg px-6 py-4 flex items-center">
+                    <CardTitle className="text-xl font-bold text-gray-800">This song is invalid</CardTitle>
+                    
+                    </CardHeader>
+            
+                    <CardContent className="p-6 text-gray-700">
+                        This song does not have valid lyrics.
+                    </CardContent>
+            
+                    
+                    
+                </Card>
+            )
+        }
+        else {
+            await prisma.songs.update({
+                where: {
+                    song_slug: song_info.song_slug,
+                },
+                data: {
+                    lyrics: song_lyrics,
+    
+                }
+            })
+        }
+      
+    }
     const job = await prisma.jobs.findUnique({
         where: {
             song_slug: song_info.song_slug
@@ -411,30 +462,16 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
             <JobLoadingContentBlock song_slug = {song_info.song_slug}/>
         )
     }
-    
-    let song_lyrics = song_db?.lyrics!
-    if (song_db?.lyrics == null) {
-        song_lyrics = await getSongLyrics(song_info.genius_id)
-        await prisma.songs.update({
-            where: {
-                song_slug: song_info.song_slug,
-            },
-            data: {
-                lyrics: song_lyrics,
 
-            }
-        })
-    }
+
     const genius_annotation = await getAnnotations(song_info.genius_id)
-
-    
     
     let shorted_lyrics = song_lyrics
     while (Get_Token_Length(shorted_lyrics) > 1500) {
         shorted_lyrics = shorted_lyrics.slice(0,shorted_lyrics.length/2)
     }
-
     const song_meaning = await GetStructuredContent(props.song_info.song_short_title, props.song_info.artist_name, shorted_lyrics, genius_annotation)
+  
     try{
         const song_meaning_structured = JSON.parse(song_meaning!) as SongMeaningStructured 
         try{
@@ -452,6 +489,7 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
             err
         ) {
             console.log(err)
+            
         }
         
     
@@ -514,6 +552,14 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
     }
     catch(err) {
         console.log(err)
+        await prisma.jobs.update({
+            where: {
+                song_slug: song_info.song_slug
+            },
+            data: {
+                isJobDone: true
+            }
+        })
         return(
             <div>
                 ERROR
