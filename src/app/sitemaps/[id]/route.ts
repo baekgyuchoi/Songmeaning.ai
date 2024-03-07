@@ -49,7 +49,7 @@ export async function GET(request: Request) {
 
       const pageNumber = parseInt(currentPage.split('/').pop() || '0');
       
-      if (pageNumber < 0 || pageNumber > 5) {
+      if (pageNumber < 0 || pageNumber > 6) {
         return new Response('Invalid page number', { status: 400 });
       }
   
