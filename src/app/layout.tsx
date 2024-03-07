@@ -26,7 +26,7 @@ export default function RootLayout({
           crossOrigin="anonymous">
 
         </script>
-        
+        <meta name="yandex-verification" content="bd4e28b3436e4e29" />
       </head>
       
       <body className={inter.className}>
