@@ -429,6 +429,16 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
         }
     })
 
+    const job_checked = job?.checked || 0
+
+    if (job_checked > 6) {
+        await prisma.jobs.delete({
+            where: {
+                song_slug: song_info.song_slug
+            }
+        })
+    }
+
     if (job == null) {
         await prisma.jobs.create({
             data: {

@@ -20,7 +20,7 @@ import StructuredContentBlock from '@/app/components/(song-page)/(content-blocks
 import ContentBlock from '@/app/components/(song-page)/(content-blocks)/ContentBlock';
 
 
-export const maxDuration = 80
+export const maxDuration = 50
 
 
 export async function generateMetadata({
@@ -252,10 +252,7 @@ export default async function SongPage({ params, searchParams }: {
             
   
 
-          let is_meaning_flagged = song_data?.song_meaning?.flagged
-          let is_preview_flagged = song_data?.song_meaning_preview?.flagged
-         
-         
+          
        
    
           

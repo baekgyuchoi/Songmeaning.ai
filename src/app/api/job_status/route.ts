@@ -12,14 +12,28 @@ export async function GET(request: Request) {
             song_slug: req_slug
         }
     })
+
+    const job_checked = job?.checked || 0
+
+
     if (job == null) { 
+        
         return new Response(JSON.stringify({'isJobDone': false}))
     }
     const isJobComplete = job.isJobDone 
-    if (isJobComplete) {
+    if (isJobComplete || job_checked > 6) {
         return new Response(JSON.stringify({'isJobDone': true}))
     }
     else {
+        await prisma.jobs.update({
+            where: {
+                song_slug: req_slug
+            },
+            data: {
+                checked: job_checked + 1
+            }
+        
+        })
         return new Response(JSON.stringify({'isJobDone': false}))
     }
 

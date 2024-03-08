@@ -34,7 +34,6 @@ model Songs {
   song_meaning_structured SongMeaningStructured?
   badges                  BadgesOnSongs[]
   FaqStructure            FaqStructure?
-  
 
   @@index([id])
   @@index([artist_slug])
@@ -100,12 +99,12 @@ model SongMeaningStructured {
   intro      String      @db.Text
   flagged    Boolean     @default(false)
   slug       String      @unique
+  createdAt  DateTime    @default(now())
   song       Songs       @relation(fields: [slug], references: [song_slug])
   background Background?
   meaning    Meaning?
   quotes     Quote[]
   jobs       Jobs?
-  createdAt  DateTime    @default(now())
 
   @@index([slug])
 }
@@ -114,7 +113,7 @@ model Background {
   id              Int                   @id @default(autoincrement())
   songMeaningSlug String                @unique
   firstPoint      String                @db.Text
-  secondPoint     String                @db.Text  
+  secondPoint     String                @db.Text
   songMeaning     SongMeaningStructured @relation(fields: [songMeaningSlug], references: [slug])
 
   @@map("backgrounds")
@@ -167,55 +166,56 @@ model FAQs {
 }
 
 model FaqStructure {
-  id       Int      @id @default(autoincrement())
-  slug  String   @unique
+  id                  Int                 @id @default(autoincrement())
+  slug                String              @unique
+  song_meaning_life   String              @db.Text
+  question            String              @db.Text
+  prompt              String              @db.Text
+  answer              String              @db.Text
+  createdAt           DateTime            @default(now())
   song_similar_lyrics SongsSimilarLyrics?
-  song_atmopshere SongAtmopshere?
-  song_meaning_life String @db.Text
-  question  String   @db.Text
-  prompt    String   @db.Text
-  answer    String   @db.Text
-  createdAt DateTime @default(now())
-  song      Songs    @relation(fields: [slug], references: [song_slug])
+  song_atmopshere     SongAtmopshere?
+  song                Songs               @relation(fields: [slug], references: [song_slug])
 
   @@index([slug])
 }
 
 model SongsSimilarLyrics {
-  id        Int         @id @default(autoincrement())
-  song_slug String      @unique
-  song1     String      @db.Text
-  explanation1 String   @db.Text
-  song2     String      @db.Text
-  explanation2 String   @db.Text
-  createdAt DateTime    @default(now())
-  FaqStructure  FaqStructure @relation(fields: [song_slug], references: [slug])
+  id           Int          @id @default(autoincrement())
+  song_slug    String       @unique
+  song1        String       @db.Text
+  explanation1 String       @db.Text
+  song2        String       @db.Text
+  explanation2 String       @db.Text
+  createdAt    DateTime     @default(now())
+  FaqStructure FaqStructure @relation(fields: [song_slug], references: [slug])
 
   @@index([song_slug])
 }
 
 model SongAtmopshere {
-  id        Int         @id @default(autoincrement())
-  song_slug String      @unique
-  occasion1     String      @db.Text
-  explanation1 String   @db.Text
-  occasion2     String      @db.Text
-  explanation2 String   @db.Text
-  occasion3     String      @db.Text
-  explanation3 String   @db.Text
-  createdAt DateTime    @default(now())
-  FaqStructure  FaqStructure @relation(fields: [song_slug], references: [slug])
+  id           Int          @id @default(autoincrement())
+  song_slug    String       @unique
+  occasion1    String       @db.Text
+  explanation1 String       @db.Text
+  occasion2    String       @db.Text
+  explanation2 String       @db.Text
+  occasion3    String       @db.Text
+  explanation3 String       @db.Text
+  createdAt    DateTime     @default(now())
+  FaqStructure FaqStructure @relation(fields: [song_slug], references: [slug])
 
   @@index([song_slug])
 }
 
-model Jobs{
-  id        Int       @id @default(autoincrement())
-  created_at DateTime @default(now())
-  song_slug String    @unique
+model Jobs {
+  id          Int                   @id @default(autoincrement())
+  created_at  DateTime              @default(now())
+  song_slug   String                @unique
+  isJobDone   Boolean               @default(false)
+  flagged     Boolean               @default(false)
+  checked     Int                   @default(0)
   songMeaning SongMeaningStructured @relation(fields: [song_slug], references: [slug])
-  isJobDone Boolean @default(false)
-  flagged   Boolean  @default(false)
 
   @@index([song_slug])
 }
