@@ -434,11 +434,7 @@ export default async function SongPage({ params, searchParams }: {
                               
                             </div>
                             
-                            <div className='w-screen sm:w-full text-sm lg:w-2/3 mt-16'>
-                              <CardContent>
-                                <PaymentContainer song_slug={song_data.song_slug} />
-                              </CardContent>
-                            </div>
+                            
                           </div>
                         
                       

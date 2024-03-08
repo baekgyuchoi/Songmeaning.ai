@@ -1,5 +1,6 @@
 User-Agent: *
 Allow: /
 Disallow: /private/
+Disallow: /artists/
 
 Sitemap: https://www.songmeaning.ai/sitemaps_index.xml

@@ -17,7 +17,10 @@ interface MoreFromArtistProps {
 async function QueueArtist(artist_slug_input: string) {
     const artist_songs = await prisma.songs.findMany({
         where: {
-            artist_slug: artist_slug_input
+            artist_slug: artist_slug_input,
+            NOT:{
+              song_meaning_structured: null
+            }
         },
         orderBy: {
           viewCount: "desc",
