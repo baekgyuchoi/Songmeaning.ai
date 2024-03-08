@@ -1,5 +1,7 @@
 import prisma from "@/lib/db"
 
+export const runtime = 'edge';
+
 export async function GET(request: Request) {
     const url = new URL(request.url)
     const queryParam = url.searchParams

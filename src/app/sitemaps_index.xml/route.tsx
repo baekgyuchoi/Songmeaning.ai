@@ -1,8 +1,10 @@
+
+export const runtime = 'edge';
 export async function GET() {
     let xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
     <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
 
-    for (let i = 0; i <= 9; i++) {
+    for (let i = 0; i <= 11; i++) {
         xmlContent += `
         <sitemap>
             <loc>https://www.songmeaning.ai/sitemaps/${i}.xml</loc>

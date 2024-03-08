@@ -21,7 +21,7 @@ import ContentBlock from '@/app/components/(song-page)/(content-blocks)/ContentB
 
 
 export const maxDuration = 50
-
+export const runtime = 'edge';
 
 export async function generateMetadata({
   params,

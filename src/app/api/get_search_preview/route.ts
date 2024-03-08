@@ -1,5 +1,7 @@
 import { SongInfo } from "@/lib/validators/song_info";
 
+export const runtime = 'edge';
+
 async function getSearchResults(searchQuery: string | undefined) {
     const geniusAPISearchURL = 'https://api.genius.com/search?q='
       const response = await fetch(geniusAPISearchURL + searchQuery, {

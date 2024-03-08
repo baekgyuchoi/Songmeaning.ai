@@ -9,7 +9,7 @@ import FooterContainer from "../components/(footer)/FooterContainer";
 export const viewport: Viewport = {
   maximumScale: 1,
 }
-
+export const runtime = 'edge';
 
 
 

@@ -9,6 +9,8 @@ import { Suspense } from "react";
 import FooterContainer from "@/app/components/(footer)/FooterContainer";
 import { Metadata } from "next";
 
+export const runtime = 'edge';
+
 export async function generateMetadata({
   params,
 }: {
