@@ -1,6 +1,6 @@
 import prisma from '@/lib/db';
 
-export const runtime = 'edge';
+
 const root_URL = "https://www.songmeaning.ai";
 
 async function fetchProducts(pageNumber: number) {
@@ -50,7 +50,7 @@ export async function GET(request: Request) {
 
       const pageNumber = parseInt(currentPage.split('/').pop() || '0');
       
-      if (pageNumber < 0 || pageNumber > 11) {
+      if (pageNumber < 0 || pageNumber > 15) {
         return new Response('Invalid page number', { status: 400 });
       }
   

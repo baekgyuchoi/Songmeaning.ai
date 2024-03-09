@@ -4,7 +4,7 @@ type Song_Slug_JSON = {
     song_slug: string
 }
 
-export const runtime = 'edge';
+
 
 export async function POST(request: Request) {
     

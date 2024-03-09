@@ -6,22 +6,16 @@ import { Suspense } from 'react';
 import TrendingChart from '@/app/components/(song-tables)/TrendingChart';
 import MoreFromArtist from '@/app/components/(song-tables)/MoreFromArtist';
 import { SongData } from '@/lib/validators/song_data_response';
-import SongFAQ from '@/app/components/(song-page)/(faq)/SongFAQ';
-import LoadingFAQ from '@/app/components/(song-page)/(faq)/LoadingFAQ';
 import Link from 'next/link';
-import PaymentContainer from '@/app/components/(payment)/PaymentContainer';
 import FooterContainer from '@/app/components/(footer)/FooterContainer';
 import { Metadata } from 'next';
 import ShareContainer from '@/app/components/(song-page)/(like/share)/ShareContainer';
 import ShareModal from '@/app/components/(song-page)/(like/share)/ShareModal';
-import SongMeaningTab from '@/app/components/(song-page)/SongMeaningTab';
-import SongMeaningContentBlock from '@/app/components/(song-page)/(content-blocks)/StructuredContentBlock';
-import StructuredContentBlock from '@/app/components/(song-page)/(content-blocks)/StructuredContentBlock';
 import ContentBlock from '@/app/components/(song-page)/(content-blocks)/ContentBlock';
 
 
 export const maxDuration = 50
-export const runtime = 'edge';
+
 
 export async function generateMetadata({
   params,

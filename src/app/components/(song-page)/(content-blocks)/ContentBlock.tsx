@@ -1,12 +1,12 @@
 import { SongInfo } from "@/lib/validators/song_info"
-import { Song } from "genius-lyrics"
-import SongMeaningContentBlock from "./SongMeaningContentBlock"
+
+
 import { Suspense } from "react"
 import StructuredContentBlock from "./StructuredContentBlock"
-import SongFAQ from "../(faq)/SongFAQ"
+
 import { SongData } from "@/lib/validators/song_data_response"
 import { Loader2 } from "lucide-react"
-import TypewriterComponent from "typewriter-effect"
+
 
 interface Props{
     song_info: SongInfo
