@@ -34,7 +34,7 @@ const JobLoadingContentBlock: React.FC<Props>= (props) => {
                         body: JSON.stringify({song_slug: props.song_slug}),
                     });
                     const success = await response.json();
-                    if (response.ok && success) {
+                    if (response.ok && success.success) {
                         console.log('Job flagged for review');
                     } else {
                         console.error('Failed to flag job for review');

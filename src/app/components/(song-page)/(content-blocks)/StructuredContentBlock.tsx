@@ -6,6 +6,7 @@ import prisma from "@/lib/db";
 import OpenAI from "openai";
 import JobLoadingContentBlock from "./JobLoadingContentBlock";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import GenerateNewContent from "./GenerateNewContent";
 
 
 
@@ -326,8 +327,9 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
                     ERROR
                 </div>
             )
-
+       
         }
+        console.log(song_db?.generate_enabled)
         return(
             <div>
             <div className="font-normal">
@@ -378,114 +380,198 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
         )
     }
 
-    
-    
-    let song_lyrics = song_db?.lyrics!
-    if (song_db?.lyrics == null) {
-        song_lyrics = await getSongLyrics(song_info.genius_id)
+    console.log(song_db?.generate_enabled)
 
-        if (song_lyrics == "error") {
-            await prisma.songs.update({
-                where: {
-                    song_slug: song_info.song_slug,
-                },
-                data: {
-                    isValid: false
-                }
-            })
-            return(
-                <Card className="mb-0.5 flex-1  bg-white px-4 pt-4 pb-4 sm:mb-8 sm:flex-initial rounded-md md:px-10 md:pt-9 md:pb-10 ">
-                        
-                    <CardHeader className="bg-beige-200 rounded-t-lg px-6 py-4 flex items-center">
-                    <CardTitle className="text-xl font-bold text-gray-800">This song is invalid</CardTitle>
-                    
-                    </CardHeader>
-            
-                    <CardContent className="p-6 text-gray-700">
-                        This song does not have valid lyrics.
-                    </CardContent>
-            
-                    
-                    
-                </Card>
-            )
-        }
-        else {
-            await prisma.songs.update({
-                where: {
-                    song_slug: song_info.song_slug,
-                },
-                data: {
-                    lyrics: song_lyrics,
-    
-                }
-            })
-        }
-      
-    }
-    const job = await prisma.jobs.findUnique({
-        where: {
-            song_slug: song_info.song_slug
-        }
-    })
-
-    const job_checked = job?.checked || 0
-
-    if (job_checked > 6) {
-        await prisma.jobs.delete({
-            where: {
-                song_slug: song_info.song_slug
-            }
-        })
-    }
-
-    if (job == null) {
-        await prisma.jobs.create({
-            data: {
-                song_slug: song_info.song_slug,
-            }
-        })
+    if (song_db?.generate_enabled == false) {
+    return(
+        <div>
+            <GenerateNewContent song_slug={song_info.song_slug} />
+        </div>
+    )
     }
     else{
-        if (job.flagged) {
-            return(
-                <div className='container flex items-center justify-center mt-10'>
-                    <Card className="mb-0.5 flex-1  bg-white px-4 pt-4 pb-4 sm:mb-8 sm:flex-initial rounded-md md:px-10 md:pt-9 md:pb-10 ">
+        let song_lyrics = song_db?.lyrics!
+        if (song_db?.lyrics == null) {
+            song_lyrics = await getSongLyrics(song_info.genius_id)
 
-                        <CardHeader className="bg-beige-200 rounded-t-lg px-6 py-4">
+            if (song_lyrics == "error") {
+                await prisma.songs.update({
+                    where: {
+                        song_slug: song_info.song_slug,
+                    },
+                    data: {
+                        isValid: false
+                    }
+                })
+                return(
+                    <Card className="mb-0.5 flex-1  bg-white px-4 pt-4 pb-4 sm:mb-8 sm:flex-initial rounded-md md:px-10 md:pt-9 md:pb-10 ">
+                            
+                        <CardHeader className="bg-beige-200 rounded-t-lg px-6 py-4 flex items-center">
                         <CardTitle className="text-xl font-bold text-gray-800">This song is invalid</CardTitle>
                         
                         </CardHeader>
                 
                         <CardContent className="p-6 text-gray-700">
-                        
+                            This song does not have valid lyrics.
                         </CardContent>
                 
                         
                         
                     </Card>
-                </div>
+                )
+            }
+            else {
+                await prisma.songs.update({
+                    where: {
+                        song_slug: song_info.song_slug,
+                    },
+                    data: {
+                        lyrics: song_lyrics,
+        
+                    }
+                })
+            }
+        
+        }
+        const job = await prisma.jobs.findUnique({
+            where: {
+                song_slug: song_info.song_slug
+            }
+        })
+
+        const job_checked = job?.checked || 0
+
+        if (job_checked > 6) {
+            await prisma.jobs.delete({
+                where: {
+                    song_slug: song_info.song_slug
+                }
+            })
+        }
+
+        if (job == null) {
+            await prisma.jobs.create({
+                data: {
+                    song_slug: song_info.song_slug,
+                }
+            })
+        }
+        else{
+            if (job.flagged) {
+                return(
+                    <div className='container flex items-center justify-center mt-10'>
+                        <Card className="mb-0.5 flex-1  bg-white px-4 pt-4 pb-4 sm:mb-8 sm:flex-initial rounded-md md:px-10 md:pt-9 md:pb-10 ">
+
+                            <CardHeader className="bg-beige-200 rounded-t-lg px-6 py-4">
+                            <CardTitle className="text-xl font-bold text-gray-800">This song is invalid</CardTitle>
+                            
+                            </CardHeader>
+                    
+                            <CardContent className="p-6 text-gray-700">
+                            
+                            </CardContent>
+                    
+                            
+                            
+                        </Card>
+                    </div>
+                )
+            }
+        
+            return(
+                <JobLoadingContentBlock song_slug = {song_info.song_slug}/>
             )
         }
-    
-        return(
-            <JobLoadingContentBlock song_slug = {song_info.song_slug}/>
-        )
-    }
 
 
-    const genius_annotation = await getAnnotations(song_info.genius_id)
+        const genius_annotation = await getAnnotations(song_info.genius_id)
+        
+        let shorted_lyrics = song_lyrics
+        while (Get_Token_Length(shorted_lyrics) > 1500) {
+            shorted_lyrics = shorted_lyrics.slice(0,shorted_lyrics.length/2)
+        }
+        const song_meaning = await GetStructuredContent(props.song_info.song_short_title, props.song_info.artist_name, shorted_lyrics, genius_annotation)
     
-    let shorted_lyrics = song_lyrics
-    while (Get_Token_Length(shorted_lyrics) > 1500) {
-        shorted_lyrics = shorted_lyrics.slice(0,shorted_lyrics.length/2)
-    }
-    const song_meaning = await GetStructuredContent(props.song_info.song_short_title, props.song_info.artist_name, shorted_lyrics, genius_annotation)
-  
-    try{
-        const song_meaning_structured = JSON.parse(song_meaning!) as SongMeaningStructured 
         try{
-            await PostSongMeaningToDB(song_meaning_structured, song_info.song_slug)
+            const song_meaning_structured = JSON.parse(song_meaning!) as SongMeaningStructured 
+            try{
+                await PostSongMeaningToDB(song_meaning_structured, song_info.song_slug)
+                await prisma.jobs.update({
+                    where: {
+                        song_slug: song_info.song_slug
+                    },
+                    data: {
+                        isJobDone: true
+                    }
+                })
+            }
+            catch(
+                err
+            ) {
+                console.log(err)
+                
+            }
+            
+        
+        return(
+            <div>
+                <div className="font-normal">
+                <div className='text-gray-800 '>
+                    <p className='mx-2 mt-3 text-base sm:text-lg leading-relaxed'>
+                        {song_meaning_structured.intro}
+                        
+                    </p>
+                </div>
+                <div className='text-gray-800 mt-10'>
+                    <div className='w-full flex justify-start border-b border-gray-300 py-2'>
+                        <h2 className='text-xl font-semibold ml-2'>Song Meaning</h2>
+                    </div>
+                    
+                        <p className='mx-2 mt-4 text-base sm:text-lg leading-relaxed'>
+                            {song_meaning_structured.meaning.paragraph_1}
+                        </p>
+                        <p className='mx-2 mt-4 text-base sm:text-lg leading-relaxed'>
+                            {song_meaning_structured.meaning.paragraph_2}
+                        </p>
+                        <p className='mx-2 mt-4 text-base sm:text-lg leading-relaxed'>
+                            {song_meaning_structured.meaning.paragraph_3}
+                        </p>
+                        <p className='mx-2 mt-4 text-base sm:text-lg leading-relaxed'>
+                            {song_meaning_structured.meaning.paragraph_4}
+                        </p>
+                        
+                </div>
+                <div className='text-gray-800 mt-10'>
+                    <div className='w-full flex justify-start border-b border-gray-300 py-2'>
+                        <h2 className='text-xl font-semibold ml-2'>Quotes</h2>
+                    </div>
+                    <div className="mx-2 mt-4">            
+                        <div  className='mt-6'>
+                            <p className='italic text-lg'>{`"${song_meaning_structured.quotes.quote_1.quote}"`}</p>
+                            <p className='mt-2 text-base sm:text-lg leading-relaxed'>{song_meaning_structured.quotes.quote_1.explanation}</p>
+                        </div>
+                        <div  className='mt-6'>
+                            <p className='italic text-lg'>{`"${song_meaning_structured.quotes.quote_2.quote}"`}</p>
+                            <p className='mt-2 text-base sm:text-lg leading-relaxed'>{song_meaning_structured.quotes.quote_2.explanation}</p>
+                        </div>
+                        <div  className='mt-6'>
+                            <p className='italic text-lg'>{`"${song_meaning_structured.quotes.quote_3.quote}"`}</p>
+                            <p className='mt-2 text-base sm:text-lg leading-relaxed'>{song_meaning_structured.quotes.quote_3.explanation}</p>
+                        </div>
+                        <div  className='mt-6'>
+                            <p className='italic text-lg'>{`"${song_meaning_structured.quotes.quote_4.quote}"`}</p>
+                            <p className='mt-2 text-base sm:text-lg leading-relaxed'>{song_meaning_structured.quotes.quote_4.explanation}</p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                
+            </div>
+
+        )
+        }
+        catch(err) {
+            console.log(err)
             await prisma.jobs.update({
                 where: {
                     song_slug: song_info.song_slug
@@ -494,89 +580,13 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
                     isJobDone: true
                 }
             })
+            return(
+                <div>
+                    ERROR
+                </div>
+            )
         }
-        catch(
-            err
-        ) {
-            console.log(err)
-            
-        }
-        
-    
-    return(
-        <div>
-            <div className="font-normal">
-              <div className='text-gray-800 '>
-                  <p className='mx-2 mt-3 text-base sm:text-lg leading-relaxed'>
-                      {song_meaning_structured.intro}
-                      
-                  </p>
-              </div>
-              <div className='text-gray-800 mt-10'>
-                  <div className='w-full flex justify-start border-b border-gray-300 py-2'>
-                      <h2 className='text-xl font-semibold ml-2'>Song Meaning</h2>
-                  </div>
-                  
-                    <p className='mx-2 mt-4 text-base sm:text-lg leading-relaxed'>
-                        {song_meaning_structured.meaning.paragraph_1}
-                    </p>
-                    <p className='mx-2 mt-4 text-base sm:text-lg leading-relaxed'>
-                        {song_meaning_structured.meaning.paragraph_2}
-                    </p>
-                    <p className='mx-2 mt-4 text-base sm:text-lg leading-relaxed'>
-                        {song_meaning_structured.meaning.paragraph_3}
-                    </p>
-                    <p className='mx-2 mt-4 text-base sm:text-lg leading-relaxed'>
-                        {song_meaning_structured.meaning.paragraph_4}
-                    </p>
-                     
-              </div>
-              <div className='text-gray-800 mt-10'>
-                  <div className='w-full flex justify-start border-b border-gray-300 py-2'>
-                      <h2 className='text-xl font-semibold ml-2'>Quotes</h2>
-                  </div>
-                  <div className="mx-2 mt-4">            
-                    <div  className='mt-6'>
-                        <p className='italic text-lg'>{`"${song_meaning_structured.quotes.quote_1.quote}"`}</p>
-                        <p className='mt-2 text-base sm:text-lg leading-relaxed'>{song_meaning_structured.quotes.quote_1.explanation}</p>
-                    </div>
-                    <div  className='mt-6'>
-                        <p className='italic text-lg'>{`"${song_meaning_structured.quotes.quote_2.quote}"`}</p>
-                        <p className='mt-2 text-base sm:text-lg leading-relaxed'>{song_meaning_structured.quotes.quote_2.explanation}</p>
-                    </div>
-                    <div  className='mt-6'>
-                        <p className='italic text-lg'>{`"${song_meaning_structured.quotes.quote_3.quote}"`}</p>
-                        <p className='mt-2 text-base sm:text-lg leading-relaxed'>{song_meaning_structured.quotes.quote_3.explanation}</p>
-                    </div>
-                    <div  className='mt-6'>
-                        <p className='italic text-lg'>{`"${song_meaning_structured.quotes.quote_4.quote}"`}</p>
-                        <p className='mt-2 text-base sm:text-lg leading-relaxed'>{song_meaning_structured.quotes.quote_4.explanation}</p>
-                    </div>
-                  </div>
-              </div>
-            </div>
-            
-        </div>
-
-    )
     }
-    catch(err) {
-        console.log(err)
-        await prisma.jobs.update({
-            where: {
-                song_slug: song_info.song_slug
-            },
-            data: {
-                isJobDone: true
-            }
-        })
-        return(
-            <div>
-                ERROR
-            </div>
-        )
-    }
-   
     
   }
   export default StructuredContentBlock

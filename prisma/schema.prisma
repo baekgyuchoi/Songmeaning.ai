@@ -29,6 +29,7 @@ model Songs {
   dislike_count           Int                    @default(0)
   true_like_count         Int                    @default(0)
   annotations             String?                @db.Text
+  generate_enabled        Boolean                @default(false)
   song_meaning            SongMeaning?
   song_meaning_preview    SongMeaningPreview?
   song_meaning_structured SongMeaningStructured?

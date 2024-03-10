@@ -1,5 +1,5 @@
-import { SongInfo } from "@/lib/validators/song_info"
 
+import { SongInfo } from "@/lib/validators/song_info"
 
 import { Suspense } from "react"
 import StructuredContentBlock from "./StructuredContentBlock"
