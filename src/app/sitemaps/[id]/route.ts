@@ -50,7 +50,7 @@ export async function GET(request: Request) {
 
       const pageNumber = parseInt(currentPage.split('/').pop() || '0');
       
-      if (pageNumber < 0 || pageNumber > 15) {
+      if (pageNumber < 0 || pageNumber > 17) {
         return new Response('Invalid page number', { status: 400 });
       }
   
