@@ -12,6 +12,8 @@ import { Metadata } from 'next';
 import ShareContainer from '@/app/components/(song-page)/(like/share)/ShareContainer';
 import ShareModal from '@/app/components/(song-page)/(like/share)/ShareModal';
 import ContentBlock from '@/app/components/(song-page)/(content-blocks)/ContentBlock';
+import BackgroundContentBlock from '@/app/components/(song-page)/(content-blocks)/BackgroundContentBlock';
+import { Loader2 } from 'lucide-react';
 
 
 export const maxDuration = 50
@@ -305,22 +307,9 @@ export default async function SongPage({ params, searchParams }: {
                                       )}
                                        
                                         {(is_meaning_valid) ? (
-                                          <>
-                                            {/* <h2 className='mb-2'>Background:</h2>
-                                            <ul className='list-disc ml-8 text-left'>
-                                              {background_content.map((item, i) => {
-                                                if (item == "" || item == " ") {
-                                                  return (
-                                                      <></>
-                                                  )
-                                                }
-                                                return(
-                                                  <li key={i} className='mb-2'>{item}</li>
-                                                )
-                                              })}
-                                              
-                                            </ul> */}
-                                          </>
+                                          <Suspense fallback={<div className='flex items-center justify-center'><Loader2 className='animate-spin'></Loader2></div>}>
+                                            <BackgroundContentBlock song_info={song_info} />
+                                          </Suspense>
                                         ) : (
                                           <></>
                                           )}
