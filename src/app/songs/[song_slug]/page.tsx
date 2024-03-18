@@ -326,16 +326,7 @@ export default async function SongPage({ params, searchParams }: {
                               </CardTitle>
                             </CardHeader>
                         <div className='px-8 pt-7 pb-8  md:px-10 md:pt-9 md:pb-10  md:p-16'>
-                          <div className="flex justify-center items-center bg-gray-200 rounded-lg p-4 mt-8 mb-8">
-                            <div className="flex flex-col items-center">
-                              <h2 className="text-xl font-bold mb-2">Try BasedLabs AI Image/Video Generator!</h2>
-                              <p className="text-gray-600 mb-4">Create stunning visuals with advanced AI technology.</p>
-                              <a href="https://www.basedlabs.ai/?via=song-meaning-ai" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-                                Get Started
-                              </a>
-                            </div>
-                          </div>
-                        
+                          
                           <div className='flex flex-col  items-center '> 
                             <div className="w-full md:px-8 md:mr-4 ">
                               <CardContent className="p-1 md:p-3 flex flex-col items-center  mb-5" style={{ minHeight: '600px', minWidth: '200px' }}>
