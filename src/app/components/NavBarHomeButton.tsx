@@ -31,7 +31,7 @@ const NavBarHomeButton: React.FC<Props> = ({ /* Destructure your props here */ }
                     className="flex items-center justify-center  text-purple-900 font-bold text-2xl tracking-tight hover:text-gray-300 focus:outline-none focus:shadow-outline"
                 >
                 
-                    <h1 className="font-mono text-base sm:text-xl md:text-2xl font-medium">Songmeaning.AI</h1><Badge className='text-xs bg-purple-800'>beta</Badge>
+                    <h1 className="font-mono text-base  sm:text-2xl font-medium">Songmeaning.AI</h1>
                 </div>
             </div>
             </Link> 
