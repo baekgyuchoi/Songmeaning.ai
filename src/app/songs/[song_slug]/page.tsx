@@ -15,6 +15,9 @@ import ContentBlock from '@/app/components/(song-page)/(content-blocks)/ContentB
 import BackgroundContentBlock from '@/app/components/(song-page)/(content-blocks)/BackgroundContentBlock';
 import { Loader2 } from 'lucide-react';
 import AtlasVPN from '@/app/components/(ads+affiliates)/AtlasVPN';
+import AtlasVPNBanner1 from '@/app/components/(ads+affiliates)/AtlasVPNBanner1';
+import AtlasVPNBanner2 from '@/app/components/(ads+affiliates)/AtlasVPNBanner2';
+import AtlasVPNBanner3 from '@/app/components/(ads+affiliates)/AtlasVPNBanner3';
 
 
 export const maxDuration = 50
@@ -326,7 +329,8 @@ export default async function SongPage({ params, searchParams }: {
                                 
                               </CardTitle>
                             </CardHeader>
-                            <AtlasVPN />
+                            <AtlasVPNBanner1 />
+                      
                         <div className='px-8 pt-7 pb-8  md:px-10 md:pt-9 md:pb-10  md:p-16'>
                           
                           <div className='flex flex-col  items-center '> 
@@ -366,6 +370,10 @@ export default async function SongPage({ params, searchParams }: {
                                 
                               </CardContent>
                             </div>
+                            <div className='w-screen relative'>
+                              <AtlasVPNBanner3 />
+                            </div>
+                     
                             <div className='w-screen sm:w-full text-sm lg:w-2/3 mb-10'>
                               {
                                 is_meaning_valid ? (
