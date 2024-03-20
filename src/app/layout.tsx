@@ -26,6 +26,7 @@ export default function RootLayout({
           crossOrigin="anonymous">
 
         </script>
+        <meta name='impact-site-verification' content='609d60aa-6e5d-4e64-9e2f-a9bdd70be238' />
         <meta name="yandex-verification" content="bd4e28b3436e4e29" />
       </head>
       
