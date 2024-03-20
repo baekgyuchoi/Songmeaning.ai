@@ -38,7 +38,7 @@ const PreviewSearchItemButton: React.FC<Props> = (props) => {
                             </div>
                             <div className="min-w-0 max-w-md flex items-start flex-col mr-4">
                                 <p className="w-48 text-sm truncate">{songInfo.song_short_title}</p>
-                                <p className="pl-4 text-gray-500 text-xs max-w-md truncate">{songInfo.artist_name}</p>
+                                <p className=" text-gray-500 text-xs max-w-md truncate">{songInfo.artist_name}</p>
                             </div>
                         </div>
                         

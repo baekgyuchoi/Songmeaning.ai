@@ -14,6 +14,7 @@ import ShareModal from '@/app/components/(song-page)/(like/share)/ShareModal';
 import ContentBlock from '@/app/components/(song-page)/(content-blocks)/ContentBlock';
 import BackgroundContentBlock from '@/app/components/(song-page)/(content-blocks)/BackgroundContentBlock';
 import { Loader2 } from 'lucide-react';
+import AtlasVPN from '@/app/components/(ads+affiliates)/AtlasVPN';
 
 
 export const maxDuration = 50
@@ -51,7 +52,7 @@ export async function generateMetadata({
     return {
       metadataBase: new URL("https://www.songmeaning.ai/songs/" + song_slug),
       title: `${song_slug.split("-").join(" ")} Lyrics Meaning - SongMeaning.AI`,
-      description: `Uncover the deepr meaning behind the lyrics of ${song_slug.split("-").join(" ")}`,
+      description: `Uncover the deeper meaning behind the lyrics of ${song_slug.split("-").join(" ")}`,
       alternates: {
         canonical: '/'
       },
@@ -316,7 +317,7 @@ export default async function SongPage({ params, searchParams }: {
                                        
                                     </div>
                                     <div className='mt-4 underline'>
-                                      <div className='animate-pulse'>
+                                      <div className=''>
                                         <ShareModal song_data={song_data} song_art_url={song_data.header_image_url!}  song_slug={song_data.song_slug} song_title={song_data.song_title}/>
                                       </div>
                                     </div>
@@ -325,6 +326,7 @@ export default async function SongPage({ params, searchParams }: {
                                 
                               </CardTitle>
                             </CardHeader>
+                            <AtlasVPN />
                         <div className='px-8 pt-7 pb-8  md:px-10 md:pt-9 md:pb-10  md:p-16'>
                           
                           <div className='flex flex-col  items-center '> 
@@ -333,26 +335,7 @@ export default async function SongPage({ params, searchParams }: {
                                   {
                                     song_data?.isValid ? (
                                       <div className='w-screen p-4 sm:p-0 sm:w-full '>
-                                        {/* {is_meaning_valid || is_preview_valid ? (
-                                          <>
-                                            <SongMeaningTab song_meaning={song_meaning_json} song_meaning_preview={song_meaning_preview_json}/>
-                             
-                                          </>
-
-                                        ):(
-                                          <>
-                                            <LoadingQueue songInfo={song_info} />
-                                            <SongMeaningContent song_info={song_info} />
-                                          </>
-                                        )} */}
-
-                                        {/* {is_meaning_valid? (
-                                          <SongMeaningTab is_meaning_flagged={is_meaning_flagged || false} is_preview_flagged={is_preview_flagged || false} song_meaning={song_meaning_json} song_meaning_preview={song_meaning_preview_json} song_info={song_info}/>
-                                        ) : (
-                                          <Suspense fallback={<p>Loading...</p>}>
-                                            <SongMeaningContentBlock />
-                                          </Suspense>
-                                        )} */}
+                                   
                                         
                                         <ContentBlock song_info={song_info} song_data={song_data} />
                                         {/* <StructuredContentBlock song_info={song_info} /> */}

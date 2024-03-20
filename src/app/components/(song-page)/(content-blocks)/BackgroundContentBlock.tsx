@@ -40,7 +40,7 @@ const BackgroundContentBlock: React.FC<Props> =  async (props) => {
 
    return(
        <div className="">
-        <h2 className='mb-2'>Background:</h2>
+        <h2 className='mb-2 text-left'>Background:</h2>
             <ul className='list-disc ml-8 text-left'>
                 <li className="mb-2">{background_content?.firstPoint}</li>
                 <li>{background_content?.secondPoint}</li>
