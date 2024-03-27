@@ -329,7 +329,7 @@ export default async function SongPage({ params, searchParams }: {
                                 
                               </CardTitle>
                             </CardHeader>
-                            <AtlasVPNBanner1 />
+                            {/* <AtlasVPNBanner1 /> */}
                       
                         <div className='px-8 pt-7 pb-8  md:px-10 md:pt-9 md:pb-10  md:p-16'>
                           
@@ -370,9 +370,9 @@ export default async function SongPage({ params, searchParams }: {
                                 
                               </CardContent>
                             </div>
-                            <div className='w-screen relative'>
+                            {/* <div className='w-screen relative'>
                               <AtlasVPNBanner3 />
-                            </div>
+                            </div> */}
                      
                             <div className='w-screen sm:w-full text-sm lg:w-2/3 mb-10'>
                               {

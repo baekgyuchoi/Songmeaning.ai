@@ -264,10 +264,10 @@ export default async function ArtistPage({
                               <ArtistTopSongCarousel artist_slug={artist.artist_slug} className="w-full bg black"/>
                             </Suspense>
                           </div>
-                          <div className="w-screen">
+                          {/* <div className="w-screen">
                             <AtlasVPNBanner1 />
                           </div>
-                          
+                           */}
                           <div>
                             <div className='font-mono rounded-md border w-full flex items-center justify-center mt-20 mb-8'>
                                 <h1>All Songs related to {artist.name}</h1>
