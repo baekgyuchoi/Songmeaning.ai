@@ -8,7 +8,8 @@ import { Loader2 } from "lucide-react";
 import { Suspense } from "react";
 import FooterContainer from "@/app/components/(footer)/FooterContainer";
 import { Metadata } from "next";
-import AtlasVPNBanner1 from "@/app/components/(ads+affiliates)/AtlasVPNBanner1";
+import NordVPNBanner728x90 from "@/app/components/(ads+affiliates)/NordVPNBanner728x90";
+
 
 
 
@@ -264,10 +265,10 @@ export default async function ArtistPage({
                               <ArtistTopSongCarousel artist_slug={artist.artist_slug} className="w-full bg black"/>
                             </Suspense>
                           </div>
-                          {/* <div className="w-screen">
-                            <AtlasVPNBanner1 />
+                          <div className="w-screen">
+                            <NordVPNBanner728x90 />
                           </div>
-                           */}
+                          
                           <div>
                             <div className='font-mono rounded-md border w-full flex items-center justify-center mt-20 mb-8'>
                                 <h1>All Songs related to {artist.name}</h1>

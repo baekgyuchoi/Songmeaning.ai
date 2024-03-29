@@ -6,12 +6,13 @@ import TrendingSongs from "./components/TrendingSongs";
 import HomeSearchInput from "./components/(home-components)/HomeSearchInput";
 import FooterContainer from "./components/(footer)/FooterContainer";
 import { Badge } from "@/components/ui/badge";
-import AtlasVPNBanner4 from "./components/(ads+affiliates)/AtlasVPNBanner4";
-import AtlasVPNBanner3 from "./components/(ads+affiliates)/AtlasVPNBanner3";
 import VoiceJungleBanner1 from "./components/(ads+affiliates)/VoiceJungleBanner1";
 import VoiceJungleBanner2 from "./components/(ads+affiliates)/VoiceJungleBanner2";
-import AtlasVPNBanner2 from "./components/(ads+affiliates)/AtlasVPNBanner2";
-import AtlasVPNBanner1 from "./components/(ads+affiliates)/AtlasVPNBanner1";
+import MusiciansFriendStupidDeal from "./components/(ads+affiliates)/MusiciansFriendStupidDeal";
+import NordVPNBanner300x250 from "./components/(ads+affiliates)/NordVPNBanner300x250";
+import NordVPNBanner1200x628 from "./components/(ads+affiliates)/NordVPNBanner1200x628";
+import NordVPNBanner728x90 from "./components/(ads+affiliates)/NordVPNBanner728x90";
+
 
 
 
@@ -48,6 +49,15 @@ export default async function Home() {
             <AtlasVPNBanner1 />
           </div>
            */}
+          {/* <div>
+            <MusiciansFriendStupidDeal />
+          </div> */}
+          <div className="mb-8 hidden sm:block">
+            <NordVPNBanner728x90 />
+          </div>
+          <div className="mb-8 sm:hidden">
+            <NordVPNBanner300x250 />
+          </div>
         </div>
         
       </main>

@@ -14,10 +14,10 @@ import ShareModal from '@/app/components/(song-page)/(like/share)/ShareModal';
 import ContentBlock from '@/app/components/(song-page)/(content-blocks)/ContentBlock';
 import BackgroundContentBlock from '@/app/components/(song-page)/(content-blocks)/BackgroundContentBlock';
 import { Loader2 } from 'lucide-react';
-import AtlasVPN from '@/app/components/(ads+affiliates)/AtlasVPN';
-import AtlasVPNBanner1 from '@/app/components/(ads+affiliates)/AtlasVPNBanner1';
-import AtlasVPNBanner2 from '@/app/components/(ads+affiliates)/AtlasVPNBanner2';
-import AtlasVPNBanner3 from '@/app/components/(ads+affiliates)/AtlasVPNBanner3';
+import NordVPNBanner728x90 from '@/app/components/(ads+affiliates)/NordVPNBanner728x90';
+import NordVPNBanner300x250 from '@/app/components/(ads+affiliates)/NordVPNBanner300x250';
+import NordVPNCustom from '@/app/components/(ads+affiliates)/NordVPNCustom';
+import NordVPNBanner1200x628 from '@/app/components/(ads+affiliates)/NordVPNBanner1200x628';
 
 
 export const maxDuration = 50
@@ -192,7 +192,21 @@ export default async function SongPage({ params, searchParams }: {
         let song_data = await QueueSong(params.song_slug) as SongData
         if (song_data == null) {
           const song_genius = await SongInGenius(song_id)
+          if(song_genius == null) {
+            return (
+        
+              <div className="flex min-h-screen font-mono flex-col items-center justify-center pb-48">
+                
+                
+                <p>404: Error - Song page does not exist</p>
+                
+                
+              
+              </div>
+            )
+          }
           const song_from_genius = song_genius as SongInfo
+          
           const song_data_genius: SongData = {
             song_slug: song_from_genius.song_slug,
             song_title: song_from_genius.song_title,
@@ -329,7 +343,7 @@ export default async function SongPage({ params, searchParams }: {
                                 
                               </CardTitle>
                             </CardHeader>
-                            {/* <AtlasVPNBanner1 /> */}
+                            <NordVPNCustom />
                       
                         <div className='px-8 pt-7 pb-8  md:px-10 md:pt-9 md:pb-10  md:p-16'>
                           
@@ -370,9 +384,9 @@ export default async function SongPage({ params, searchParams }: {
                                 
                               </CardContent>
                             </div>
-                            {/* <div className='w-screen relative'>
-                              <AtlasVPNBanner3 />
-                            </div> */}
+                            <div className='w-full  relative'>
+                              <NordVPNBanner300x250 />
+                            </div>
                      
                             <div className='w-screen sm:w-full text-sm lg:w-2/3 mb-10'>
                               {
