@@ -1,13 +1,8 @@
 "use client";
 
 import { SongInfo } from "@/lib/validators/song_info";
-import { constants } from "buffer";
-import { Song } from "genius-lyrics";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import TypewriterComponent from "typewriter-effect"
-import { set } from "zod";
-import SearchItemButton from "../(search-page)/SearchItemButton";
 import PreviewSearchItemButton from "../(search-page)/PreviewSearchItemButton";
 
 

@@ -15,8 +15,8 @@ const FooterContainer: React.FC = () => {
                     <div className='mt-5  flex items-center gap-4 text-xs text-tertiary md:mt-0'>
                         <a hidden href="media.songmeaning.ai">Blog</a>
                         <a href="mailto:admin@songmeaning.ai">Contact Us</a>
-                        <a href="/TOS_songmeaning_ai.pdf">Terms of Service</a>
-                        <a href="/privacy_policy_songmeaning_ai.pdf">Privacy Policy</a>
+                        <a href="/TOS.docx.pdf">Terms of Service</a>
+                        <a href="/privacy_policy.docx.pdf">Privacy Policy</a>
                     </div>
                 </div>
             </div>
