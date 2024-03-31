@@ -18,6 +18,7 @@ import NordVPNBanner728x90 from '@/app/components/(ads+affiliates)/NordVPNBanner
 import NordVPNBanner300x250 from '@/app/components/(ads+affiliates)/NordVPNBanner300x250';
 import NordVPNCustom from '@/app/components/(ads+affiliates)/NordVPNCustom';
 import NordVPNBanner1200x628 from '@/app/components/(ads+affiliates)/NordVPNBanner1200x628';
+import MeaningPublishDate from '@/app/components/(song-page)/(content-blocks)/MeaningPublishDate';
 
 
 export const maxDuration = 50
@@ -353,11 +354,10 @@ export default async function SongPage({ params, searchParams }: {
                                   {
                                     song_data?.isValid ? (
                                       <div className='w-screen p-4 sm:p-0 sm:w-full '>
-                                   
+                                        {/* <MeaningPublishDate song_info={song_info} /> */}
                                         
                                         <ContentBlock song_info={song_info} song_data={song_data} />
-                                        {/* <StructuredContentBlock song_info={song_info} /> */}
-                                        {/* <SongMeaningContentBlock song_info={song_info} /> */}
+                                       
                                       
                                         
                                       </div> 
