@@ -9,8 +9,8 @@ import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: "Songmeaning.ai",
-  description: "The world’s best song meanings"
+  title: "Songmeaning.ai | In-Depth Meanings of Song Lyrics",
+  description: "Add a new layer of depth to the understanding of your favorite music with the world’s best song meanings."
 }
 
 
