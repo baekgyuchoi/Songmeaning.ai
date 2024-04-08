@@ -25,6 +25,9 @@ export const maxDuration = 50
 
 function extractSegment(text: string, maxLength: number = 160): string {
   // If the text is shorter than or equal to the maximum length, return it as is
+  if (text == null || text == "") {
+    return ""
+  }
   if (text.length <= maxLength) {
       return text;
   }
