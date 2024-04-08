@@ -23,7 +23,7 @@ const ContentBlock: React.FC<Props> =  async (props) => {
                 <Loader2 className="animate-spin animate-pulse text-purple-800" size={45} />
 
                 <div className="text-black mt-10">
-                    Loading Song Meaning... Please wait a moment
+                    Loading Song Meaning... Please wait 30 seconds
                 </div>
        
                </div>
