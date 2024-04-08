@@ -67,7 +67,7 @@ export async function generateMetadata({
 
   let song_description = ""
   
-  song_description = song_db?.song_meaning_structured?.intro.slice(0,150) + "..." || ""
+  song_description = extractSegment(song_db?.song_meaning_structured?.intro!) + "..." || "Uncover the deeper meaning behind the lyrics of your favorite songs."
   
   // fetch data
  
