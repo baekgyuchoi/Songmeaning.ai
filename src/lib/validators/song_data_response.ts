@@ -36,20 +36,14 @@ export const SongDataSchema = z.object({
     release_date: z.string().optional(),
     two_word_description: z.string(),
     badges: z.array(z.object({})),
-    song_meaning: z.union([z.object({
+    song_meaning_structured: z.union([z.object({
         id: z.number(),
         slug: z.string(),
-        meaning: z.string(),
+        intro: z.string(),
         flagged: z.boolean(),
         createdAt:z.date()
     }), z.null()]),
-    song_meaning_preview: z.union([z.object({
-        id: z.number(),
-        slug: z.string(),
-        meaning: z.string(),
-        flagged: z.boolean(),
-        createdAt:z.date()
-    }), z.null()])
+   
     
 
 

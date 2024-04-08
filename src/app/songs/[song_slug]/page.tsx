@@ -13,7 +13,7 @@ import ShareContainer from '@/app/components/(song-page)/(like/share)/ShareConta
 import ShareModal from '@/app/components/(song-page)/(like/share)/ShareModal';
 import ContentBlock from '@/app/components/(song-page)/(content-blocks)/ContentBlock';
 import BackgroundContentBlock from '@/app/components/(song-page)/(content-blocks)/BackgroundContentBlock';
-import { Loader2 } from 'lucide-react';
+import { Calendar, Loader2 } from 'lucide-react';
 import NordVPNBanner728x90 from '@/app/components/(ads+affiliates)/NordVPNBanner728x90';
 import NordVPNBanner300x250 from '@/app/components/(ads+affiliates)/NordVPNBanner300x250';
 import NordVPNCustom from '@/app/components/(ads+affiliates)/NordVPNCustom';
@@ -174,8 +174,7 @@ async function QueueSong(song_slug_input: string) {
             song_slug: song_slug_input
         },
         include: {
-            song_meaning: true,
-            song_meaning_preview: true,
+            song_meaning_structured: true,
             badges: true
         }
     });
@@ -247,8 +246,7 @@ export default async function SongPage({ params, searchParams }: {
             lyrics: null,
             two_word_description: '',
             badges: [],
-            song_meaning: null,
-            song_meaning_preview:null
+            song_meaning_structured: null,
           }
          
 
@@ -341,10 +339,10 @@ export default async function SongPage({ params, searchParams }: {
                                   </div>
                                   <div className='flex flex-col justify-center '>
                                     <div className='text-base sm:ml-1 flex flex-col font-mono items-start'>
-                                      {song_data.release_date == "" || song_data.release_date == null ? (
-                                        <p>Released: N/A </p>
+                                      {song_data.song_meaning_structured?.createdAt == undefined || song_data.song_meaning_structured?.createdAt == null ? (
+                                        <div className='flex flex-row'>Meaning Published: N/A </div>
                                       ) : (
-                                        <p>Released:  {song_data.release_date}</p>
+                                        <div className='flex flex-row '>Meaning Published: {song_data.song_meaning_structured?.createdAt.toDateString().split(" ").slice(1,).join(" ")}</div>
                                       )}
                                        
                                         {(is_meaning_valid) ? (
