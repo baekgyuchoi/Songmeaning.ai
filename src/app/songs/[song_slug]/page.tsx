@@ -23,6 +23,25 @@ import MeaningPublishDate from '@/app/components/(song-page)/(content-blocks)/Me
 
 export const maxDuration = 50
 
+function extractSegment(text: string, maxLength: number = 160): string {
+  // If the text is shorter than or equal to the maximum length, return it as is
+  if (text.length <= maxLength) {
+      return text;
+  }
+
+  // Find the last space within the maxLength
+  const lastSpaceIndex = text.lastIndexOf(' ', maxLength);
+
+  // If there is no space in the substring, return the whole string up to maxLength
+  // You might want to handle this differently depending on your needs
+  if (lastSpaceIndex === -1) {
+      return text.substring(0, maxLength);
+  }
+
+  // Return the substring from the start to the last space index
+  return text.substring(0, lastSpaceIndex);
+}
+
 
 export async function generateMetadata({
   params,
@@ -48,7 +67,7 @@ export async function generateMetadata({
 
   let song_description = ""
   
-  song_description = song_db?.song_meaning_structured?.intro || ""
+  song_description = song_db?.song_meaning_structured?.intro.slice(0,150) + "..." || ""
   
   // fetch data
  

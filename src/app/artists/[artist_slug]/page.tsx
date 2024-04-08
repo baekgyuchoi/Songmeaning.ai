@@ -240,7 +240,7 @@ export default async function ArtistPage({
                       <CardHeader>
                         <CardTitle className="mt-12 text-4xl font-bold text-gray-800 ">
                         
-                              Song meanings for <p className="text-gray-600">{artist_name}</p>
+                              <h1>Song meanings for <span className="text-gray-600">{artist_name}</span> </h1>
                           
                         </CardTitle>
                         
@@ -252,7 +252,7 @@ export default async function ArtistPage({
                         <CardContent className="p-6 text-black flex flex-col items-center justify-center pt-6 md:pt-6" >
                           <div className="w-full flex items-center flex-col justify-center mb-8">
                             <div className='font-mono rounded-md border w-full flex items-center justify-center'>
-                                <h1>Top Song Meanings by {artist.name}</h1>
+                                <h2>Top Song Meanings by {artist.name}</h2>
                             </div>
                 
                             <Suspense 
@@ -271,7 +271,7 @@ export default async function ArtistPage({
                           
                           <div>
                             <div className='font-mono rounded-md border w-full flex items-center justify-center mt-20 mb-8'>
-                                <h1>All Songs related to {artist.name}</h1>
+                                <h2>All Songs related to {artist.name}</h2>
                             </div>
                             <Suspense fallback={<div>loading</div>}>
                               <ArtistTotalSongs artist_id={artist.genius_id} artist_slug={artist.artist_slug} artist_name={artist.name} page={page_number} />

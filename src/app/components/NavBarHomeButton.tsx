@@ -23,7 +23,7 @@ const NavBarHomeButton: React.FC<Props> = ({ /* Destructure your props here */ }
             className="">
             <div className=" flex items-center justify-center rounded p-2 transition text-gray-600  " >
                 <div className='w-1/6 mr-2 flex items-center'>
-                    <img className="w-16" src='/Songmeaning_favicon.png' />
+                    <img className="w-16" src='/Songmeaning_favicon.png' alt='songmeaning.ai logo' />
                 </div>
             
     
@@ -31,7 +31,7 @@ const NavBarHomeButton: React.FC<Props> = ({ /* Destructure your props here */ }
                     className="flex items-center justify-center  text-purple-900 font-bold text-2xl tracking-tight hover:text-gray-300 focus:outline-none focus:shadow-outline"
                 >
                 
-                    <h1 className="font-mono text-base  sm:text-2xl font-medium">Songmeaning.AI</h1>
+                    <div className="font-mono text-base  sm:text-2xl font-medium">Songmeaning.AI</div>
                 </div>
             </div>
             </Link> 
