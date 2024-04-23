@@ -13,12 +13,8 @@ import ShareContainer from '@/app/components/(song-page)/(like/share)/ShareConta
 import ShareModal from '@/app/components/(song-page)/(like/share)/ShareModal';
 import ContentBlock from '@/app/components/(song-page)/(content-blocks)/ContentBlock';
 import BackgroundContentBlock from '@/app/components/(song-page)/(content-blocks)/BackgroundContentBlock';
-import { Calendar, Loader2 } from 'lucide-react';
-import NordVPNBanner728x90 from '@/app/components/(ads+affiliates)/NordVPNBanner728x90';
-import NordVPNBanner300x250 from '@/app/components/(ads+affiliates)/NordVPNBanner300x250';
-import NordVPNCustom from '@/app/components/(ads+affiliates)/NordVPNCustom';
-import NordVPNBanner1200x628 from '@/app/components/(ads+affiliates)/NordVPNBanner1200x628';
-import MeaningPublishDate from '@/app/components/(song-page)/(content-blocks)/MeaningPublishDate';
+import { Loader2 } from 'lucide-react';
+
 
 
 export const maxDuration = 50
@@ -364,7 +360,7 @@ export default async function SongPage({ params, searchParams }: {
                                 
                               </CardTitle>
                             </CardHeader>
-                            <NordVPNCustom />
+                            {/* <NordVPNCustom /> */}
                       
                         <div className='px-8 pt-7 pb-8  md:px-10 md:pt-9 md:pb-10  md:p-16'>
                           
@@ -404,9 +400,9 @@ export default async function SongPage({ params, searchParams }: {
                                 
                               </CardContent>
                             </div>
-                            <div className='w-full  relative'>
+                            {/* <div className='w-full  relative'>
                               <NordVPNBanner300x250 />
-                            </div>
+                            </div> */}
                      
                             <div className='w-screen sm:w-full text-sm lg:w-2/3 mb-10'>
                               {

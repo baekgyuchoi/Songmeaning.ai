@@ -42,7 +42,7 @@ const TrendingChart: React.FC = async () => {
   
 
   return (
-    <main>
+    <div>
       <div className='font-mono border-t-2 border-b-2 border-gray-400 rounded-md flex items-center justify-center mb-6 p-1'>
         <h2>Trending Chart</h2>
       </div>
@@ -57,7 +57,7 @@ const TrendingChart: React.FC = async () => {
           )
         })}
       </div>
-    </main>
+    </div>
   );
 };
 

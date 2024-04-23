@@ -8,7 +8,6 @@ import { Loader2 } from "lucide-react";
 import { Suspense } from "react";
 import FooterContainer from "@/app/components/(footer)/FooterContainer";
 import { Metadata } from "next";
-import NordVPNBanner728x90 from "@/app/components/(ads+affiliates)/NordVPNBanner728x90";
 
 
 
@@ -126,7 +125,7 @@ export default async function ArtistPage({
           const artist_from_genius = await GetArtistFromGenius(parseInt(searchParams?.artist!))
           if (artist_from_genius == null) {
             return(
-              <main className="flex flex-col items-center px-4 py-8">
+              <div className="flex flex-col items-center px-4 py-8">
               
               <div className='mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-2 flex w-full flex-1 flex-col pl-0 pr-0 '>
                 <Card className=" w-full  mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 px-8 pt-7 pb-8 text-white shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl md:px-10 md:pt-9 md:pb-10 ">
@@ -159,7 +158,7 @@ export default async function ArtistPage({
               
               <footer className="text-gray-500 text-sm">2023 Songmeaning.AI</footer>
            
-              </main>
+              </div>
                 )
             }
           const new_artist: Artist = {
@@ -185,7 +184,7 @@ export default async function ArtistPage({
 
         if (artist == null) {
             return(
-              <main>
+              <div>
                 <div className="flex flex-col items-center px-4 py-8">
 
                   
@@ -221,7 +220,7 @@ export default async function ArtistPage({
             
             <FooterContainer />
           
-          </main>
+          </div>
             )
         }
 
@@ -265,9 +264,7 @@ export default async function ArtistPage({
                               <ArtistTopSongCarousel artist_slug={artist.artist_slug} className="w-full bg black"/>
                             </Suspense>
                           </div>
-                          <div className="w-screen">
-                            <NordVPNBanner728x90 />
-                          </div>
+                         
                           
                           <div>
                             <div className='font-mono rounded-md border w-full flex items-center justify-center mt-20 mb-8'>

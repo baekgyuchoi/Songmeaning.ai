@@ -331,7 +331,7 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
         }
         console.log(song_db?.generate_enabled)
         return(
-            <div>
+            <main>
             <div className="font-normal">
               <div className='text-gray-800 '>
                   <p className='mx-2 mt-3 text-base sm:text-lg leading-relaxed'>
@@ -376,7 +376,7 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
               </div>
             </div>
             
-        </div>
+        </main>
         )
     }
 
@@ -450,11 +450,15 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
         }
 
         if (job == null) {
+            try{
             await prisma.jobs.create({
                 data: {
                     song_slug: song_info.song_slug,
                 }
             })
+            } catch(err) {
+                console.log(err)
+            }   
         }
         else{
             if (job.flagged) {
@@ -514,7 +518,7 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
             
         
         return(
-            <div>
+            <main>
                 <div className="font-normal">
                 <div className='text-gray-800 '>
                     <p className='mx-2 mt-3 text-base sm:text-lg leading-relaxed'>
@@ -566,7 +570,7 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
                 </div>
                 </div>
                 
-            </div>
+            </main>
 
         )
         }
