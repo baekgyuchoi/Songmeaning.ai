@@ -35,14 +35,14 @@ const SearchItemButton: React.FC<Props> = (props) => {
                     <div className="flex flex-row w-full  p-2 pl-4 pr-4">
                         <div className="group flex items-center gap-x-4 py-3">
                             <div className="relative flex w-12 h-12 overflow-hidden">
-                                <img className="object-cover" alt="song art" src={songInfo.song_art_url} />
+                                <Image className="object-cover" alt="song art" src={songInfo.song_art_url!} width={150} height={150} />
                             </div>
                             <div className="min-w-0 max-w-md flex items-start flex-col">
                                 <p className="w-52 sm:w-96 md:max-w-md truncate">{songInfo.song_short_title}</p>
                                 <p className="pl-4 text-gray-500 text-sm max-w-md truncate">{songInfo.artist_name}</p>
                             </div>
                         </div>
-                        <div className='flex items-center justify-end w-full hidden sm:flex'>
+                        <div className=' items-center justify-end w-full hidden sm:flex'>
                             <p className="text-gray-500 text-sm truncate">{songInfo.release_date}</p>
                         </div>
                     </div>

@@ -1,4 +1,5 @@
 import { SongData } from '@/lib/validators/song_data_response';
+import Image from 'next/image';
 import React from 'react';
 
 interface InstagramSquareProps {
@@ -15,12 +16,14 @@ const InstagramSquare: React.FC<InstagramSquareProps> = (props) => {
             </div>
     
             <div className='w-56  h-56 rounded-lg bg-purple-500/25 relative z-10'>
-            <img 
-                src={song_data.header_image_url}
+            <Image
+                src={song_data.header_image_url!}
                 alt='song art'
                 className="object-cover w-56 h-56 p-2  "
+                height={150}
+                width={150}
             >
-            </img>
+            </Image>
             </div>
         
             <div className="relative z-10 w-full mt-8 p-3 text-center sm:text-left sm:ml-3 sm:mt-12 mb-6 text-4xl  text-gray-800">
