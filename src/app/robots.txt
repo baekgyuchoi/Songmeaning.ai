@@ -2,6 +2,8 @@ User-Agent: *
 Allow: /
 Disallow: /private/
 Disallow: /search/
+Disallow: /TOS.docx.pdf/
+Disallow: /privacy_policy.docx.pdf/
 
 
 Sitemap: https://www.songmeaning.ai/sitemaps_index.xml

@@ -14,6 +14,7 @@ import ShareModal from '@/app/components/(song-page)/(like/share)/ShareModal';
 import ContentBlock from '@/app/components/(song-page)/(content-blocks)/ContentBlock';
 import BackgroundContentBlock from '@/app/components/(song-page)/(content-blocks)/BackgroundContentBlock';
 import { Loader2 } from 'lucide-react';
+import Image from 'next/image';
 
 
 
@@ -308,12 +309,14 @@ export default async function SongPage({ params, searchParams }: {
                         
                               <div className='w-56 sm:w-72 h-56 rounded-lg bg-purple-500/25 relative z-10'>
 
-                                <img 
-                                  src={song_data.song_image_url}
+                                <Image 
+                                  src={song_data.song_image_url!}
                                   alt='song art'
                                   className="object-cover w-56 h-56 p-2  "
+                                  width={224}
+                                  height={224}
                                 >
-                                </img>
+                                </Image>
                               </div>
                             
                               <CardTitle className="relative z-10 w-full mt-8 p-3 text-center sm:text-left sm:ml-3 sm:mt-12 mb-6 text-4xl  text-gray-800">

@@ -2,6 +2,7 @@
 
 
 import { Badge } from '@/components/ui/badge';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -23,7 +24,7 @@ const NavBarHomeButton: React.FC<Props> = ({ /* Destructure your props here */ }
             className="">
             <div className=" flex items-center justify-center rounded p-2 transition text-gray-600  " >
                 <div className='w-1/6 mr-2 flex items-center'>
-                    <img className="w-16" src='/Songmeaning_favicon.png' alt='songmeaning.ai logo' />
+                    <Image className="w-16" src='/Songmeaning_favicon.png' alt='songmeaning.ai logo' width={150} height={150} />
                 </div>
             
     

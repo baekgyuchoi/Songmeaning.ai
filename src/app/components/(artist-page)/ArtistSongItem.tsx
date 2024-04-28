@@ -1,5 +1,6 @@
 
 import { SongInfo } from '@/lib/validators/song_info';
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
@@ -30,10 +31,12 @@ const ArtistSongItem: React.FC<Props> = (props) => {
                
             >
                 <div className=' flex flex-shrink items-center justify-center aspect-square m-4 mb-2 h-36 w-auto'>
-                    <img
-                    src={songInfo.song_art_url}
+                    <Image
+                    src={songInfo.song_art_url!}
                     alt='song art'
                     className="object-cover rounded-md w-9/10 h-36 w-auto "
+                    width={150}
+                    height={150}
                     />
                 </div>
                 <div className=" text-xs text-left text-muted-foreground w-36 truncate mb-2 flex flex-col items-start justify-center ">
