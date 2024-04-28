@@ -264,7 +264,10 @@ export default async function SongPage({ params, searchParams }: {
           
           song_data = song_data_genius
         }
-
+        if (song_data.song_meaning_structured == null) {
+          is_meaning_valid = false
+          console.log("Meaning is not valid")
+        }
         
         const song_name = song_data?.song_short_title
         const song_info: SongInfo = {
@@ -293,11 +296,8 @@ export default async function SongPage({ params, searchParams }: {
 
           return (
               <main className="">
-                
+                {is_meaning_valid? (<></>):(<meta name="robots" content="noindex, nofollow" />)}
                   <div className='flex flex-col items-center md:px-4 py-8'>
-
-                  
-
                     <div className='md:mx-auto max-w-6xl px-0 md:px-6 lg:px-8  flex w-full flex-1 flex-col pl-0 pr-0 '>
                       <Card className="w-full mb-0.5 flex-1 rounded-t-3xl from-primary to-primary/80 shadow-xl sm:mb-8 sm:flex-initial sm:rounded-b-3xl">
                         <CardHeader className='relative border-1 border-b-4 border-purple-800/25 bg-gray-50 rounded-t-3xl sm:rounded-b-3xl flex flex-col items-center sm:flex-row mb-4 px-4 sm:py-10 sm:px-10'>
