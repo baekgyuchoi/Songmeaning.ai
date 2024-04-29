@@ -35,16 +35,7 @@ export default async function Home() {
             
             <TrendingSongs className="w-full" />
           </div>
-          {/* <div className="mb-8 sm:hidden">
-            <AtlasVPNBanner2 />
-          </div>
-          <div className="mb-8 hidden sm:block">
-            <AtlasVPNBanner1 />
-          </div>
-           */}
-          {/* <div>
-            <MusiciansFriendStupidDeal />
-          </div> */}
+        
           
         </div>
         

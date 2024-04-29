@@ -16,8 +16,6 @@ import BackgroundContentBlock from '@/app/components/(song-page)/(content-blocks
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
 
-
-
 export const maxDuration = 50
 
 function extractSegment(text: string, maxLength: number = 160): string {
@@ -67,7 +65,7 @@ export async function generateMetadata({
 
   let song_description = ""
   
-  song_description = extractSegment(song_db?.song_meaning_structured?.intro!) + "..." || "Uncover the deeper meaning behind the lyrics of your favorite songs."
+  song_description = song_db?.song_meaning_structured?.intro! || "Uncover the deeper meaning behind the lyrics of your favorite songs."
   
   // fetch data
  
@@ -85,7 +83,7 @@ export async function generateMetadata({
   }
   return {
     metadataBase: new URL("https://www.songmeaning.ai/songs/" + song_slug),
-    title: `${song_db!.song_short_title} by ${song_db!.artist_name} Lyrics Meaning - SongMeaning.AI`,
+    title: `Meaning of ${song_db!.song_short_title} by ${song_db!.artist_name} | Lyrics Meaning by SongMeaning.AI`,
     description: song_description,
     alternates: {
       canonical: '/'
