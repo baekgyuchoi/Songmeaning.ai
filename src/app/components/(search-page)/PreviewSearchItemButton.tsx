@@ -21,7 +21,7 @@ const PreviewSearchItemButton: React.FC<Props> = (props) => {
                 <div className="flex flex-row w-full p-2 pl-4 pr-4">
                     <div className="group flex items-center gap-x-4 py-1">
                         <div className="relative flex w-8 h-8 overflow-hidden">
-                            <img className="object-cover" alt="song art" src={songInfo.song_art_url!} width={150} height={150} />
+                            <Image className="object-cover" alt="song art" src={'/music_placeholder_image.png'} width={150} height={150} />
                         </div>
                         <div className="min-w-0 max-w-md flex items-start flex-col mr-4">
                             <p className="w-48 text-sm truncate">{songInfo.song_short_title}</p>

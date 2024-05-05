@@ -83,7 +83,7 @@ export async function generateMetadata({
   }
   return {
     metadataBase: new URL("https://www.songmeaning.ai/songs/" + song_slug),
-    title: `Meaning of ${song_db!.song_short_title} by ${song_db!.artist_name} | Lyrics Meaning by SongMeaning.AI`,
+    title: `Meaning of ${song_db!.song_short_title} by ${song_db!.artist_name} | Song Meaning, Background, and Quotes by SongMeaning.AI`,
     description: song_description,
     alternates: {
       canonical: '/'

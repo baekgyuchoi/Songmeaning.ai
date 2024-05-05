@@ -31,7 +31,7 @@ const ArtistSongItem: React.FC<Props> = (props) => {
                
             >
                 <div className=' flex flex-shrink items-center justify-center aspect-square m-4 mb-2 h-36 w-auto'>
-                    <img
+                    <Image
                     src={songInfo.song_art_url!}
                     alt='song art'
                     className="object-cover rounded-md w-9/10 h-36 w-auto "
