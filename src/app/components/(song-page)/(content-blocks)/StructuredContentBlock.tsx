@@ -387,7 +387,7 @@ const StructuredContentBlock: React.FC<StructuredContentProps> =  async (props) 
         <div>
             <GenerateNewContent song_slug={song_info.song_slug} />
         </div>
-    )
+        )
     }
     else{
         let song_lyrics = song_db?.lyrics!
