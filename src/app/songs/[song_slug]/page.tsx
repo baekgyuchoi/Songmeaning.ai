@@ -82,12 +82,25 @@ export async function generateMetadata({
     }
   }
   return {
-    metadataBase: new URL("https://www.songmeaning.ai/songs/" + song_slug),
-    title: `Meaning of ${song_db!.song_short_title} by ${song_db!.artist_name} | Song Meaning, Background, and Quotes by SongMeaning.AI`,
-    description: song_description,
-    alternates: {
-      canonical: '/'
-    }
+      metadataBase: new URL("https://www.songmeaning.ai/songs/" + song_slug),
+      title: `Meaning of ${song_db!.song_short_title} by ${song_db!.artist_name} | Song Meaning, Background, and Quotes by SongMeaning.AI`,
+      description: song_description,
+      alternates: {
+        canonical: '/'
+      },
+      openGraph: {
+        title: `${song_db!.song_short_title} by ${song_db!.artist_name} | SongMeaning.AI`,
+        description: extractSegment(song_description),
+        images: [
+          {
+            url: song_db!.header_image_url!,
+            width: 1200,
+            height: 630,
+            alt: `${song_db!.song_short_title} by ${song_db!.artist_name} | SongMeaning.AI`,
+          },
+        ],
+      
+      }
     }
   };
 
