@@ -15,6 +15,9 @@ import ContentBlock from '@/app/components/(song-page)/(content-blocks)/ContentB
 import BackgroundContentBlock from '@/app/components/(song-page)/(content-blocks)/BackgroundContentBlock';
 import { Loader2 } from 'lucide-react';
 import Image from 'next/image';
+import AmazonMusicLongHorizontal1 from '@/app/components/(ads+affiliates)/AmazonMusicLongHorizontal1';
+import AmazonMusicShortHorizontal1 from '@/app/components/(ads+affiliates)/AmazonMusicShortHorizontal1';
+import AmazonMusicSquare1 from '@/app/components/(ads+affiliates)/AmazonMusicSquare1';
 
 export const maxDuration = 50
 
@@ -374,9 +377,15 @@ export default async function SongPage({ params, searchParams }: {
                                 
                               </CardTitle>
                             </CardHeader>
-                            {/* <NordVPNCustom /> */}
+
+                          <div className='w-full mt-8 hidden sm:block'>
+                            <AmazonMusicLongHorizontal1 />
+                          </div>
+                          <div className='w-full mt-8 sm:hidden'>
+                            <AmazonMusicShortHorizontal1 />
+                          </div>
                       
-                        <div className='px-8 pt-7 pb-8  md:px-10 md:pt-9 md:pb-10  md:p-16'>
+                        <div className='px-8 pt-4 pb-8  md:px-10 md:pt-9 md:pb-10  md:p-16'>
                           
                           <div className='flex flex-col  items-center '> 
                             <div className="w-full md:px-8 md:mr-4 ">
@@ -417,6 +426,9 @@ export default async function SongPage({ params, searchParams }: {
                             {/* <div className='w-full  relative'>
                               <NordVPNBanner300x250 />
                             </div> */}
+                            <div className='sm:w-1/2 mb-4'>
+                              <AmazonMusicSquare1 />
+                            </div>
                      
                             <div className='w-screen sm:w-full text-sm lg:w-2/3 mb-10'>
                               {

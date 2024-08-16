@@ -6,6 +6,7 @@ import TrendingSongs from "./components/TrendingSongs";
 import HomeSearchInput from "./components/(home-components)/HomeSearchInput";
 import FooterContainer from "./components/(footer)/FooterContainer";
 import { Badge } from "@/components/ui/badge";
+import AmazonMusicLongHorizontal1 from "./components/(ads+affiliates)/AmazonMusicLongHorizontal1";
 
 
 
@@ -37,6 +38,9 @@ export default async function Home() {
           </div>
         
           
+        </div>
+        <div className="w-full mb-8">
+          <AmazonMusicLongHorizontal1 />
         </div>
         
       </main>
