@@ -5,13 +5,8 @@ import HomeTypewriter from "./components/(home-components)/HomeTypewriter";
 import TrendingSongs from "./components/TrendingSongs";
 import HomeSearchInput from "./components/(home-components)/HomeSearchInput";
 import FooterContainer from "./components/(footer)/FooterContainer";
-import { Badge } from "@/components/ui/badge";
+
 import AmazonMusicLongHorizontal1 from "./components/(ads+affiliates)/AmazonMusicLongHorizontal1";
-
-
-
-
-
 
 
 export default async function Home() {
