@@ -225,6 +225,7 @@ const SongMeaningContentBlock: React.FC<SongMeaningContentProps> = async (props)
     
     
     let shorted_lyrics = song_lyrics
+    console.log(shorted_lyrics)
     while (Get_Token_Length(shorted_lyrics) > 1500) {
         shorted_lyrics = shorted_lyrics.slice(0,shorted_lyrics.length/2)
     }
